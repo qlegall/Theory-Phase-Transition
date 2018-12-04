@@ -1,6 +1,6 @@
 %Report template
 
-\documentclass[11pt,a4paper]{amsart}
+\documentclass[10pt,a4paper]{amsart}
 
 % Class options
 
@@ -20,6 +20,7 @@
 \usepackage{subfig}
 \usepackage{float}
 \usepackage{color}
+\usepackage{hyperref}
 % plotting
 \usepackage{pgfplots}
 \pgfplotsset{compat=newest}
@@ -248,8 +249,8 @@ The network is modelled by the \emph{connectivity graph} $\mathcal{G}_{r,\lambda
 \subsection{Definitions and Notations}
 We begin with introducing a few notations and definitions useful for the purposes of our developments.
  \begin{Notation}
- For $A \subset \mathbb{R}^{2}$ and $B \subset \mathbb{R}^{2}$, we denote as customary the distance between $A$ and $B$ by:
- $$\text{dist}(A,B) \coloneqq \inf \lbrace \lVert x - y \rVert , \,  x \in A, \,  y \in B \rbrace$$
+ For $A \subset \mathbb{R}^{2}$ and $B \subset \mathbb{R}^{2}$, we denote as customary the Euclidean distance between $A$ and $B$ by:
+ $$\text{dist}(A,B) \coloneqq \inf \lbrace \lVert x - y \rVert_{2} , \,  x \in A, \,  y \in B \rbrace$$
  \end{Notation}
 
 \begin{Notation}
@@ -279,22 +280,24 @@ We will then need the concepts of \emph{stabilization} and \emph{essential asymp
 A random measure $\Xi$ on $\mathbb{R}^{2}$ is called \emph{stabilizing} if there exists a random field of stabilisation radii $R = \lbrace R_{x} \rbrace _{x \in \mathbb{R}^{2}}$ defined on the same probability space as $\Xi$ such that:
 \begin{enumerate}[label = (\arabic*)]
 \item $(\Xi,R)$ are jointly stationary
-\item $\displaystyle \lim_{n \uparrow \infty} \mathbb{P}(\sup _{y \in Q_{n} \cap \mathbb{Q}^{2}} R_{y} < n) = 1$
+\item $\displaystyle \lim_{n \uparrow \infty} \mathbb{P}\left(\sup _{y \in Q_{n} \cap \mathbb{Q}^{2}} R_{y} < n\right) = 1$
 \item for all $n \geq 1$, the random variables 
 $$ \left\lbrace f\left(\Xi_{Q_{n}(x)}\right)\mathbbm{1}\left\lbrace \sup_{y \in Q_{n}(x) \cap \mathbb{Q}^{2}} R_{y} < n \right\rbrace \right\rbrace _{x \in \varphi}$$
 are independent for all bounded measurable functions $$f : \mathbf{M} \to \left[0, +\infty \right)$$ and finite $\varphi \subset \mathbb{R}^{2}$ such that $\forall \, x \in \varphi, \, \text{dist}(x, \varphi \setminus \lbrace x \rbrace ) > 3n$.
 \end{enumerate}
 \end{Definition}
-
 \begin{Remark}
-In the above definition, the random field of stabilization radii $R = \lbrace R_{x} \rbrace _{x \in \mathbb{R}^{d}}$ may not be unique, i.e. a random measure can be stabilizing for more than one field of stabilization radii.
+Throughout the rest of this paper, we assume the random variables $(R_x)_{x \in \mathbb{R}^{2}}$ to be $\Lambda$-measurable, as has been done by the authors of \cite{hirsch_continuum_2017}.
+\end{Remark}
+\begin{Remark}
+In the above definition, the random field of stabilization radii $R = \lbrace R_{x} \rbrace _{x \in \mathbb{R}^{2}}$ may not be unique, i.e. a random measure can be stabilizing for more than one field of stabilization radii.
 \end{Remark}
 \begin{Remark}
 Let $b > 0$ and assume that $\Xi$ is $b$-dependent, i.e. $$\forall A,B \subset \mathbb{R}^{d}, \, \text{dist}(A,B) > b \Rightarrow \Xi_{A} \indep \Xi_{B}$$ Then $\Xi$ is stabilizing. 
 \end{Remark} 
 
 \begin{Definition}[Essentially asymptotically connected random measure]
-Let $\Xi$ be a random measure. Then $\Xi$ is \emph{essentially asymptotically connected} if there exists a random field $R = \lbrace R_{x} \rbrace_{x \in \mathbb{R}^{d}}$ such that $\Lambda$ is stabilizing for $R$ and if for all $n \geq 1$, whenever $\displaystyle \sup_{y \in Q_{2n}} R_{y} < n/2$, the following assertions are satisfied:
+Let $\Xi$ be a random measure. Then $\Xi$ is \emph{essentially asymptotically connected} if there exists a random field $R = \lbrace R_{x} \rbrace_{x \in \mathbb{R}^{d}}$ such that $\Lambda$ is stabilizing for $R$ and if for all $n \geq 1$, whenever $\displaystyle \sup_{y \in Q_{2n} \cap \mathbb{Q}^{2}} R_{y} < n/2$, the following assertions are satisfied:
 \begin{enumerate}[label = (\arabic*)]
 \item $\text{supp}(\Xi_{Q_{n}}) \neq \varnothing$
 \item $\text{supp}(\Xi_{Q_{n}})$ is contained in a connected component of $\text{supp}(\Xi_{Q_{2n}})$
@@ -398,18 +401,58 @@ To this end, for $n \geq 1$, say a site $z \in \mathbb{Z}^{2}$ is \emph{n-good} 
 \item $R(Q_n(nz)) < n$
 \item $\forall e \in E, \, s_e \coloneqq e \cap Q_n(nz) \; \text{is closed}$
 \end{enumerate}
-Say a site $z \in \mathbb{Z}^{2}$ is \emph{n-bad} if it is not n-good. \\
+Say a site $z \in \mathbb{Z}^{2}$ is \emph{$n$-bad} if it is not $n$-good. \\
 \\
 Our first claim is the following:
 \begin{Lemma}
 \label{Claim1.subcritical}
-Percolation of $\mathcal{G}_{\lambda,r,1}$ implies percolation of the process of n-bad sites.
+Percolation of $\mathcal{G}_{\lambda,r,1}$ implies percolation of the process of $n$-bad sites.
 \end{Lemma}
 \begin{Proof}
 Assume $\mathcal{G}_{\lambda,r,1}$ percolates and denote by $\mathcal{C}$ a giant component of $\mathcal{G}_{\lambda,r,1}$. Since $\mathcal{C}$ is infinite, we have: $\# \lbrace z : \mathcal{C} \cap Q_n(nz) \neq \emptyset \rbrace = + \infty$.
-\\ Denote $ \lbrace z : \mathcal{C} \cap Q_n(nz) \neq \emptyset \rbrace \coloneqq \lbrace z_i, i \geq 1 \rbrace$. Note that $\mathcal{C}$ is made of open street segments and open crossroads. Therefore, since $Q_n(nz_i)$ is crossed by $\mathcal{C}$ for all $i \geq 1$, $Q_n(nz_i)$ has to be crossed by some open non-empty $s_e$, for some $e \in  E$. Hence $z_i$ is n-good, and $\lbrace z_i, i \geq 1 \rbrace$ is a infinite component of n-good sites. Now, since $\mathcal{C}$ is connected, then so is $\lbrace z_i, i \geq 1 \rbrace$. Hence, the process of n-good sites percolates. 
+\\ Denote $ \lbrace z : \mathcal{C} \cap Q_n(nz) \neq \emptyset \rbrace \coloneqq \lbrace z_i, i \geq 1 \rbrace$. Note that $\mathcal{C}$ is made of open street segments and open crossroads. Therefore, since $Q_n(nz_i)$ is crossed by $\mathcal{C}$ for all $i \geq 1$, $Q_n(nz_i)$ has to be crossed by some open non-empty $s_e$, for some $e \in  E$. Hence $z_i$ is $n$-bad, and $\lbrace z_i, i \geq 1 \rbrace$ is a infinite component of $n$-bad sites. Now, since $\mathcal{C}$ is connected, then so is $\lbrace z_i, i \geq 1 \rbrace$. Hence, the process of $n$-bad sites percolates. 
 \end{Proof}
-Ensuring the validity of the conditions of \cite[Theorem 0.0]{liggett_domination_1997} can be done via k-dependence. This is a test
+The conditions of \cite[Theorem 0.0]{liggett_domination_1997} are valid for so-called $k$-dependent random fields:
+\begin{Definition}
+Let $ \mathbf{X}=(X_s)_{s \in \mathbb{Z}^{d}}$ be a discrete random field. Let $k \geq 1$. Then $\mathbf{X}$ is said to be $k$-dependent if for all $p \geq 1$ and all $\psi = \lbrace s_{1}, \ldots s_{p} \rbrace \subset \mathbb{Z}^{d}$ finite with the property that $\forall i \neq j, \lVert s_{i} - s_{j} \rVert_{\infty} > k $, the random variables $(X_{s_{i}})_{1 \leq i \leq p}$ are independent.
+\end{Definition}
+
+As we shall see thereafter, the process of $n$-bad sites previously defined is $3$-dependent:
+
+\begin{Lemma}
+For $z \in \mathbb{Z}^{2}$, set $\zeta_{z} \coloneqq \mathbbm{1}\lbrace z \, \text{is $n$-bad} \rbrace$. Then $(\zeta_{z})_{z \in \mathbb{Z}^{2}}$ is a $3$-dependent random field.
+\end{Lemma}
+\begin{Proof}
+As a starting point, note that $\forall z \in \mathbb{Z}^{2}, \zeta_{z} = 1 - \mathbbm{1} \lbrace z \, \text{is $n$-good} \rbrace$. It is therefore equivalent to prove that the process of $n$-good sites is $3$-dependent. \\
+For $z \in \mathbb{Z}^{2}$, set $\xi_{z} = \mathbbm{1} \lbrace z \, \text{is $n$-good} \rbrace$. Let $\psi = \lbrace z_{1}, \ldots z_{p} \rbrace \subset \mathbb{Z}^{2}$ be such that $\forall i \neq j, \lVert z_i - z_j \rVert_{\infty} > 3$.
+We want to show that the random variables $(\xi_{z_i})_{1\leq i \leq p}$ are independent. Equivalently, since we are dealing with indicator functions, this amounts to showing that: 
+$$\mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) = \prod_{i=1}^{p} \mathbb{E}(\xi_{z_i})$$
+Now, we have:
+
+\begin{flalign*}
+  &\mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) = \mathbb{E}\left(\mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \vert \Lambda \right)\right) &\\ \label{eq2} &= \mathbb{E}\left(\mathbb{E}\left(\mathbbm{1}\lbrace R(Q_n(nz_1)) < n \rbrace \mathbbm{1} \lbrace X^{\lambda} \cap Q_n(nz_1) = \emptyset \rbrace \ldots \mathbbm{1}\lbrace R(Q_n(nz_p)) < n \rbrace \mathbbm{1} \lbrace X^{\lambda} \cap Q_n(nz_p) = \emptyset \rbrace \vert \Lambda \right) \right) &
+\end{flalign*}
+
+Now, what I'd like to do in  is getting  those indicators of the form $\mathbbm{1} \lbrace R(Q_n(nz_i) <n \rbrace$ out of the conditional expectation, so as to get:
+
+\begin{align}
+    \eqref{eq2} &= \mathbb{E}\left(\mathbbm{1}\lbrace R(Q_n(nz_1)) < n \rbrace \ldots \mathbbm{1}\lbrace R(Q_n(nz_p)) < n \rbrace \mathbb{E}\left(\mathbbm{1} \lbrace X^{\lambda} \cap Q_n(nz_1) = \emptyset \rbrace \ldots \mathbbm{1} \lbrace X^{\lambda} \cap Q_n(nz_p) = \emptyset \rbrace \vert \Lambda \right) \right) \\ \label{eq4} &= \mathbb{E}\left(\mathbbm{1}\lbrace R(Q_n(nz_1)) < n \rbrace \ldots \mathbbm{1}\lbrace R(Q_n(nz_p)) < n \rbrace \prod_{i=1}^{p}\mathbb{E}\left(\mathbbm{1} \lbrace X^{\lambda} \cap Q_n(nz_i) = \emptyset \rbrace \vert \Lambda \right) \right)
+\end{align}
+where Poisson independence property has been used to obtain \eqref{eq4}. Now, setting, $f(\Lambda_{Q_n(x)}) \coloneqq \mathbb{E}\left(\mathbbm{1} \lbrace X^{\lambda} \cap Q_n(x) = \emptyset \rbrace \vert \Lambda \right)$, a deterministic measurable function of $\Lambda_{Q_n(x)}$ we are left with:
+\begin{align}
+    \eqref{eq4} &= \mathbb{E}\left( \prod_{i=1}^{p} f(\Lambda_{Q_n(nz_i)}) \mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right) \label{eq5}
+\end{align}
+Now, the set $\varphi \coloneqq \lbrace nz_1,\ldots,nz_p \rbrace \subset \mathbb{R}^{d}$ is finite and satisfies: $\forall x \in \varphi, \text{dist}(x,\phi \setminus \lbrace x \rbrace ) > 3n$, so we can apply the definition  \cite[Definition 2.3]{hirsch_continuum_2017} of stabilization to get that the random variables appearing in~\eqref{eq5} are independent. Hence $\eqref{eq5}=\prod_{i=1}^{p} \mathbb{E}\left( f(\Lambda_{Q_n(nz_i)})\mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right)$ \\
+Therefore, we finally get:
+\begin{align}
+    \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \prod_{i=1}^{p} \mathbb{E}\left(\mathbb{E}\left( \mathbbm{1} \lbrace X^{\lambda} \cap Q_n(nz_i) \neq \emptyset \rbrace \vert \Lambda \right) \mathbbm{1} \lbrace R(Q_n(nz_i)) <n \rbrace \right) \label{eq7}
+\end{align}
+Putting back the indicators of the form $\mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace$ inside of the conditional expectation in~\eqref{eq7}, we are left with the expectation of a conditional expectation and finally get the desired identity:
+\begin{align}
+    \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \prod_{i=1}^{p} \mathbb{E}\left( \mathbbm{1} \lbrace X^{\lambda} \cap Q_n(nz_i) \neq \emptyset \rbrace   \mathbbm{1} \lbrace R(Q_n(nz_i)) <n \rbrace \right) \\ &\eqqcolon \prod_{i=1}^{p}\mathbb{E}(\xi_{z_i})
+\end{align}
+and so we're done.
+\end{Proof}
 \bibliographystyle{amsplain}
 \bibliography{references}
 
