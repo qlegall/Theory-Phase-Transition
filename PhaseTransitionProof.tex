@@ -254,7 +254,7 @@ We begin with introducing a few notations and definitions useful for the purpose
  \end{Notation}
 
 \begin{Notation}
-For $x \in \mathbb{R}^{2}$, $n \in \mathbb{N} \setminus \lbrace 0 \rbrace$, we denote by $$Q_n(x) \coloneqq x + \left[-n/2,n/2\right]^{2}$$ the square of side $n$ centered at $x$.
+For $x \in \mathbb{R}^{2}$, $n \in \mathbb{N} \setminus \lbrace 0 \rbrace$, we denote by $$Q_n(x) \coloneqq x + \left[-n/2,n/2\right]^{2}$$ the square of side $n$ centered at $x$. We note that this is exactly the definition of the closed ball with center $x$ and radius $n/2$ for the infinite norm of $\mathbb{R}$
 \end{Notation}
 
 \begin{Notation}
@@ -270,6 +270,11 @@ We denote by $\mathbf{M}$ the space of Borel measures on $\mathbb{R}^{2}$, equip
 For a (possibly random) Borel measure $\mu$ on $\mathbb{R}^{2}$ and $A \subset \mathbb{R}^{2}$, we denote the restriction of $\mu$ to $A$ by: $$\mu_A(\cdot) \coloneqq \mu(A \cap \cdot)$$
 \end{Notation}
 
+Finally, we will use the following convenient notation for the length of a street segment or a subset of street segment:
+\begin{Notation}
+Let $e \in E$ and $s \subseteq e$. Then we denote the length of $s$ by $\vert s \vert$.
+\end{Notation}
+
 \begin{Definition}
 Let $\mu$ be a (possibly random) Borel measure on $\mathbb{R}^{2}$. The \emph{support} of $\mu$ is the following set:
 $$\text{supp}(\mu) \coloneqq \lbrace x \in \mathbb{R}^{d} \, : \forall \varepsilon > 0, \,  \mu(Q_{\varepsilon}(x)) > 0 \rbrace$$
@@ -277,6 +282,7 @@ $$\text{supp}(\mu) \coloneqq \lbrace x \in \mathbb{R}^{d} \, : \forall \varepsil
 We will then need the concepts of \emph{stabilization} and \emph{essential asymptotical connectedness} given in \cite{hirsch_continuum_2017} for investigating spatial dependencies of random measures:
 
 \begin{Definition}
+\label{Def.stabilizing}
 A random measure $\Xi$ on $\mathbb{R}^{2}$ is called \emph{stabilizing} if there exists a random field of stabilisation radii $R = \lbrace R_{x} \rbrace _{x \in \mathbb{R}^{2}}$ defined on the same probability space as $\Xi$ such that:
 \begin{enumerate}[label = (\arabic*)]
 \item $(\Xi,R)$ are jointly stationary
@@ -299,7 +305,7 @@ Let $b > 0$ and assume that $\Xi$ is $b$-dependent, i.e. $$\forall A,B \subset \
 \begin{Definition}[Essentially asymptotically connected random measure]
 Let $\Xi$ be a random measure. Then $\Xi$ is \emph{essentially asymptotically connected} if there exists a random field $R = \lbrace R_{x} \rbrace_{x \in \mathbb{R}^{d}}$ such that $\Lambda$ is stabilizing for $R$ and if for all $n \geq 1$, whenever $\displaystyle \sup_{y \in Q_{2n} \cap \mathbb{Q}^{2}} R_{y} < n/2$, the following assertions are satisfied:
 \begin{enumerate}[label = (\arabic*)]
-\item $\text{supp}(\Xi_{Q_{n}}) \neq \varnothing$
+\item $\text{supp}(\Xi_{Q_{n}}) \neq \emptyset$
 \item $\text{supp}(\Xi_{Q_{n}})$ is contained in a connected component of $\text{supp}(\Xi_{Q_{2n}})$
 \end{enumerate}
 \end{Definition}
@@ -326,7 +332,8 @@ Say a crossroad $V_{i} \in V$ is \emph{open} if it is an atom of the point proce
 \end{Definition}
 
 \begin{Definition}[Open/Closed street segment]
-Let $e \in E$ be a street segment. Let $s \subseteq e$.  \\ Say $s$ is \emph{open} if either of the two following set of conditions are satisfied:
+\label{Def.open/closed/subcritical}
+Let $e \in E$ be a street segment and let $\emptyset \neq s \subseteq e$ be a non-empty subset of $e$.\\ Say $s$ is \emph{open} if either of the two following set of conditions are satisfied:
 \begin{enumerate}
 \item $\vert s \vert \leq r$
 \vspace{.2 cm}
@@ -399,7 +406,7 @@ As customary in any continuum percolation problem and as has been done in \cite{
 To this end, for $n \geq 1$, say a site $z \in \mathbb{Z}^{2}$ is \emph{n-good} if the following conditions are satisfied: 
 \begin{enumerate}
 \item $R(Q_n(nz)) < n$
-\item $\forall e \in E, \, s_e \coloneqq e \cap Q_n(nz) \; \text{is closed}$
+\item $\forall e \in E, \, s_{z,e} \coloneqq e \cap Q_n(nz) \; \text{is closed}$
 \end{enumerate}
 Say a site $z \in \mathbb{Z}^{2}$ is \emph{$n$-bad} if it is not $n$-good. \\
 \\
@@ -412,6 +419,7 @@ Percolation of $\mathcal{G}_{\lambda,r,1}$ implies percolation of the process of
 Assume $\mathcal{G}_{\lambda,r,1}$ percolates and denote by $\mathcal{C}$ a giant component of $\mathcal{G}_{\lambda,r,1}$. Since $\mathcal{C}$ is infinite, we have: $\# \lbrace z : \mathcal{C} \cap Q_n(nz) \neq \emptyset \rbrace = + \infty$.
 \\ Denote $ \lbrace z : \mathcal{C} \cap Q_n(nz) \neq \emptyset \rbrace \coloneqq \lbrace z_i, i \geq 1 \rbrace$. Note that $\mathcal{C}$ is made of open street segments and open crossroads. Therefore, since $Q_n(nz_i)$ is crossed by $\mathcal{C}$ for all $i \geq 1$, $Q_n(nz_i)$ has to be crossed by some open non-empty $s_e$, for some $e \in  E$. Hence $z_i$ is $n$-bad, and $\lbrace z_i, i \geq 1 \rbrace$ is a infinite component of $n$-bad sites. Now, since $\mathcal{C}$ is connected, then so is $\lbrace z_i, i \geq 1 \rbrace$. Hence, the process of $n$-bad sites percolates. 
 \end{Proof}
+Therefore, it suffices to prove that the process of $n$-bad sites does not percolate if $\lambda$ and $r$ are sufficiently small. This will be done via appealing to \cite[Theorem 0.0]{liggett_domination_1997}. \\
 The conditions of \cite[Theorem 0.0]{liggett_domination_1997} are valid for so-called $k$-dependent random fields:
 \begin{Definition}
 Let $ \mathbf{X}=(X_s)_{s \in \mathbb{Z}^{d}}$ be a discrete random field. Let $k \geq 1$. Then $\mathbf{X}$ is said to be $k$-dependent if for all $p \geq 1$ and all $\psi = \lbrace s_{1}, \ldots s_{p} \rbrace \subset \mathbb{Z}^{d}$ finite with the property that $\forall i \neq j, \lVert s_{i} - s_{j} \rVert_{\infty} > k $, the random variables $(X_{s_{i}})_{1 \leq i \leq p}$ are independent.
@@ -429,30 +437,94 @@ We want to show that the random variables $(\xi_{z_i})_{1\leq i \leq p}$ are ind
 $$\mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) = \prod_{i=1}^{p} \mathbb{E}(\xi_{z_i})$$
 Now, we have:
 
-\begin{flalign*}
-  &\mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) = \mathbb{E}\left(\mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \vert \Lambda \right)\right) &\\ \label{eq2} &= \mathbb{E}\left(\mathbb{E}\left(\mathbbm{1}\lbrace R(Q_n(nz_1)) < n \rbrace \mathbbm{1} \lbrace X^{\lambda} \cap Q_n(nz_1) = \emptyset \rbrace \ldots \mathbbm{1}\lbrace R(Q_n(nz_p)) < n \rbrace \mathbbm{1} \lbrace X^{\lambda} \cap Q_n(nz_p) = \emptyset \rbrace \vert \Lambda \right) \right) &
-\end{flalign*}
+\begin{align}
+  \nonumber \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \mathbb{E}\left[\mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \Bigg\vert \Lambda \right)\right] \\ \label{eq2} &= \mathbb{E}\Bigg[\mathbb{E}\Bigg(\prod_{i=1}^{p}\mathbbm{1}\lbrace R(Q_n(nz_i)) < n \rbrace \prod_{i=1}^{p} \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg) \Bigg] 
+\end{align}
 
-Now, what I'd like to do in  is getting  those indicators of the form $\mathbbm{1} \lbrace R(Q_n(nz_i) <n \rbrace$ out of the conditional expectation, so as to get:
+By $\Lambda$-measurability of the random variables $\lbrace R_x \rbrace_{x \in \mathbb{R}^2}$, we can take the indicators of the form $\mathbbm{1} \lbrace R(Q_n(nz_i)) < n \rbrace$, $1 \leq i \leq p$ out of the conditional expectation given $\Lambda$ in~\eqref{eq2}. This yields:
 
 \begin{align}
-    \eqref{eq2} &= \mathbb{E}\left(\mathbbm{1}\lbrace R(Q_n(nz_1)) < n \rbrace \ldots \mathbbm{1}\lbrace R(Q_n(nz_p)) < n \rbrace \mathbb{E}\left(\mathbbm{1} \lbrace X^{\lambda} \cap Q_n(nz_1) = \emptyset \rbrace \ldots \mathbbm{1} \lbrace X^{\lambda} \cap Q_n(nz_p) = \emptyset \rbrace \vert \Lambda \right) \right) \\ \label{eq4} &= \mathbb{E}\left(\mathbbm{1}\lbrace R(Q_n(nz_1)) < n \rbrace \ldots \mathbbm{1}\lbrace R(Q_n(nz_p)) < n \rbrace \prod_{i=1}^{p}\mathbb{E}\left(\mathbbm{1} \lbrace X^{\lambda} \cap Q_n(nz_i) = \emptyset \rbrace \vert \Lambda \right) \right)
+ \label{eq3} \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \mathbb{E}\Bigg[\prod_{i=1}^{p} \mathbbm{1} \lbrace R(Q_n(nz_i) <n \rbrace \mathbb{E}\Bigg( \prod_{i=1}^{p} \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg) \Bigg] 
 \end{align}
-where Poisson independence property has been used to obtain \eqref{eq4}. Now, setting, $f(\Lambda_{Q_n(x)}) \coloneqq \mathbb{E}\left(\mathbbm{1} \lbrace X^{\lambda} \cap Q_n(x) = \emptyset \rbrace \vert \Lambda \right)$, a deterministic measurable function of $\Lambda_{Q_n(x)}$ we are left with:
+For $1 \leq i \leq p$, set $A_{z_i} \coloneqq \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace \, , 1 \leq i \leq p$. According to Definition~\ref{Def.open/closed/subcritical}, for a given $1 \leq i \leq p$, the event $A_{z_i}$ only depends on the configuration of the random measure $\Lambda$ and of the Cox process $X^{\lambda}$ inside the square $Q_n(nz_i)$. Therefore, given $\Lambda$, the former events only depend on $X^{\lambda} \cap Q_n(nz_i)$ for $1 \leq i \leq p$. Since we have $\forall i \neq j, \lVert z_i - z_j \rVert_{\infty} > 3$, then the squares $Q_n(nz_i) = $ are disjoint. Now, we have that $X^{\lambda}$ is a Poisson Point Process given $\Lambda$. Thus, by Poisson independence property, the events $(A_{z_i})_{1 \leq i \leq p}$ are conditionally independent given $\Lambda$. Hence~\eqref{eq3} yields:
 \begin{align}
-    \eqref{eq4} &= \mathbb{E}\left( \prod_{i=1}^{p} f(\Lambda_{Q_n(nz_i)}) \mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right) \label{eq5}
+ \label{eq4} \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \mathbb{E}\Bigg[\prod_{i=1}^{p} \mathbbm{1} \lbrace R(Q_n(nz_i) <n \rbrace \prod_{i=1}^{p} \mathbb{E}\Bigg(  \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg) \Bigg] 
 \end{align}
-Now, the set $\varphi \coloneqq \lbrace nz_1,\ldots,nz_p \rbrace \subset \mathbb{R}^{d}$ is finite and satisfies: $\forall x \in \varphi, \text{dist}(x,\phi \setminus \lbrace x \rbrace ) > 3n$, so we can apply the definition  \cite[Definition 2.3]{hirsch_continuum_2017} of stabilization to get that the random variables appearing in~\eqref{eq5} are independent. Hence $\eqref{eq5}=\prod_{i=1}^{p} \mathbb{E}\left( f(\Lambda_{Q_n(nz_i)})\mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right)$ \\
-Therefore, we finally get:
+Now, setting, $f(\Lambda_{Q_n(x)}) \coloneqq \mathbb{E}\Bigg(  \mathbbm{1} \lbrace \forall \, e \in E, \, s_{x,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg)$, a deterministic, bounded and measurable function of $\Lambda_{Q_n(x)}$ we are left with:
 \begin{align}
-    \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \prod_{i=1}^{p} \mathbb{E}\left(\mathbb{E}\left( \mathbbm{1} \lbrace X^{\lambda} \cap Q_n(nz_i) \neq \emptyset \rbrace \vert \Lambda \right) \mathbbm{1} \lbrace R(Q_n(nz_i)) <n \rbrace \right) \label{eq7}
+    \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \mathbb{E}\left( \prod_{i=1}^{p} f(\Lambda_{Q_n(nz_i)}) \mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right) \label{eq5}
 \end{align}
-Putting back the indicators of the form $\mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace$ inside of the conditional expectation in~\eqref{eq7}, we are left with the expectation of a conditional expectation and finally get the desired identity:
+Now, the set $\varphi \coloneqq \lbrace nz_1,\ldots,nz_p \rbrace \subset \mathbb{R}^{d}$ is finite and satisfies: $$\forall i \neq j, \lVert nz_i - nz_j \rVert_{\infty} > 3n$$ Since the infinite norm is always upper bounded by the Euclidean norm, we have $\forall i \neq j, \lVert nz_i - nz_j \rVert_{2} > 3n $, and so $\varphi$ satisfies:
+$$\forall x \in \varphi, \, \text{dist}(x, \varphi \setminus \lbrace x \rbrace) > 3n$$
+We can therefore apply the definition of stabilization  \cite[Definition 2.3]{hirsch_continuum_2017} to get that the random variables appearing in the right-hand side of~\eqref{eq5} are independent. Hence:
+
 \begin{align}
-    \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \prod_{i=1}^{p} \mathbb{E}\left( \mathbbm{1} \lbrace X^{\lambda} \cap Q_n(nz_i) \neq \emptyset \rbrace   \mathbbm{1} \lbrace R(Q_n(nz_i)) <n \rbrace \right) \\ &\eqqcolon \prod_{i=1}^{p}\mathbb{E}(\xi_{z_i})
+    \nonumber \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \prod_{i=1}^{p} \mathbb{E}\left( f(\Lambda_{Q_n(nz_i)})\mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right) \\\nonumber &= \prod_{i=1}^{p} \mathbb{E}\left[  \mathbb{E}\Bigg(  \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg) \mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right] \nonumber \\ &= \prod_{i=1}^{p} \mathbb{E}\left[  \mathbb{E}\Bigg(  \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace \mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace  \Bigg\vert \Lambda \Bigg)   \right]  \label{eq6} \intertext{(where we have used $\Lambda$-measurability of the $R$'s in~\eqref{eq6})} \nonumber  \\ \nonumber &= \prod_{i=1}^{p} \mathbb{E}\left[   \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace \mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right] \\ \nonumber &\eqqcolon \prod_{i=1}^{p} \mathbb{E}(\xi_{z_i}) 
 \end{align}
-and so we're done.
+This concludes the proof of the lemma.
 \end{Proof}
+Now that we have proven that the process of $n$-bad sites is $3$-dependent, in order to apply \cite[Theorem 0.0]{liggett_domination_1997}, it remains to prove that the probability for a site $z \in \mathbb{Z}^{d}$ to be $n$-bad is sufficiently small when $\lambda$ and $r$ are chosen sufficiently small. Equivalently, as has been done in \cite{hirsch_continuum_2017}, we need to prove the following:
+\begin{equation*}
+    \limsup_{n \uparrow \infty}\limsup_{r \downarrow 0}\limsup_{\lambda \downarrow 0} \mathbb{P}(z \, \text{is $n$-bad}) = 0
+\end{equation*}
+By stationarity, it suffices to prove that: 
+\begin{equation*}
+\limsup_{n \uparrow \infty}\limsup_{r \downarrow 0}\limsup_{\lambda \downarrow 0} \mathbb{P}(0 \, \text{is $n$-bad}) = 0
+\end{equation*}
+Now, note that we have:
+\begin{align*}
+    \mathbb{P}(0 \, \text{is $n$-bad}) &= \mathbb{P}\Big(\lbrace R(Q_n) \geq n \rbrace \cup \lbrace \exists \, e \in E, \, e \cap Q_n \, \text{is open} \rbrace \Big) \\ & \leq \mathbb{P}\left( R(Q_n) \geq n \right) + \mathbb{P}\left(  \exists \, e \in E, \, e \cap Q_n \, \text{is open} \right)
+\end{align*}
+On the one hand, we note that the quantity $R(Q_n)$ does not depend on $\lambda$ and $r$ and by Definition~\ref{Def.stabilizing}, we have $\displaystyle \lim_{n \uparrow \infty} \mathbb{P}(R(Q_n) \geq n)  = 0$. \\
+Therefore, it remains to deal with the quantity $\mathbb{P}\left(  \exists \, e \in E, \, e \cap Q_n \, \text{is open} \right)$. We have:
+\begin{align}
+    \nonumber \mathbb{P}\left(\exists \, e \in E, \, e \cap Q_n \, \text{is open} \right) &= 1 - \mathbb{P}\left(  \forall \, e \in E, \, e \cap Q_n \, \text{is open} \right) \\ \nonumber &= 1 - \mathbb{E}\left( \prod_{e \in E \, : \, e \cap Q_n \neq \emptyset} \mathbbm{1}\lbrace \text{$e \cap Q_n$ is open} \rbrace \right) \\ \nonumber &= 1 - \mathbb{E}\left[\mathbb{E}\left( \prod_{e \in E \, : e \cap Q_n \neq \emptyset} \mathbbm{1}\lbrace \text{$e \cap Q_n$ is closed} \rbrace  \Bigg\vert \Lambda \right) \right] 
+\end{align}
+For $e \in E$, denote:
+\begin{gather*}
+    s_e \coloneqq e \cap Q_n \\ A_e \coloneqq \lbrace \exists \, c \subset s_e, \, \text{$c$ topologically closed}, \vert c \vert = r, X^{\lambda}(c) = 0 \rbrace
+\end{gather*}
+We have: $\mathbbm{1}\lbrace \text{$s_e$ is closed} \rbrace = \mathbbm{1}\lbrace \vert s_e \vert > r \rbrace \mathbbm{1}\lbrace A_e \rbrace $. Thus:
+
+\begin{align}
+     \nonumber \mathbb{P}\left(\exists \, e \in E, \, e \cap Q_n \, \text{is open} \right) &= 1 - \mathbb{E}\left[\mathbb{E}\left( \prod_{e \in E \, : s_e \neq \emptyset} \mathbbm{1}\lbrace \vert s_e \vert > r \rbrace \mathbbm{1}\lbrace A_e \rbrace  \Bigg\vert \Lambda \right) \right] \\ \nonumber &= 1 - \mathbb{E}\left[\prod_{e \in E : s_e \neq \emptyset} \mathbbm{1}\lbrace \vert s_e \vert > r \rbrace\mathbb{E}\left( \prod_{e \in E \, : s_e \neq \emptyset}  \mathbbm{1}\lbrace A_e \rbrace  \Bigg\vert \Lambda \right) \right],  \intertext{by $\Lambda$-measurability of the events $\lbrace \vert s_e > r \vert \rbrace$,\, $e \in E$.} \nonumber
+\end{align}
+Given $\Lambda$, $X^{\lambda}$ has the distribution of a Poisson point process with mean measure $\lambda \Lambda$ and $A_e$ only depends on $X^{\lambda} \cap e$ once $e$ is fixed. Therefore, given $\Lambda$, the events $\lbrace A_e \, : e \in E \rbrace$ depend on the number of Cox points on distinct edges and so, by the Poisson independence property, these events are conditionally independent given $\Lambda$. Thus: 
+
+\begin{align}
+     \nonumber \mathbb{P}\left(\exists \, e \in E, \, e \cap Q_n \, \text{is open} \right) &= 1 - \mathbb{E}\left[\prod_{e \in E : s_e \neq \emptyset} \mathbbm{1}\lbrace \vert s_e \vert > r \rbrace\mathbb{E}\left( \prod_{e \in E \, : s_e \neq \emptyset}  \mathbbm{1}\lbrace A_e \rbrace  \Bigg\vert \Lambda \right) \right] \\ \nonumber &= 1 - \mathbb{E}\left[\prod_{e \in E : s_e \neq \emptyset} \mathbbm{1}\lbrace \vert s_e \vert > r \rbrace \prod_{e \in E \, : s_e \neq \emptyset}\mathbb{E}\left(   \mathbbm{1}\lbrace A_e \rbrace  \vert \Lambda \right) \right] \\ \label{eq7} &= 1 - \mathbb{E}\left[\prod_{e \in E : s_e \neq \emptyset} \mathbbm{1}\lbrace \vert s_e \vert > r \rbrace \prod_{e \in E \, : s_e \neq \emptyset}\mathbb{P}\left( A_e  \vert \Lambda \right) \right] 
+\end{align}
+For all $e \in E$ such that $s_e \neq \emptyset$, we have that $0 \leq \mathbb{P}(A_e \vert \Lambda) \leq 1$, and moreover the event $A_e$ is increasing in $\lambda$ with $\displaystyle \lim_{\lambda \downarrow 0} \mathbbm{1}\lbrace A_e \rbrace = 1 \: \text{a.s.}$. So, by monotone convergence, we have that for all $e \in E$ such that $s_e \neq \emptyset$, $\displaystyle \lim_{\lambda \downarrow 0} \mathbb{P}(A_e \vert \Lambda) = 1 \: \text{a.s.}$. As a matter of fact:
+\begin{equation*}
+    \limsup_{\lambda \downarrow 0} \prod_{e \in E : s_e \neq \emptyset} \mathbbm{1}\lbrace \vert s_e \vert > r \rbrace \prod_{e \in E \, : s_e \neq \emptyset}\mathbb{P}\left(    A_e  \vert \Lambda \right) = \prod_{e \in E : s_e \neq \emptyset} \mathbbm{1}\lbrace \vert s_e \vert > r \rbrace \quad \text{a.s.}
+\end{equation*}
+Noting that $\displaystyle \Bigg\lvert \prod_{e \in E : s_e \neq \emptyset} \mathbbm{1}\lbrace \vert s_e \vert > r \rbrace \prod_{e \in E \, : s_e \neq \emptyset}\mathbb{P}\left(    A_e  \vert \Lambda \right) \Bigg\rvert \leq 1$, we can apply dominated convergence in~\eqref{eq7}, we get:
+\begin{align}
+   \nonumber  \limsup_{\lambda \downarrow 0} \mathbb{P}\left(\exists \, e \in E, \, e \cap Q_n \, \text{is open} \right) &= 1 - \mathbb{E}\left(\prod_{e \in E : s_e \neq \emptyset} \mathbbm{1}\lbrace \vert s_e \vert > r \rbrace \right) \\ \label{eq8} &= 1 - \mathbb{E}\left(\prod_{e \in E} \mathbbm{1}\lbrace \vert e \cap Q_n \vert > r \rbrace \mathbbm{1} \lbrace e \cap Q_n \neq \emptyset \rbrace \right)
+\end{align}
+Again, by monotone convergence, we have for all $e \in E$:
+\begin{align*}
+\lim_{r \downarrow 0} \mathbbm{1}\lbrace \vert e \cap Q_n \vert > r \rbrace \mathbbm{1}\lbrace e \cap Q_n \neq \emptyset \rbrace &= \mathbbm{1}\lbrace \vert e \cap Q_n \vert > 0 \rbrace \mathbbm{1}\lbrace e \cap Q_n \neq \emptyset \rbrace \quad \text{a.s.} \\ &= \mathbbm{1}\lbrace e \cap Q_n \neq \emptyset \rbrace \quad \text{a.s.}
+\end{align*} 
+So, applying dominated convergence again in~\eqref{eq8} we get:
+\begin{equation}
+\label{eq9}
+   \limsup_{r \downarrow \infty}\limsup_{\lambda \downarrow 0} \mathbb{P}\left(\exists \, e \in E, \, e \cap Q_n \, \text{is open} \right)=1-\mathbb{E}\left(\prod_{e \in E } \mathbbm{1}\lbrace e \cap Q_n \neq \emptyset \rbrace \right)
+\end{equation}
+By monotone convergence, $\displaystyle \lim_{n \uparrow \infty}\mathbbm{1}\lbrace e \cap Q_n \neq \emptyset \rbrace = 1 \quad \text{a.s.}$ for all $e \in E$. Therefore, by dominated convergence in~\eqref{eq9}, we obtain:
+\begin{equation}
+    \label{eq10}
+    \limsup_{n \uparrow \infty}\limsup_{r \downarrow 0}\limsup_{\lambda \downarrow 0} \mathbb{P}\left(\exists \, e \in E, \, e \cap Q_n \, \text{is open} \right) = 1-1 = 0
+\end{equation}
+To conclude, we have: 
+\begin{equation*}
+    0 \leq \mathbb{P}(0 \, \text{is $n$-bad}) \leq \mathbb{P}(R(Q_n) \geq n) + \mathbb{P}(\exists \, e \in E, \, e \cap Q_n \, \text{is open})
+\end{equation*}
+Using Definition~\ref{Def.stabilizing} on  and~\eqref{eq10}, we finally get:
+\begin{equation*}
+     \limsup_{n \uparrow \infty}\limsup_{r \downarrow 0}\limsup_{\lambda \downarrow 0} \mathbb{P}(0 \, \text{is $n$-bad}) =0
+\end{equation*}
+Hence, by \cite[Theorem 0.0]{liggett_domination_1997}, the process of $n$-bad sites is stochastically dominated from above by a sub-critical Bernoulli process when $\lambda$ and $r$ are sufficiently small. In particular, the process of $n$-bad sites cannot percolate when $\lambda$ and $r$ are sufficiently small. This concludes the proof of Theorem~\ref{Thm.subcritical}. \qed
 \bibliographystyle{amsplain}
 \bibliography{references}
 
