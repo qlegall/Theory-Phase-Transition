@@ -524,7 +524,21 @@ Using Definition~\ref{Def.stabilizing} on  and~\eqref{eq10}, we finally get:
 \begin{equation*}
      \limsup_{n \uparrow \infty}\limsup_{r \downarrow 0}\limsup_{\lambda \downarrow 0} \mathbb{P}(0 \, \text{is $n$-bad}) =0
 \end{equation*}
-Hence, by \cite[Theorem 0.0]{liggett_domination_1997}, the process of $n$-bad sites is stochastically dominated from above by a sub-critical Bernoulli process when $\lambda$ and $r$ are sufficiently small. In particular, the process of $n$-bad sites cannot percolate when $\lambda$ and $r$ are sufficiently small. This concludes the proof of Theorem~\ref{Thm.subcritical}. \qed
+Hence, by \cite[Theorem 0.0]{liggett_domination_1997}, the process of $n$-bad sites is stochastically dominated from above by a sub-critical Bernoulli process when $\lambda$ and $r$ are sufficiently small. In particular, the process of $n$-bad sites cannot percolate when $\lambda$ and $r$ are sufficiently small. In other words, there exists $r_0 >0$ such that $\lambda_c(r) > 0$. This concludes the proof of Theorem~\ref{Thm.subcritical}. \qed
+
+\subsection{Proof of Corollary~\ref{Coroll.subcritical}}\mbox{}\\
+Let $r_0$ be defined as in Theorem~\ref{Thm.subcritical}. Let $r \leq r_0$ and $p \in \left( p^{*},A \right]$. For fixed $\lambda > 0$, there are obviously fewer possible connections in the connectivity graph $\mathcal{G}_{r,\lambda,p}$ than in $\mathcal{G}_{r,\lambda,1}$. In other words, the vertex-set (resp. edge-set) of $\mathcal{G}_{r,\lambda,p}$ is a subset of the vertex-set (resp. edge-set) of $\mathcal{G}_{\lambda,r,1}$. Thus we have:
+\begin{equation*}
+    \mathcal{G}_{\lambda,r,p} \, \text{percolates} \,  \Rightarrow \mathcal{G}_{\lambda,r,1} \, \text{percolates}
+\end{equation*}
+Therefore:
+\begin{equation*}
+    \inf \lbrace \lambda > 0 : \, \mathbb{P}(\mathcal{G}_{\lambda, r, p} \; \text{percolates}) > 0 \rbrace >   \underbrace{\inf \lbrace \lambda > 0 : \, \mathbb{P}(\mathcal{G}_{\lambda, r, 1} \; \text{percolates}) > 0 \rbrace}_{ \eqqcolon \lambda_c(r)}
+\end{equation*}
+By Theorem~\ref{Thm.subcritical}, we have that $\lambda_c(r) > 0$ whenever $r \leq r_0$. This concludes the proof of Corollary~\ref{Coroll.subcritical}. \qed
+
+\subsection{Proof of Theorem~\ref{Thm.supercritical}}\mbox{}\\
+As in the proof of Theorem~\ref{Thm.subcritical}, we will use a renormalization argument to prove that $\mathcal{G}_{r, \lambda, p}$ percolates if $\lambda$ and $p \in \left(p^{*},1\right]$ are chosen sufficiently large. 
 \bibliographystyle{amsplain}
 \bibliography{references}
 
