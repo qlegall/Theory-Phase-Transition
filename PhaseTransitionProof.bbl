@@ -1,0 +1,33 @@
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{1}
+
+\bibitem{becker_percolation_2009}
+Adam~M. Becker and Robert~M. Ziff, \emph{Percolation thresholds on
+  two-dimensional {V}oronoi networks and {D}elaunay triangulations}, Phys. Rev.
+  E \textbf{80} (2009), 041101.
+
+\bibitem{hirsch_continuum_2017}
+Christian Hirsch, Benedikt Jahnel, and Elie Cali, \emph{Continuum percolation
+  for {Cox} point processes}, arXiv preprint arXiv:1710.11407 (2017).
+
+\bibitem{last2017lectures}
+G{\"u}nter Last and Mathew Penrose, \emph{Lectures on the poisson process},
+  vol.~7, Cambridge University Press, 2017.
+
+\bibitem{liggett_domination_1997}
+Thomas~M. Liggett, Roberto~H. Schonmann, and Alan~M. Stacey, \emph{Domination
+  by product measures}, The Annals of Probability \textbf{25} (1997), no.~1,
+  71--95.
+
+\bibitem{neher2008topological}
+Richard~A Neher, Klaus Mecke, and Herbert Wagner, \emph{Topological estimation
+  of percolation thresholds}, Journal of Statistical Mechanics: Theory and
+  Experiment \textbf{2008} (2008), no.~01, P01011.
+
+\end{thebibliography}

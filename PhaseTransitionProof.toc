@@ -1,0 +1,10 @@
+\contentsline {section}{\tocsection {}{1}{Foreword}}{1}{section.1}
+\contentsline {subsection}{\tocsubsection {}{1.1}{Network model}}{1}{subsection.1.1}
+\contentsline {paragraph}{\tocparagraph {}{}{Main question :}}{2}{section*.2}
+\contentsline {subsection}{\tocsubsection {}{1.2}{Definitions and Notations}}{2}{subsection.1.2}
+\contentsline {section}{\tocsection {}{2}{Results}}{4}{section.2}
+\contentsline {subsection}{\tocsubsection {}{2.1}{Proof of Theorem\nonbreakingspace \ref {Thm.minimality}}}{5}{subsection.2.1}
+\contentsline {subsection}{\tocsubsection {}{2.2}{Proof of Theorem\nonbreakingspace \ref {Thm.subcritical}}}{5}{subsection.2.2}
+\contentsline {subsection}{\tocsubsection {}{2.3}{Proof of Corollary\nonbreakingspace \ref {Coroll.subcritical}}}{10}{subsection.2.3}
+\contentsline {subsection}{\tocsubsection {}{2.4}{Proof of Theorem\nonbreakingspace \ref {Thm.supercritical}}}{10}{subsection.2.4}
+\contentsline {section}{\tocsection {}{}{References}}{13}{section*.3}

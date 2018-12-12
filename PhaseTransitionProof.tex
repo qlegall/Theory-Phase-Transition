@@ -148,6 +148,7 @@ anchor=north east}}
 \newcommand\ceil[1]{\lceil#1\rceil}
 \newcommand{\indep}{\rotatebox[origin=c]{90}{$\models$}}
 
+
 %\makenomenclature
 
 % Hyphenation
@@ -187,12 +188,18 @@ anchor=north east}}
 
 \begin{document}
 \title{Percolation for Cox Point Processes with Canyon Shadowing}
-\author{Quentin Le Gall}
+\author[Q. Le Gall]{Quentin Le Gall}
 \address{Orange Labs Networks, 44 avenue de la République 92320 Ch\^atillon}
 \email{quentin1.legall@orange.com}
-\author{Bart\l{}omiej B\l{}aszczyszyn}
+\author[B. B\l{}aszczyszyn] {Bart\l{}omiej B\l{}aszczyszyn}
 \address{Inria - \MakeUppercase{ens}, 2 rue Simone Iff CS42112 75589 Paris Cedex 12}
 \email{bartek.blaszczyszyn@ens.fr }
+\author[E. Cali]{\'Elie Cali}
+\address{Orange Labs Networks, 44 avenue de la République 92320 Ch\^atillon}
+\email{elie.cali@orange.com}
+\author[T. En-Najjary]{Taoufik En-Najjary}
+\address{Orange Labs Networks, 44 avenue de la République 92320 Ch\^atillon}
+\email{taoufik.ennajjary@orange.com}
 \maketitle
 \tableofcontents
 \section{Foreword}
@@ -201,7 +208,7 @@ anchor=north east}}
 Consider a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ and state space $(\mathbb{R}^{2}, \mathcal{B}(\mathbb{R}^{2}))$, where $\mathcal{B}(\mathbb{R}^{2})$ is the usual Borel $\sigma$-algebra of $\mathbb{R}^{2}$. \\
 
 Let $\lambda_{S} > 0$ and $X_{S}$ be a homogeneous planar Poisson point process (PPP) in the state space $\mathbb{R}^{2}$ with intensity $\lambda_S$. Consider the Poisson-Voronoi tessellation (PVT) $S$ associated with $X_S$. In particular, $S$ is stationary. By analogy with a telecommunications network, $S$ will be called \emph{street system} from now owards. \\
-\indent Denote by $E \coloneqq (E_{i})_{i \geq 1}$ the edge-set of $S$ and by $V \coloneqq (V_{i})_{i \geq 1}$ the vertex-set of $V$. Furthering the aforementioned analogy, the elements of $E$ (resp. $V$) will be called \emph{street segments} (resp. \emph{crossroads}). \\
+\indent Denote by $E \coloneqq (e_{i})_{i \geq 1}$ the edge-set of $S$ and by $V \coloneqq (V_{i})_{i \geq 1}$ the vertex-set of $V$. Furthering the aforementioned analogy, the elements of $E$ (resp. $V$) will be called \emph{street segments} (resp. \emph{crossroads}). \\
 \indent Let $\Lambda$ be the stationary random measure defined such that:
 \begin{itemize}
 \item $\mathbb{E} \Lambda \left[0,1\right]^{2} = 1$
@@ -216,13 +223,20 @@ The key network parameters are:
 \end{itemize}
 
 The users, equipped with mobile devices, are modelled by a Cox process $X^{\lambda}$ driven by the random intensity measure $\lambda \Lambda$. In other words, conditioned on a given realization of the street system $S$, $X^{\lambda}$ is a PPP with mean measure $\lambda \Lambda$. In particular, the number of users on a given street segment $e \in E$ is a Poisson random variable with mean $\nu_{1}(e)$ and the numbers of users in two disjoint subsets of $E$ are independent random variables. \\
-\indent The relays (either representing physical antennas or additional users not modelled through $X^{\lambda}$) are modelled by a Bernoulli point process $Y$ on the set of crossroads $V$ with parameter $p$, so that one can write:
+\indent The relays (either representing physical antennas or additional users not modelled through $X^{\lambda}$) are modelled by a doubly stochastic Bernoulli point process $Y$ on the set of crossroads $V$ with parameter $p$, so that one can write:
 \begin{equation*}
 Y = \sum_{i} \mathbbm{1}_{\lbrace U_{i} \leq p \rbrace } \delta_{V_{i}},
 \end{equation*}
-where $U_{i} \;\substack{ \text{i.i.d.} \\ \sim} \; \mathcal{U}(0,1)$ and where $\delta_{x}$ denotes the Dirac measure at $x$. In other words, each crossroad is retained (resp. erased) independently from all others with probability $p$ (resp. $1-p$). \\
-\noindent Moreover, we also assume that the processes of users and of relays are independent, i.e. $X^{\lambda} \indep Y$. We denote $Z \coloneqq X^{\lambda} \cup Y$ the superposition of users and relays. \\
-
+where $U_{i} \;\substack{ \text{i.i.d.} \\ \sim} \; \mathcal{U}(0,1)$ and where $\delta_{x}$ denotes the Dirac measure at $x$. In other words, conditioned on $\Lambda$ (or, equivalently, $S$) each crossroad is retained (resp. erased) independently from all others with probability $p$ (resp. $1-p$). \\
+\noindent Moreover, we also assume that the processes of users and of relays  are conditionnally independent given their random support, i.e. $X^{\lambda} \indep Y \, \vert \,  \Lambda$. We denote $Z \coloneqq X^{\lambda} \cup Y$ the superposition of users and relays. 
+%Then, conditioned on $\Lambda$, $Z$ has an independence property similar to the one of Poisson processes:
+%\begin{Proposition}
+%Given $\Lambda$, $Z$ has the complete independence property.
+%\end{Proposition}
+%\begin{Proof}
+%Let $A, B \subset \mathbb{R}^{2}$ be Borel sets such that $A \cap B = \emptyset$. We need to show that $Z(A) \indep Z(B) \, \vert \, \Lambda$.
+%\end{Proof}
+%\vspace{2\baselineskip}
 The network is modelled by the \emph{connectivity graph} $\mathcal{G}_{r,\lambda,p}$ defined in the following way:
 \begin{itemize}
 \item $\mathcal{G}_{r,\lambda,p}$ is undirected.
@@ -233,7 +247,7 @@ The network is modelled by the \emph{connectivity graph} $\mathcal{G}_{r,\lambda
 \forall \, i \neq j, \: Z_{i} \leftrightsquigarrow Z_{j} \Leftrightarrow 
 \left\{
 \begin{array}{l}
-\exists \, e \in E, \, Z_{i} \in E  \  \text{and} \  Z_{j} \in E \\
+\exists \, e \in E, \, Z_{i} \in e  \  \text{and} \  Z_{j} \in e \\
 \lVert Z_{i} - Z_{j} \rVert \leq r
 \end{array}
 \right.
@@ -328,6 +342,7 @@ $$R(Q_n(x)) \coloneqq \sup_{y \in Q_n(x) \cap \mathbb{Q}^{2}} R_y$$
 Finally, we will adapt the usual definitions of openness and closedness of crossroads and parts of street segments (possibly the whole street segments themselves) in our model as follows:
 
 \begin{Definition}[Open/Closed crossroad]
+\label{Def.open/crossroad}
 Say a crossroad $V_{i} \in V$ is \emph{open} if it is an atom of the point process $Y$, i.e. $Y(\lbrace V_i \rbrace) = 1$, or, equivalently, $U_i \leq p$. \\ Say $V_{i}$ is \emph{closed} if it is not open, i.e. $Y(\lbrace V_i \rbrace) = 0$, or, equivalently, $U_i > p$.
 \end{Definition}
 
@@ -360,7 +375,7 @@ Our results concern the phase transition of the connectivity graph corresponding
 
 \begin{Theorem}[Minimality condition on $p$]
 \label{Thm.minimality}
-Let $p^{*}$ be the Voronoi percolation site threshold (a theoretical estimate is given in~\cite{neher2008topological} and a numerical one is given in~\cite{becker_percolation_2009}). Let $p < p^*$. Then, for all $\lambda > 0$ and $r >0$, the connectivity graph $\mathcal{G}_{\lambda,r,p}$ does not percolate with probability 1.
+Let $p^{*}$ be the Voronoi percolation site threshold (a theoretical estimate is given in~\cite{neher2008topological} and a numerical one is given in~\cite{becker_percolation_2009}). Let $p < p^*$. Then, for all $\lambda > 0$ and $r >0$, the connectivity graph $\mathcal{G}_{r, \lambda, p}$ does not percolate with probability 1.
 \end{Theorem}
 
 Concerning the sub-critical phase, we have the following:
@@ -368,7 +383,7 @@ Concerning the sub-critical phase, we have the following:
 \label{Thm.subcritical}
 Assume $p=1$. Then there exists $r_{0} > 0$ such that, whenever $r \leq r_0$, we have:
 \begin{equation*}
-    \lambda_c(r) \coloneqq \inf \lbrace \lambda > 0 : \, \mathbb{P}(\mathcal{G}_{\lambda, r, 1} \; \text{percolates}) > 0 \rbrace > 0
+    \lambda_c(r) \coloneqq \inf \lbrace \lambda > 0 : \, \mathbb{P}(\mathcal{G}_{r, \lambda, 1} \; \text{percolates}) > 0 \rbrace > 0
 \end{equation*}
 In other words, there exists a subcritical phase for percolation of the connectivity graph when all crossroads are equipped with a relay if the connection radius is not too large.
 \end{Theorem}
@@ -379,7 +394,7 @@ A straightforward consequence of Theorem~\ref{Thm.subcritical} is the following:
 \label{Coroll.subcritical}
 Let $r_0$ be defined as in Theorem~\ref{Thm.subcritical}. Then, whenever $r \leq r_{0}$, for all $p \in \left(p^*,1\right]$, we have:
 \begin{equation*}
-    \inf \lbrace \lambda > 0 : \, \mathbb{P}(\mathcal{G}_{\lambda, r, p} \; \text{percolates}) > 0 \rbrace > 0
+    \inf \lbrace \lambda > 0 : \, \mathbb{P}(\mathcal{G}_{r, \lambda, p} \; \text{percolates}) > 0 \rbrace > 0
 \end{equation*}
 \end{Corollary}
 
@@ -387,7 +402,7 @@ Finally, we also were able to get a matching super-criticality result:
 
 \begin{Theorem}[Existence of a non-trivial super-critical phase]
 \label{Thm.supercritical}
-For sufficiently large and finite $\lambda$ and sufficiently large $p > p^*$, $\mathcal{G}_{\lambda,r,p}$ percolates, i.e. there exists a non-trivial super-critical phase.
+For sufficiently large and finite $\lambda$ and sufficiently large $p > p^*$, $\mathcal{G}_{r,\lambda,p}$ percolates, i.e. there exists a non-trivial super-critical phase.
 \end{Theorem}
 
 While Theorem~\ref{Thm.minimality} is quite straightforward, Theorems~\ref{Thm.subcritical} and ~\ref{Thm.supercritical} require the use of renormalization techniques similar to the ones exposed in \cite{hirsch_continuum_2017} and the domination by product measures theorem \cite[Theorem 0.0]{liggett_domination_1997}. \\
@@ -395,13 +410,13 @@ We will carry the proofs of the former theorems in the rest of this section.
 
 \subsection{Proof of Theorem~\ref{Thm.minimality}}\mbox{}\\
 \indent Let $p^*$ denote the usual Poisson-Voronoi site percolation threshold, as defined in ~\cite{becker_percolation_2009,neher2008topological}. It is known that $p \in \left(0,1\right)$. Note that by stationarity, $p^*$ is independent of the intensity of the PPP generating the considered PVT. Hence, consider site percolation on the PVT $S$ with parameter $p \in \left(0,1\right)$ and denote by $\mathcal{G}_p$ the associated graph. \\
-Now, note that for given $p \in \left[0,1\right]$, all $\lambda >0$ and $r>0$, the edge-set of the connectivity graph of our model $\mathcal{G}_{\lambda,r,p}$ is a subset of the edge-set of $\mathcal{G}_p$. 
-\\Hence: $\forall \, \lambda >0, \forall \, r>0, \, \mathcal{G}_{p} \ \text{does not percolate} \Rightarrow \, \mathcal{G}_{\lambda, r, p} \ \text{does not percolate}$.
+Now, note that for given $p \in \left[0,1\right]$, all $\lambda >0$ and $r>0$, the edge-set of the connectivity graph of our model $\mathcal{G}_{r,\lambda,p}$ is a subset of the edge-set of $\mathcal{G}_p$. 
+\\Hence: $\forall \, \lambda >0, \forall \, r>0, \, \mathcal{G}_{p} \ \text{does not percolate} \Rightarrow \, \mathcal{G}_{r, \lambda, p} \ \text{does not percolate}$.
 Now, by definition of $p^*$, $\forall \, p < p^*, \, \mathcal{G}_p$ does not percolate. This concludes the proof of Theorem~\ref{Thm.minimality}. \qed
 \\
 \subsection{Proof of Theorem~\ref{Thm.subcritical}}\mbox{}\\
-Proving Theorem~\ref{Thm.subcritical} is equivalent to proving that there exists $r_0$ such that whenever $r \leq r_0$, $\mathcal{G}_{\lambda,r,1}$ does not percolate if $\lambda$ is sufficiently small but positive. \\
-As customary in any continuum percolation problem and as has been done in \cite{hirsch_continuum_2017}, we will use a renormalization argument and introduce a discrete percolation model constructed in such a way that if the discrete model does not percolate, then neither does $\mathcal{G}_{\lambda,r,1}$. Proving the absence of percolation of the discrete model will then be done via appealing to \cite[Theorem 0.0]{liggett_domination_1997}. \\
+Proving Theorem~\ref{Thm.subcritical} is equivalent to proving that there exists $r_0$ such that whenever $r \leq r_0$, $\mathcal{G}_{r, \lambda, 1}$ does not percolate if $\lambda$ is sufficiently small but positive. \\
+As customary in any continuum percolation problem and as has been done in \cite{hirsch_continuum_2017}, we will use a renormalization argument and introduce a discrete percolation model constructed in such a way that if the discrete model does not percolate, then neither does $\mathcal{G}_{r, \lambda,1}$. Proving the absence of percolation of the discrete model will then be done via appealing to \cite[Theorem 0.0]{liggett_domination_1997}. \\
 \\
 To this end, for $n \geq 1$, say a site $z \in \mathbb{Z}^{2}$ is \emph{n-good} if the following conditions are satisfied: 
 \begin{enumerate}
@@ -413,10 +428,10 @@ Say a site $z \in \mathbb{Z}^{2}$ is \emph{$n$-bad} if it is not $n$-good. \\
 Our first claim is the following:
 \begin{Lemma}
 \label{Claim1.subcritical}
-Percolation of $\mathcal{G}_{\lambda,r,1}$ implies percolation of the process of $n$-bad sites.
+Percolation of $\mathcal{G}_{r, \lambda,1}$ implies percolation of the process of $n$-bad sites.
 \end{Lemma}
 \begin{Proof}
-Assume $\mathcal{G}_{\lambda,r,1}$ percolates and denote by $\mathcal{C}$ a giant component of $\mathcal{G}_{\lambda,r,1}$. Since $\mathcal{C}$ is infinite, we have: $\# \lbrace z : \mathcal{C} \cap Q_n(nz) \neq \emptyset \rbrace = + \infty$.
+Assume $\mathcal{G}_{r,\lambda,1}$ percolates and denote by $\mathcal{C}$ a giant component of $\mathcal{G}_{r, \lambda, 1}$. Since $\mathcal{C}$ is infinite, we have: $\# \lbrace z : \mathcal{C} \cap Q_n(nz) \neq \emptyset \rbrace = + \infty$.
 \\ Denote $ \lbrace z : \mathcal{C} \cap Q_n(nz) \neq \emptyset \rbrace \coloneqq \lbrace z_i, i \geq 1 \rbrace$. Note that $\mathcal{C}$ is made of open street segments and open crossroads. Therefore, since $Q_n(nz_i)$ is crossed by $\mathcal{C}$ for all $i \geq 1$, $Q_n(nz_i)$ has to be crossed by some open non-empty $s_e$, for some $e \in  E$. Hence $z_i$ is $n$-bad, and $\lbrace z_i, i \geq 1 \rbrace$ is a infinite component of $n$-bad sites. Now, since $\mathcal{C}$ is connected, then so is $\lbrace z_i, i \geq 1 \rbrace$. Hence, the process of $n$-bad sites percolates. 
 \end{Proof}
 Therefore, it suffices to prove that the process of $n$-bad sites does not percolate if $\lambda$ and $r$ are sufficiently small. This will be done via appealing to \cite[Theorem 0.0]{liggett_domination_1997}. \\
@@ -428,6 +443,7 @@ Let $ \mathbf{X}=(X_s)_{s \in \mathbb{Z}^{d}}$ be a discrete random field. Let $
 As we shall see thereafter, the process of $n$-bad sites previously defined is $3$-dependent:
 
 \begin{Lemma}
+\label{Claim2.subcritical}
 For $z \in \mathbb{Z}^{2}$, set $\zeta_{z} \coloneqq \mathbbm{1}\lbrace z \, \text{is $n$-bad} \rbrace$. Then $(\zeta_{z})_{z \in \mathbb{Z}^{2}}$ is a $3$-dependent random field.
 \end{Lemma}
 \begin{Proof}
@@ -450,7 +466,7 @@ For $1 \leq i \leq p$, set $A_{z_i} \coloneqq \lbrace \forall \, e \in E, \, s_{
 \begin{align}
  \label{eq4} \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \mathbb{E}\Bigg[\prod_{i=1}^{p} \mathbbm{1} \lbrace R(Q_n(nz_i) <n \rbrace \prod_{i=1}^{p} \mathbb{E}\Bigg(  \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg) \Bigg] 
 \end{align}
-Now, setting, $f(\Lambda_{Q_n(x)}) \coloneqq \mathbb{E}\Bigg(  \mathbbm{1} \lbrace \forall \, e \in E, \, s_{x,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg)$, a deterministic, bounded and measurable function of $\Lambda_{Q_n(x)}$ we are left with:
+Now, setting, $f(\Lambda_{Q_n(x)}) \coloneqq \mathbb{E}\Bigg(  \mathbbm{1} \lbrace \forall \, e \in E, \, s_{x,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg)$, a deterministic, bounded and measurable function of $\Lambda_{Q_n(x)}$, we are left with:
 \begin{align}
     \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \mathbb{E}\left( \prod_{i=1}^{p} f(\Lambda_{Q_n(nz_i)}) \mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right) \label{eq5}
 \end{align}
@@ -527,18 +543,123 @@ Using Definition~\ref{Def.stabilizing} on  and~\eqref{eq10}, we finally get:
 Hence, by \cite[Theorem 0.0]{liggett_domination_1997}, the process of $n$-bad sites is stochastically dominated from above by a sub-critical Bernoulli process when $\lambda$ and $r$ are sufficiently small. In particular, the process of $n$-bad sites cannot percolate when $\lambda$ and $r$ are sufficiently small. In other words, there exists $r_0 >0$ such that $\lambda_c(r) > 0$. This concludes the proof of Theorem~\ref{Thm.subcritical}. \qed
 
 \subsection{Proof of Corollary~\ref{Coroll.subcritical}}\mbox{}\\
-Let $r_0$ be defined as in Theorem~\ref{Thm.subcritical}. Let $r \leq r_0$ and $p \in \left( p^{*},A \right]$. For fixed $\lambda > 0$, there are obviously fewer possible connections in the connectivity graph $\mathcal{G}_{r,\lambda,p}$ than in $\mathcal{G}_{r,\lambda,1}$. In other words, the vertex-set (resp. edge-set) of $\mathcal{G}_{r,\lambda,p}$ is a subset of the vertex-set (resp. edge-set) of $\mathcal{G}_{\lambda,r,1}$. Thus we have:
+Let $r_0$ be defined as in Theorem~\ref{Thm.subcritical}. Let $r \leq r_0$ and $p \in \left( p^{*},A \right]$. For fixed $\lambda > 0$, there are obviously fewer possible connections in the connectivity graph $\mathcal{G}_{r,\lambda,p}$ than in $\mathcal{G}_{r,\lambda,1}$. In other words, the vertex-set (resp. edge-set) of $\mathcal{G}_{r,\lambda,p}$ is a subset of the vertex-set (resp. edge-set) of $\mathcal{G}_{r, \lambda,1}$. Thus we have:
 \begin{equation*}
-    \mathcal{G}_{\lambda,r,p} \, \text{percolates} \,  \Rightarrow \mathcal{G}_{\lambda,r,1} \, \text{percolates}
+    \mathcal{G}_{r, \lambda,p} \, \text{percolates} \,  \Rightarrow \mathcal{G}_{r, \lambda,1} \, \text{percolates}
 \end{equation*}
 Therefore:
 \begin{equation*}
-    \inf \lbrace \lambda > 0 : \, \mathbb{P}(\mathcal{G}_{\lambda, r, p} \; \text{percolates}) > 0 \rbrace >   \underbrace{\inf \lbrace \lambda > 0 : \, \mathbb{P}(\mathcal{G}_{\lambda, r, 1} \; \text{percolates}) > 0 \rbrace}_{ \eqqcolon \lambda_c(r)}
+    \inf \lbrace \lambda > 0 : \, \mathbb{P}(\mathcal{G}_{r, \lambda, p} \; \text{percolates}) > 0 \rbrace >   \underbrace{\inf \lbrace \lambda > 0 : \, \mathbb{P}(\mathcal{G}_{r, \lambda, 1} \; \text{percolates}) > 0 \rbrace}_{ \eqqcolon \lambda_c(r)}
 \end{equation*}
 By Theorem~\ref{Thm.subcritical}, we have that $\lambda_c(r) > 0$ whenever $r \leq r_0$. This concludes the proof of Corollary~\ref{Coroll.subcritical}. \qed
 
 \subsection{Proof of Theorem~\ref{Thm.supercritical}}\mbox{}\\
-As in the proof of Theorem~\ref{Thm.subcritical}, we will use a renormalization argument to prove that $\mathcal{G}_{r, \lambda, p}$ percolates if $\lambda$ and $p \in \left(p^{*},1\right]$ are chosen sufficiently large. 
+As in the proof of Theorem~\ref{Thm.subcritical}, we will use a renormalization argument to prove that $\mathcal{G}_{r, \lambda, p}$ percolates if $\lambda$ and $p \in \left(p^{*},1\right]$ are chosen sufficiently large. \\
+To this end, let us first define a discrete model in such a way that percolation of the discrete model will imply percolation of the continuum one. For $n \geq 1$, say a site $z \in \mathbb{Z}^{2}$ is $n$-good if the following conditions are satisfied:
+\begin{enumerate}
+\item $R(Q_{6n}(nz)) < n/2$
+\item $E \cap Q_n(nz) \neq \emptyset$, i.e. the square $Q_n(nz)$ contains a \emph{full} street segment (not just a subset of a street segment)
+\item There exists $e \in E \cap Q_n(nz)$ such that $e$ is open, in the sense of Definition~\ref{Def.open/closed/subcritical}. In other words, there exists an open edge which is fully included in the square $Q_n(nz)$.
+\item Every two open edges $e,e' \in E \cap Q_{3n}(nz)$ are connected by a path in $\mathcal{G}_{r,\lambda,1}\cap Q_{6n}(nz)$, i.e. $e$ and $e'$ are connected by a path of the connectivity graph staying inside of the larger square $Q_{6n}(nz)$ if all crossroads are open.
+\item $Y(Q_{6n}(nz)) = \#(V \cap Q_{6n}(nz))$, i.e. all crossroads in $Q_{6n}(nz)$ are open, in the sense of Definition~\ref{Def.open/crossroad}.
+\end{enumerate}
+The $n$-good sites have been defined so as to satisfy the following:
+Our first claim is the following:
+\begin{Lemma}
+\label{Claim1.supercritical}
+Percolation of the process of $n$-good sites implies percolation of the connectivity graph $\mathcal{G}_{r, \lambda,p}$.
+\end{Lemma}
+\begin{Proof}
+Let $\mathcal{C}$ be an infinite connected component of $n$-good sites. Consider a finite path $\lbrace z_0, \ldots, z_q \rbrace \subset \mathcal{C}$ of $n$-good sites $(q \geq 1)$. Then, by condition $(2)$ in the definition of $n$-goodness, we can find an open edge $e_j \in E \cap Q_n(nz_j)$, for each $0 \leq j \leq q$. Let $0 \leq j \leq q-1$. Then $z_j = (a,b)$ for some $a \in \mathbb{Z}$ and $b \in \mathbb{Z}$. Since $\mathcal{C}$ is connected in $\mathbb{Z}^{2}$, we have $z_{j+1} \in \lbrace (a \pm 1, b), (a, b \pm 1) \rbrace$. By symmetry, we can assume $z_{j+1} = (a+1,b)$. Thus:
+\begin{gather*}
+Q_n(nz_j) = \left[na-n/2,na+n/2\right] \times \left[nb-n/2,nb+n/2\right]\\ Q_n(nz_{j+1}) = \left[na+n/2,na+3n/2\right] \times \left[nb-n/2,nb+n/2\right] \\
+Q_{3n}(nz_j) = \left[na-3n/2,na+3n/2\right] \times \left[nb-3n/2,nb+3n/2\right] \\
+Q_{6n}(nz_j) = \left[na-3n,na+3n\right] \times \left[nb-3n,nb+3n\right]
+\end{gather*}
+Therefore, we have $Q_{n}(nz_{j+1}) \subset Q_{3n}(nz_j)$ and so $e_{j+1} \in E \cap Q_{n}(nz_{j+1})$ implies $e_{j+1} \in E \cap Q_{3n}(nz_j)$. Since we also have $e_{j} \in E \cap Q_{n}(nz_j) \subset  E \cap Q_{3n}(nz_j)$ and that $e_j$ and $e_{j+1}$ are both open, by condition (4) in the definition of,$n$-goodness, $e_j$ and $e_{j+1}$ are connected by a path $\mathcal{L}$ in $\mathcal{G}_{r,\lambda,1} \cap Q_{6n}(nz_j)$. But since $z_j$ is an $n$-good site, by condition (5) in the definition of $n$-goodness, all crossroads inside of $Q_{6n}(nz_j)$ are open. Therefore, the path $\mathcal{L}$ also connects $e_j$ and $e_{j+1}$ in $\mathcal{G}_{r, \lambda,p} \cap Q_{6n}(nz_j)$. Iterating this process gives rise to an infinite connected component in $\mathcal{G}_{r,\lambda,p}$. This concludes the proof of Lemma~\ref{Claim1.supercritical}.
+\end{Proof}
+As a matter of fact, proving Theorem~\ref{Thm.supercritical} amounts to proving that the process of $n$-good sites percolates for sufficiently large $\lambda$ and $p$. \\
+As has been done in the proof of Theorem~\ref{Thm.subcritical}, we will stochastically dominate the process of $n$-good sites by a Bernoulli process via the means of \cite[Theorem 0.0]{liggett_domination_1997}. To check that the conditions of this theorem are satisfied, we will need to use a slightly modified version of $n$-goodness more adapted to the use of the aforementioned theorem, as follows: \\
+
+For $n \geq 1$, say a site $z \in \mathbb{Z}^{2}$ is weakly-$n$-good if the following conditions are satisfied:
+\begin{enumerate}
+\item[(1\textsuperscript{'})] $R(Q_{6n}(nz)) < 6n$
+\item[(2)]  $E \cap Q_n(nz) \neq \emptyset$, i.e. the square $Q_n(nz)$ contains a \emph{full} street segment (not just a subset of a street segment)
+\item[(3)]  There exists $e \in E \cap Q_n(nz)$ such that $e$ is open, in the sense of Definition~\ref{Def.open/closed/subcritical}. In other words, there exists an open edge which is fully included in the square $Q_n(nz)$.
+\item[(4)]  Every two open edges $e,e' \in E \cap Q_{3n}(nz)$ are connected by a path in $\mathcal{G}_{r,\lambda,1}\cap Q_{6n}(nz)$, i.e. $e$ and $e'$ are connected by a path of the connectivity graph staying inside of the larger square $Q_{6n}(nz)$ if all crossroads are open.
+\item[(5)]  $Y(Q_{6n}(nz)) = \#(V \cap Q_{6n}(nz))$, i.e. all crossroads in $Q_{6n}(nz)$ are open, in the sense of Definition~\ref{Def.open/crossroad}.
+\end{enumerate}
+Then the following is clear:
+\begin{Lemma}
+\label{Lemma1.almost}
+$\forall \, z \in \mathbb{Z}^{2}$, $z$ is $n$-good $\Rightarrow \, z$ is weakly-$n$-good. Therefore, we have the following: $\forall \, z \in \mathbb{Z}^{2}, \: \mathbb{P}(\text{$z$ is $n$-good}) \leq \mathbb{P}(\text{$z$ is almost-$n$-good})$
+\end{Lemma} Moreover, since the condition (1) in the definition of $n$-goodness has not been used in the proof of Lemma~\ref{Claim1.supercritical}, the following is also clear:
+\begin{Lemma}
+\label{Lemma2.almost}
+Percolation of the process of weakly-$n$-good sites implies percolation of the connectivity graph $\mathcal{G}_{r,\lambda,p}$.
+\end{Lemma}
+The reason why considering almost-$n$-good sites instead of $n$-good sites will turn out to be easier for our purposes is the following:
+\begin{Lemma}
+\label{Claim2.supercritical}
+For $z \in \mathbb{Z}^{2}$, set $\xi_{z} \coloneqq \mathbbm{1}\lbrace z \, \text{is weakly-$n$-good} \rbrace$. Then $(\xi_{z})_{z \in \mathbb{Z}^{2}}$ is an $18$-dependent random field.
+\end{Lemma}
+\begin{Proof}
+In the same way as in the proof of Lemma~\ref{Claim1.subcritical}, it suffices to prove that for all finite $\psi = \lbrace z_{1}, \ldots z_{p} \rbrace \subset \mathbb{Z}^{2}$ such that $\forall i \neq j, \lVert z_i - z_j \rVert_{\infty} > 18$, we have:
+$$\mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) = \prod_{i=1}^{p} \mathbb{E}(\xi_{z_i})$$
+Denote respectively by $(A_z),(B_z),(C_z),(D_z),(F_z)$ the events $(1'),(2),(3),(4),(5)$ in the definition of weakly-$n$-goodness for $z \in \mathbb{Z}^{2}$. We thus have: 
+$$\forall z \in \mathbb{Z}^{2}, \, \xi_{z} = \mathbbm{1}\lbrace (A_z) \rbrace \mathbbm{1}\lbrace (B_z) \rbrace \mathbbm{1}\lbrace (C_z) \rbrace \mathbbm{1}\lbrace (D_z) \rbrace \mathbbm{1}\lbrace (F_z) \rbrace$$
+
+Note first that whenever $z \in \mathbb{Z}^{2}$, the indicators $\mathbbm{1} \lbrace (A_z) \rbrace$ and $\mathbbm{1} \lbrace (B_z) \rbrace$ are $\Lambda$-measurable. Thus, we have :
+\begin{align}
+\nonumber \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \mathbb{E}\left[\mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \Bigg\vert \Lambda \right)\right] 
+\\ \nonumber &= \mathbb{E}\left[\mathbb{E}\left(\prod_{i=1}^{p} \mathbbm{1}\lbrace (A_{z_i}) \rbrace \mathbbm{1}\lbrace (B_{z_i}) \rbrace \mathbbm{1}\lbrace (C_{z_i}) \rbrace \mathbbm{1}\lbrace (D_{z_i}) \rbrace \mathbbm{1}\lbrace (F_{z_i}) \rbrace \Bigg\vert \Lambda \right)\right] 
+\\ \nonumber &= \mathbb{E}\left[\prod_{i=1}^{p} \mathbbm{1}\lbrace (A_{z_i}) \rbrace \mathbbm{1}\lbrace (B_{z_i})\rbrace\mathbb{E}\left(  \prod_{i=1}^{p}\mathbbm{1}\lbrace (C_{z_i}) \cap (D_{z_i}) \cap (F_{z_i})  \rbrace \Bigg\vert \Lambda \right)\right] 
+\end{align}
+Now, note that conditioned on $\Lambda$, for each $1 \leq i \leq p$, the event $ (C_{z_i}) \cap (D_{z_i}) \cap (F_{z_i}) $ only depends on the following:
+\begin{itemize}
+\item The configuration of $X^{\lambda}$ inside of the square $Q_{6n}(nz_i)$
+\item The configuration of $Y$ inside of the square $Q_{6n}(nz_i)$
+\end{itemize}
+Since $\psi$ satisfies $\forall i \neq j, \lVert z_i - z_j \rVert_{\infty} > 18$, then we have $\forall i \neq j, \lVert nz_i - nz_j \rVert_{\infty} > 18n$. As a matter of fact, the squares $\lbrace Q_{6n}(nz_i)) \, : \, 1 \leq i \leq p\rbrace$ are disjoint, i.e. $$\forall i \neq j, Q_{6n}(nz_i) \cap Q_{6n}(nz_j) = \emptyset$$
+As a matter of fact, the events $\lbrace (C_{z_i}) \cap (D_{z_i}) \cap (F_{z_i}) \, : \, 1 \leq i \leq p \rbrace$ depend on disjoint Borel sets. 
+%so, by the independence property of Z
+Now, conditioned on $\Lambda$, $X^{\lambda}$ has the distribution of a Poisson point process, $Y$ has the distribution of a Bernoulli point process and $X^{\lambda} \indep Y \, \vert \Lambda \,$. By the independence property for Poisson and Bernoulli point processes, we have that the events $ \lbrace (C_{z_i}) \cap (D_{z_i}) \cap (F_{z_i}) \, : \, 1 \leq i \leq p \rbrace$ are conditionally independent given $\Lambda$. Hence:
+\begin{align}
+\nonumber \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right)  &= \mathbb{E}\left[\prod_{i=1}^{p} \mathbbm{1}\lbrace (A_{z_i}) \rbrace \mathbbm{1}\lbrace (B_{z_i})\rbrace\mathbb{E}\left(  \prod_{i=1}^{p}\mathbbm{1}\lbrace (C_{z_i}) \cap (D_{z_i}) \cap (F_{z_i})  \rbrace \Bigg\vert \Lambda \right)\right] 
+\\ \nonumber &=  \mathbb{E}\left[\prod_{i=1}^{p} \mathbbm{1}\lbrace (A_{z_i}) \rbrace \mathbbm{1}\lbrace (B_{z_i})\rbrace \prod_{i=1}^{p}\mathbb{E}\left(  \mathbbm{1}\lbrace (C_{z_i}) \cap (D_{z_i}) \cap (F_{z_i})  \rbrace \Bigg\vert \Lambda \right)\right] 
+\end{align}
+Again, by $\Lambda$-measurability of the events $ \lbrace (B_{z_i}) \, : \, 1 \leq i \leq p \rbrace$, we can put the indicators $\mathbbm{1} \lbrace (B_{z_i}) \rbrace$ back into the conditional expectation given $\Lambda$, so as to get:
+\begin{align}
+\nonumber \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right)  &=  \mathbb{E}\left[\prod_{i=1}^{p} \mathbbm{1}\lbrace (A_{z_i}) \rbrace  \prod_{i=1}^{p}\mathbb{E}\left( \mathbbm{1}\lbrace (B_{z_i})\rbrace \mathbbm{1}\lbrace (C_{z_i}) \cap (D_{z_i}) \cap (F_{z_i})  \rbrace \Bigg\vert \Lambda \right)\right] 
+\\ \nonumber &= \mathbb{E}\left[\prod_{i=1}^{p} \mathbbm{1}\lbrace (A_{z_i}) \rbrace  \prod_{i=1}^{p}\mathbb{E}\left( \mathbbm{1}\lbrace (B_{z_i}) \cap (C_{z_i}) \cap (D_{z_i}) \cap (F_{z_i})  \rbrace \Bigg\vert \Lambda \right)\right] 
+\end{align}
+Now, setting $f(\Lambda_{Q_{6n}(x)}) \coloneqq \mathbb{E}\left(\mathbbm{1}\lbrace (B_{x}) \cap (C_{x}) \cap (D_{x}) \cap (F_{x})  \rbrace \,  \vert \, \Lambda \right)$, a bounded measurable deterministic function of $\Lambda_{Q_{6n}(x)}$, we are left with:
+\begin{align}
+\nonumber \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right)  &=  \mathbb{E}\left[\prod_{i=1}^{p} \mathbbm{1}\lbrace (A_{z_i}) \rbrace  \prod_{i=1}^{p}\mathbb{E}\left( \mathbbm{1}\lbrace (B_{z_i})\rbrace \mathbbm{1}\lbrace (C_{z_i}) \cap (D_{z_i}) \cap (F_{z_i})  \rbrace \Bigg\vert \Lambda \right)\right] 
+\\ \label{eq11} &= \mathbb{E}\left[\prod_{i=1}^{p} \mathbbm{1}\lbrace R(Q_{6n}(nz_i) < 6n \rbrace  f(\Lambda_{Q_{6n}(nz_i)})\right] 
+\end{align}
+Now, the set $\varphi \coloneqq \lbrace nz_1,\ldots,nz_p \rbrace \subset \mathbb{R}^{d}$ is finite and satisfies: $$\forall i \neq j, \lVert nz_i - nz_j \rVert_{\infty} > 18n $$ Since the infinite norm is always upper bounded by the Euclidean norm, we have $\forall i \neq j, \lVert nz_i - nz_j \rVert_{2} > 18n  $, and so $\varphi$ satisfies:
+$$\forall x \in \varphi, \, \text{dist}(x, \varphi \setminus \lbrace x \rbrace) > 18n=3 \times 6n $$
+We can therefore apply the definition of stabilization  \cite[Definition 2.3]{hirsch_continuum_2017} (with $n$ replaced by $6n$ in the third condition) to get that the random variables appearing in the right-hand side of~\eqref{eq11} are independent. Hence:
+\begin{align}
+\label{eq12} \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right)  &= \prod_{i=1}^{p} \mathbb{E}\left[\mathbbm{1}\lbrace R(Q_{6n}(nz_i) < 6n \rbrace   f(\Lambda_{Q_{6n}(nz_i)})\right] 
+\end{align}
+Now, for each $1 \leq i \leq p$, note that:
+\begin{gather*}
+ \mathbb{E}\left[\mathbbm{1}\lbrace R(Q_{6n}(nz_i) < 6n \rbrace   f(\Lambda_{Q_{6n}(nz_i)})\right] 
+\\  = \mathbb{E}\left[\mathbbm{1}\lbrace R(Q_{6n}(nz_i) < 6n \rbrace  \mathbb{E}\left(\mathbbm{1}\lbrace (B_{z_i}) \cap (C_{z_i}) \cap (D_{z_i}) \cap (F_{z_i})  \rbrace \,  \vert \, \Lambda \right)  \right]
+\\ = \mathbb{E}\left[ \mathbb{E}\left(\mathbbm{1}\lbrace R(Q_{6n}(nz_i) < 6n \rbrace \mathbbm{1}\lbrace (B_{z_i}) \rbrace \mathbbm{1} \lbrace (C_{z_i}) \rbrace \mathbbm{1} \lbrace (D_{z_i}) \rbrace \mathbbm{1} \lbrace (F_{z_i})  \rbrace \,  \Bigg\vert \, \Lambda \right)  \right],
+\\ \intertext{using $\Lambda$-measurability of $\mathbbm{1}\lbrace R(Q_{6n}(nz_i) < 6n \rbrace$}
+\\ =  \mathbb{E}\left(\mathbbm{1}\lbrace R(Q_{6n}(nz_i) < 6n \rbrace \mathbbm{1}\lbrace (B_{z_i}) \rbrace \mathbbm{1} \lbrace (C_{z_i}) \rbrace \mathbbm{1} \lbrace (D_{z_i}) \rbrace \mathbbm{1} \lbrace (F_{z_i})  \rbrace \right)
+\\ =  \mathbb{E}\left(\mathbbm{1}\lbrace (A_{z_i}) \rbrace \mathbbm{1}\lbrace (B_{z_i}) \rbrace \mathbbm{1} \lbrace (C_{z_i}) \rbrace \mathbbm{1} \lbrace (D_{z_i}) \rbrace \mathbbm{1} \lbrace (F_{z_i})  \rbrace \right) 
+\\ \eqqcolon \mathbb{E}(\xi_{z_i})
+\end{gather*}
+Thus,~\eqref{eq12} yields:
+\begin{equation*}
+ \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) = \prod_{i=1}^{p} \mathbb{E}(\xi_{z_i}),
+\end{equation*}
+as needed. This concludes the proof of Lemma~\ref{Claim2.supercritical}.
+\end{Proof}
 \bibliographystyle{amsplain}
 \bibliography{references}
 
