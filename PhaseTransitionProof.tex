@@ -583,7 +583,7 @@ As has been done in the proof of Theorem~\ref{Thm.subcritical}, we will stochast
 
 For $n \geq 1$, say a site $z \in \mathbb{Z}^{2}$ is weakly-$n$-good if the following conditions are satisfied:
 \begin{enumerate}
-\item[(1\textsuperscript{'})] $R(Q_{6n}(nz)) < 6n$
+\item[$\widetilde{(1)}$] $R(Q_{6n}(nz)) < 6n$
 \item[(2)]  $E \cap Q_n(nz) \neq \emptyset$, i.e. the square $Q_n(nz)$ contains a \emph{full} street segment (not just a subset of a street segment)
 \item[(3)]  There exists $e \in E \cap Q_n(nz)$ such that $e$ is open, in the sense of Definition~\ref{Def.open/closed/subcritical}. In other words, there exists an open edge which is fully included in the square $Q_n(nz)$.
 \item[(4)]  Every two open edges $e,e' \in E \cap Q_{3n}(nz)$ are connected by a path in $\mathcal{G}_{r,\lambda,1}\cap Q_{6n}(nz)$, i.e. $e$ and $e'$ are connected by a path of the connectivity graph staying inside of the larger square $Q_{6n}(nz)$ if all crossroads are open.
@@ -606,7 +606,7 @@ For $z \in \mathbb{Z}^{2}$, set $\xi_{z} \coloneqq \mathbbm{1}\lbrace z \, \text
 \begin{Proof}
 In the same way as in the proof of Lemma~\ref{Claim1.subcritical}, it suffices to prove that for all finite $\psi = \lbrace z_{1}, \ldots z_{p} \rbrace \subset \mathbb{Z}^{2}$ such that $\forall i \neq j, \lVert z_i - z_j \rVert_{\infty} > 18$, we have:
 $$\mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) = \prod_{i=1}^{p} \mathbb{E}(\xi_{z_i})$$
-Denote respectively by $(A_z),(B_z),(C_z),(D_z),(F_z)$ the events $(1'),(2),(3),(4),(5)$ in the definition of weakly-$n$-goodness for $z \in \mathbb{Z}^{2}$. We thus have: 
+Denote respectively by $(A_z),(B_z),(C_z),(D_z),(F_z)$ the events $\widetilde{(1)},(2),(3),(4),(5)$ in the definition of weakly-$n$-goodness for $z \in \mathbb{Z}^{2}$. We thus have: 
 $$\forall z \in \mathbb{Z}^{2}, \, \xi_{z} = \mathbbm{1}\lbrace (A_z) \rbrace \mathbbm{1}\lbrace (B_z) \rbrace \mathbbm{1}\lbrace (C_z) \rbrace \mathbbm{1}\lbrace (D_z) \rbrace \mathbbm{1}\lbrace (F_z) \rbrace$$
 
 Note first that whenever $z \in \mathbb{Z}^{2}$, the indicators $\mathbbm{1} \lbrace (A_z) \rbrace$ and $\mathbbm{1} \lbrace (B_z) \rbrace$ are $\Lambda$-measurable. Thus, we have :
