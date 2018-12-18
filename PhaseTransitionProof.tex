@@ -207,7 +207,7 @@ anchor=north east}}
 \label{Ss.NetworkModel}
 Consider a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ and state space $(\mathbb{R}^{2}, \mathcal{B}(\mathbb{R}^{2}))$, where $\mathcal{B}(\mathbb{R}^{2})$ is the usual Borel $\sigma$-algebra of $\mathbb{R}^{2}$. \\
 
-Let $\lambda_{S} > 0$ and $X_{S}$ be a homogeneous planar Poisson point process (PPP) in the state space $\mathbb{R}^{2}$ with intensity $\lambda_S$. Consider the Poisson-Voronoi tessellation (PVT) $S$ associated with $X_S$. In particular, $S$ is stationary. By analogy with a telecommunications network, $S$ will be called \emph{street system} from now owards. \\
+Let $\lambda_{S} > 0$ and $X_{S}$ be a homogeneous planar Poisson point process (PPP) in the state space $\mathbb{R}^{2}$ with intensity $\lambda_S$. Consider the Poisson-Voronoi tessellation (PVT) $S$ associated with $X_S$. In particular, $S$ is stationary. By analogy with a telecommunications network, $S$ will be called \emph{street system} from now owards. Moreover, note that $S$ is motion-invariant and scale-invariant. As a matter of fact, we assume $\lambda_S$ to be fixed throughout the rest of this paper by setting $\lambda_S = 1$  \\
 \indent Denote by $E \coloneqq (e_{i})_{i \geq 1}$ the edge-set of $S$ and by $V \coloneqq (V_{i})_{i \geq 1}$ the vertex-set of $V$. Furthering the aforementioned analogy, the elements of $E$ (resp. $V$) will be called \emph{street segments} (resp. \emph{crossroads}). \\
 \indent Let $\Lambda$ be the stationary random measure defined such that:
 \begin{itemize}
@@ -293,7 +293,7 @@ Let $e \in E$ and $s \subseteq e$. Then we denote the length of $s$ by $\vert s 
 Let $\mu$ be a (possibly random) Borel measure on $\mathbb{R}^{2}$. The \emph{support} of $\mu$ is the following set:
 $$\text{supp}(\mu) \coloneqq \lbrace x \in \mathbb{R}^{d} \, : \forall \varepsilon > 0, \,  \mu(Q_{\varepsilon}(x)) > 0 \rbrace$$
 \end{Definition}
-We will then need the concepts of \emph{stabilization} and \emph{essential asymptotical connectedness} given in \cite{hirsch_continuum_2017} for investigating spatial dependencies of random measures:
+We will then need the concepts of \emph{stabilization} and \emph{essential asymptotic connectedness} given in \cite{hirsch_continuum_2017} for investigating spatial dependencies of random measures:
 
 \begin{Definition}\cite[Definition 2.3]{hirsch_continuum_2017}
 \label{Def.stabilizing}
@@ -317,6 +317,7 @@ Let $b > 0$ and assume that $\Xi$ is $b$-dependent, i.e. $$\forall A,B \subset \
 \end{Remark} 
 
 \begin{Definition}\cite[Definition 2.5]{hirsch_continuum_2017}
+\label{Def.eac}
 Let $\Xi$ be a random measure. Then $\Xi$ is \emph{essentially asymptotically connected} if there exists a random field $R = \lbrace R_{x} \rbrace_{x \in \mathbb{R}^{d}}$ such that $\Lambda$ is stabilizing for $R$ and if for all $n \geq 1$, whenever $\displaystyle \sup_{y \in Q_{2n} \cap \mathbb{Q}^{2}} R_{y} < n/2$, the following assertions are satisfied:
 \begin{enumerate}[label = (\arabic*)]
 \item $\text{supp}(\Xi_{Q_{n}}) \neq \emptyset$
@@ -788,6 +789,111 @@ Therefore, we have:
     \label{eq20}
     \lim_{n \uparrow \infty}\lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F^c) = 0
 \end{equation}
+It finally remains to deal with the quantity $\mathbb{P}(A \cap B \cap C \cap F \cap D^{c})$. \\
+First, note that only the events $A$ and $B$ only depend on $n$ and the underlying random support given by $\Lambda$, while the event $F$ only depends on $p$. The events $C$ and $D^c$ both depend on $\Lambda$, $n$ and $\lambda$. For fixed $n$ and $\lambda$, we first deal with the limit in $p$ as follows:
+\begin{align*}
+    \mathbb{P}(A \cap B \cap C \cap F \cap D^c) &= \mathbb{P}\Big(A \cap B \cap C \cap D^c \cap \lbrace Y(V \cap Q_{6n}) = \#(V \cap Q_{6n}) \rbrace \Big)
+\end{align*}
+Now, note that:
+\begin{equation*}
+    \mathbbm{1}\Big\lbrace Y(V \cap Q_{6n}) = \#(V \cap Q_{6n}) \Big\rbrace \eqqcolon \prod_{i : V_i \in V \cap Q_{6n}} \mathbbm{1} \lbrace U_i \leq p \rbrace
+\end{equation*}
+Hence: $\displaystyle \lim_{p \uparrow 1} \mathbbm{1}\Big\lbrace Y(V \cap Q_{6n}) = \#(V \cap Q_{6n}) \Big\rbrace = 1 \quad \text{a.s.}$ (indeed, if $V\cap Q_{6n}$ is non-empty this is obvious, and if not we are left with an empty product, which equals 1 by convention). \\
+Therefore, since the event $A \cap B \cap C \cap F$ does not depend on $p$, by monotone convergence, we have:
+\begin{equation*}
+\lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F \cap D^{c}) = \mathbb{P}(A \cap B \cap C \cap D^c) 
+\end{equation*}
+Now, note that under the event $A$, we have $R(Q_{6n}) < n/2 < 3n/2$. Hence, by essential asymptotic connectedness (see Definition~\ref{Def.eac}), we have $\text{supp}(\Lambda_{Q_{3n}}) \neq \emptyset$ and, moreover, there exists a connected component $\Delta$ of $\text{supp}(\Lambda_{Q_{6n}})$ such that $\text{supp}(\Lambda_{Q_{3n}}) \subset \Delta \subset \text{supp}(\Lambda_{Q_{6n}})$. Hence:
+\begin{gather*}
+    \lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F \cap D^{c})  = \mathbb{P}(A \cap B \cap C \cap D^c)  \\ \leq \mathbb{P}\left(B \cap C \cap D^c \cap \Big\lbrace \text{supp}(\Lambda_{Q_{3n}}) \neq \emptyset \Big\rbrace \cap \Big\lbrace \text{supp}(\Lambda_{Q_{3n}}) \subset \Delta \subset \text{supp}(\Lambda_{Q_{6n}}) \Big\rbrace \right)
+\end{gather*}
+Since $E \cap Q_n \neq \emptyset \Rightarrow \text{supp}(\Lambda_{Q_{3n}}) \neq \emptyset$, we have $B \subset \Big\lbrace \text{supp}(\Lambda_{Q_{3n}}) \neq \emptyset \Big\rbrace$. Hence:
+\begin{gather*}
+    \lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F \cap D^{c})  = \mathbb{P}(A \cap B \cap C \cap D^c)  \\ \leq \mathbb{P}\left(B \cap C \cap D^c  \cap \Big\lbrace \text{supp}(\Lambda_{Q_{3n}}) \subset \Delta \subset \text{supp}(\Lambda_{Q_{6n}}) \Big\rbrace \right)
+\end{gather*}
+For fixed $n$, we now consider the limit $\lambda \uparrow \infty$. Then the support $S$ of $X^{\lambda}$ will eventually be filled with Cox points, and so all edges will eventually be open. As a matter of fact, we have:
+\begin{align*}
+    \mathbbm{1} \lbrace C \rbrace &\eqqcolon \mathbbm{1} \Big\lbrace \exists \, e \in E\cap Q_n \: \text{such that $e$ is open} \Big\rbrace 
+    \\ &\uparrow \mathbbm{1} \lbrace \exists e \in E\cap Q_n \rbrace \quad \text{a.s. as $\lambda \uparrow \infty$}
+\end{align*}
+and: \begin{align*}
+     \mathbbm{1} \lbrace D^c \rbrace &\eqqcolon \mathbbm{1} \Big\lbrace \exists \, e,e' \in E\cap Q_n \: \text{with $e$ and $e'$ open and not connected in } \mathcal{G}_{r,\lambda,1}  \Big\rbrace 
+     \\ &\uparrow \mathbbm{1} \Big\lbrace \exists \, e,e' \in E\cap Q_n \: \text{not connected in } S  \Big\rbrace \quad \text{a.s. as $\lambda \uparrow \infty$}
+\end{align*}
+Moreover, note that the events $B$ and $\Big\lbrace \text{supp}(\Lambda_{Q_{3n}}) \subset \Delta \subset \text{supp}(\Lambda_{Q_{6n}}) \Big\rbrace$ do not depend on $\lambda$. Hence, by monotone convergence, we get:
+\begin{gather*}
+    \lim_{\lambda \uparrow \infty} \mathbb{P}\left(B \cap C \cap D^c  \cap \Big\lbrace \text{supp}(\Lambda_{Q_{3n}}) \subset \Delta \subset \text{supp}(\Lambda_{Q_{6n}}) \Big\rbrace \right) 
+    \\ = \mathbb{P}\left(B \cap \Big\lbrace \exists \, e \in E \cap Q_n \Big\rbrace \cap \Big\lbrace \exists \, e,e' \in E\cap Q_n \: \text{not connected in } S  \Big\rbrace \right. \\ \left. \cap \Big\lbrace \text{supp}(\Lambda_{Q_{3n}}) \subset \Delta \subset \text{supp}(\Lambda_{Q_{6n}}) \Big\rbrace  \right)
+\end{gather*}
+Now we note that:
+\begin{equation*}
+    B \cap \lbrace \exists e \in E \cap Q_n \rbrace \eqqcolon \lbrace E \cap Q_n \neq \emptyset \rbrace \cap \lbrace \exists e \in E \cap Q_n \rbrace = \lbrace E \cap Q_n \neq \emptyset \rbrace \coloneqq B
+\end{equation*}
+And so we get:
+\begin{gather*}
+    \lim_{\lambda \uparrow \infty} \mathbb{P}\left(B \cap C \cap D^c  \cap \Big\lbrace \text{supp}(\Lambda_{Q_{3n}}) \subset \Delta \subset \text{supp}(\Lambda_{Q_{6n}}) \Big\rbrace \right) 
+    \\ = \mathbb{P}\left(B  \cap \Big\lbrace \exists \, e,e' \in E\cap Q_n \: \text{not connected in } S  \Big\rbrace \right. \\ \left. \cap \Big\lbrace \text{supp}(\Lambda_{Q_{3n}}) \subset \Delta \subset \text{supp}(\Lambda_{Q_{6n}}) \Big\rbrace  \right)
+\end{gather*}
+Now, we have the following dichotomy: \\
+Either $B$ does not hold and so:
+\begin{gather*}
+    \mathbb{P}\left(B  \cap \Big\lbrace \exists \, e,e' \in E\cap Q_n \: \text{not connected in } S  \Big\rbrace \right. \\ \left. \cap \Big\lbrace \text{supp}(\Lambda_{Q_{3n}}) \subset \Delta \subset \text{supp}(\Lambda_{Q_{6n}}) \Big\rbrace  \right) = 0
+\end{gather*} \\
+Or $B$ holds and then: 
+\begin{equation*}
+    \exists e,e' \, \in E \cap Q_n \, \text{not connected in } S \Rightarrow \exists e,e' \, \in E \cap Q_{3n} \, \text{not connected in } S,
+\end{equation*}
+because $Q_n \subset Q_{3n}$. But then, the existence of a connected component $\Delta$ of $\text{supp}(\Lambda_{Q_{6n}})$ satisfying $\text{supp}(\Lambda_{Q_{3n}}) \subset \Delta \subset \text{supp}(\Lambda_{Q_{6n}})$ implies that $e$ and $e'$ are in $\Delta$. But $\Delta$ being connected in $Q_{6n}$, it is also connected in $S$, and so $e,e' \in \Delta$ implies that $e,e'$ must be connected in $S$. As a matter of fact, we also have:
+\begin{gather*}
+    \mathbb{P}\left(B  \cap \Big\lbrace \exists \, e,e' \in E\cap Q_n \: \text{not connected in } S  \Big\rbrace \right. \\ \left. \cap \Big\lbrace \text{supp}(\Lambda_{Q_{3n}}) \subset \Delta \subset \text{supp}(\Lambda_{Q_{6n}}) \Big\rbrace  \right) = 0
+\end{gather*}
+In all, we therefore have:
+\begin{gather*}
+    \mathbb{P}\left(B  \cap \Big\lbrace \exists \, e,e' \in E\cap Q_n \: \text{not connected in } S  \Big\rbrace \right. \\ \left. \cap \Big\lbrace \text{supp}(\Lambda_{Q_{3n}}) \subset \Delta \subset \text{supp}(\Lambda_{Q_{6n}}) \Big\rbrace  \right) = 0
+\end{gather*}
+And hence:
+\begin{equation*}
+   \lim_{\lambda \uparrow \infty} \mathbb{P}\left(B \cap C \cap D^c  \cap \Big\lbrace \text{supp}(\Lambda_{Q_{3n}}) \subset \Delta \subset \text{supp}(\Lambda_{Q_{6n}}) \Big\rbrace \right) = 0 
+\end{equation*}
+As a matter of fact, the inequality:
+\begin{gather*}
+    \lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F \cap D^{c})  = \mathbb{P}(A \cap B \cap C \cap D^c)  \\ \leq \mathbb{P}\left(B \cap C \cap D^c  \cap \Big\lbrace \text{supp}(\Lambda_{Q_{3n}}) \subset \Delta \subset \text{supp}(\Lambda_{Q_{6n}}) \Big\rbrace \right)
+\end{gather*}
+implies that:
+\begin{equation*}
+     \lim_{\lambda \uparrow \infty}\lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F \cap D^{c}) = 0
+\end{equation*}
+And hence:
+\begin{equation}
+    \label{eq21}
+    \lim_{n \uparrow \infty}\lim_{\lambda \uparrow \infty}\lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F \cap D^{c}) = 0
+\end{equation}
+
+To conclude, putting~\eqref{eq13},\eqref{eq14},\eqref{eq18},\eqref{eq20},\eqref{eq21} altogether, we have proven the following:
+\begin{gather*}
+    \lim_{n \uparrow \infty}\mathbb{P}(A^c) = 0 
+    \\ \lim_{n \uparrow \infty}\mathbb{P}(A \cap B^c) = 0 
+    \\ \limsup_{\lambda \uparrow \infty} \mathbb{P}(A \cap B \cap C^c) = 0
+  \\ \lim_{n \uparrow \infty}\lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F^c) = 0 
+  \\ \lim_{n \uparrow \infty}\lim_{\lambda \uparrow \infty}\lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F \cap D^{c}) = 0
+\end{gather*}
+But we had:
+\begin{align*}
+    \mathbb{P}(0 \, \text{is $n$-bad}) &= \mathbb{P}(A^c \cup B^c \cup C^c \cup D^c \cup F^c)
+\\ &= \mathbb{P}(A^c) + \mathbb{P}(A \cap B^c) + \mathbb{P}(A \cap B \cap C^c) + \mathbb{P}(A \cap B \cap C \cap F^c) \\ & \quad + \mathbb{P}(A \cap B \cap C \cap F \cap D^c)
+\end{align*}
+Nothing that:
+\begin{itemize}
+    \item The events $A^c$, $A \cap B^c$ only depend on $n$
+    \item The event $A \cap B \cap C^c$ only depends on $n$ and $\lambda$
+    \item The event $A \cap B \cap C \cap F^c$ depends on $n$, $\lambda$ and $p$
+    \item The event $A \cap B \cap C \cap F \cap D^c$ depends on $n$, $\lambda$ and $p$
+\end{itemize} 
+we have indeed proven the following, as wanted:
+\begin{equation*}
+    \limsup_{n \uparrow \infty}\limsup_{\lambda \uparrow \infty}\limsup_{p \uparrow 1} \mathbb{P}(0 \, \text{is $n$-bad}) = 0
+\end{equation*}
+Therefore, by \cite[Theorem 0.0]{liggett_domination_1997}, the process of weakly-$n$-good sites is stochastically dominated from below by a supercritical Bernoulli process, which concludes the proof of Theorem~\ref{Thm.supercritical}.
 \bibliographystyle{amsplain}
 \bibliography{references}
 
