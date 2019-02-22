@@ -27,7 +27,7 @@
 \pgfplotsset{every axis legend/.append style={
 at={(0,0)},
 anchor=north east}} 
-
+%\everymath{\displaystyle}
 
 % abbreviations
 %\usepackage[intoc]{nomencl}
@@ -187,7 +187,7 @@ anchor=north east}}
 %\setlength\cftbeforetabskip{\cftbeforechapskip}
 
 \begin{document}
-\title{Percolation for Cox Point Processes with Canyon Shadowing}
+\title{Continuum Line-of-Sight Percolation on Poisson-Voronoi Tessellations}
 \author[Q. Le Gall]{Quentin Le Gall}
 \address{Orange Labs Networks, 44 avenue de la République 92320 Ch\^atillon}
 \email{quentin1.legall@orange.com}
@@ -202,30 +202,71 @@ anchor=north east}}
 \email{taoufik.ennajjary@orange.com}
 \maketitle
 \tableofcontents
-\section{Foreword}
+
+\begin{abstract}
+    \textbf{\textcolor{red}{This is the abstract. Yet to be written.}}
+\end{abstract}
+\section{Introduction}
+\subsection{Background and motivation}
+Bernoulli bond percolation, introduced in the late fifties by Boradbent and Hammersley \cite{broadbent1957percolation}, is one of the simplest mathematical models featuring phase transition. Since then, this model has been generalized in many different ways, making percolation theory a broader and still very active research topic today. 
+\\ \indent In his seminal work \cite{gilbert1961random}, Gilbert introduced percolation in a continuum setting by considering a planar homogeneous Poisson point process where two points are joined by an edge if and only if they are separated by a distance gap less than a given threshold %$R$ in the plane. 
+This model has at the time been considered to be a good candidate for representing a telecommunications network, with the range of the stations being taken into account as a parameter. The Poisson case has now extensively been studied \cite{FnT1,meester_continuum_1996} and Gilbert's model has recently been extended to other types of point processes, among which sub-Poisson \cite{blaszczyszyn2010connectivity,blaszczyszyn2013clustering,blaszczyszyn2015clustering} , Ginibre \cite{ghosh2016continuum} and Gibbsian \cite{jansen2016continuum,stucki2013continuum}. 
+\\ \indent The study of percolation processes living in random environments has only been considered recently and outlined that many standard techniques from Bernoulli or continuum percolation cannot be applied in a random environment setting.
+%fail to carry over in a random environment setting
+%Recent results on random unimodular graphs \cite{beringer2017percolation} confirmed this fashion 
+As a matter of fact, new tools and techniques had to be introduced. In this regard, the paper from Bollob\'as and Riordan \cite{bollobas2006critical} on the threshold of Voronoi percolation in the plane is pioneering. Later on, \cite{ahlberg2016quenched,tassion2016crossing} brought additional results concerning this model. Other percolation models \cite{vahidi1990first}, tessellations \cite{bollobas2008percolation} and other random graphs \cite{balister2008percolation, balister2008percolationknearest,beringer2017percolation} have also been considered. A more general study of Bernoulli and first-passage percolation on random tessellations has been conducted in \cite{ziesche2016bernoulli,ziesche2016first}. 
+\\ \indent A natural extension of Gilbert's model in a random environment setting is obtained by considering a Cox point process, i.e. a Poisson point process with a random intensity measure. Percolation of Gilbert's model in such a setting has theoretically been studied for the first time in \cite{hirsch2018continuum}. %Numerical aspects of Gilbert's model for Cox processes with applications to telecommunications networks have then been explored in \cite{cali2018percolation}. Only very recently, SINR percolation for Cox processes has been investigated in \cite{tobias2018signal}.
+\\ \indent In Gilbert's original model, connectivity between two network nodes only depends on their mutual Euclidean distance. This assumption has proven to be quite simplistic for the modelling of real telecommunications networks, where physical phenomena such as interference, fading or shadowing are at stake, making connectivity between two nodes to occur depend on other factors. As a matter of fact, other extensions of Gilbert's work have been considered for a more accurate modelling of telecommunications networks. In particular, percolation of the signal-to-interference-plus-noise ratio (SINR) model, where a connection between a pair of points does not only depend on their relative distance anymore but also on the positions of all other nodes of the network, has theoretically been studied in \cite{dousse2006percolation}. SINR percolation for Cox point processes has only been explored very recently \cite{tobias2018signal}. On a more applied perspective, random tessellations have turned out to yield good fits of real street systems, as has been proven in \cite{gloaguen2006fitting}. Percolation thresholds of the Gilbert graph of Cox processes supported by random tessellations have numerically been investigated in \cite{cali2018percolation}, yielding other interesting applications for telecommunication networks. 
+\\ \indent Recently, mathematical models of so-called \emph{line-of-sight} (LOS) networks have been introduced modelling of telecommunication networks in environments with regular obstructions, such as large urban environments or indoor environments. Nodes of the networks are then connected when they are sufficiently close to one another and when they have line-of-sight access to one another, in other words if no physical obstacle stands between them. In \cite{frieze2009line}, asymptotically tight results on $k$-connectivity of the connectivity graph are studied. Bollobàs, Janson and Riordan \cite{bollobas2009line} extend these results by introducing a line-of-sight site percolation model on the discrete square lattice $\mathbb{Z}^{2}$ and the two-dimensional $n$-torus $\left[0 \times n \right]^2$: asymptotical results for the critical probability are derived as well. Interesting connections to Gilbert's continuum percolation model are also investigated. However, the study of line-of-sight percolation in a continuum setting with a random environment has not, to the state of our knowledge, been studied yet. \\ \indent In light of these recent developments, we introduced a new percolation model for Cox processes supported by Poisson-Voronoi tessellations (PVT) in our previous work \cite{LeGal1904:Influence}, where two network nodes are connected if and only if they are sufficiently close and located on the same edge of the supporting PVT. We now investigate this new model on a more theoretical approach and will be interested in theoretical proofs which had to be postponed in our previous work.
+\subsection{Main findings} In our new model introduced in \cite{LeGal1904:Influence}, we consider the PVT $S$ generated by a stationary homogeneous planar Poisson point process. The edges of tessellation will be the support of a Cox point process \cite[Section 5.2]{chiu_stochastic_2013}, and the vertices of $S$ will be the support of a Bernoulli point process \cite[Section 2.2]{chiu_stochastic_2013}, whose atoms will ensure connectivity between adjacent edges of $S$. We then consider the superposition of these two point processes, say $Z$. Any two distinct points of $Z$ are joined by an edge if and only if they are located on the same edge of $S$ and their relative Euclidean distance is less than a given threshold. This defines a connectivity graph whose percolation regimes are studied in this paper. For this study, relevant parameters, to be properly defined in Section~\ref{S.Model}, are:
+\begin{itemize}
+    \item $\lambda$, the linear intensity of the Cox process $\lambda$ (i.e. the mean number of Cox points per edge of the PVT $S$)
+    \item $p$, the parameter of the Bernoulli process (i.e. the mean proportion of PVT vertices that are atoms of the Bernoulli process)
+    \item $r$, the connectivity range
+\end{itemize}
+\indent \emph{Our main findings are the following ones:}
+\begin{itemize}
+    \item \textbf{Minimal parameter for the Bernoulli process:} There exists a minimal parameter $p=p_c$ under which percolation of the connectivity graph cannot happen with positive probability, regardless of all other parameters.
+    \item Above the former threshold, two connectivity regimes exist:
+    \begin{itemize}
+        \item \textbf{Non-trivial subcritical phase :} If the connectivity range is not too large, then there exists a subcritical phase for percolation of the connectivity graph, i.e. it does not percolate if the linear user intensity is too small (but positive).
+        \item \textbf{Non-trivial supercritical phase :} For sufficiently large $p<1$ and finite $\lambda >0$, percolation happens with some positive probability.
+    \end{itemize}
+\end{itemize}
+\textbf{\textcolor{red}{Need to write with actual and concrete words what our results mean}}
+%\begin{itemize}
+    %\item \textbf{Minimality condition:} There is a minimal parameter of the Bernoulli process below which the connectivity graph of our model does not percolate, regardless of all other parameters.
+    %\item \textbf{Non-trivial sub-critical phase under certain conditions:} If the Bernoulli parameter exceeds the former threshold and if the connectivity threshold is sufficiently small, there is a non-trivial sub-critical phase for percolation of the connectivity graph.
+   % \item \textbf{Non-trivial super-critical phase:} There is a non-trivial super-critical phase for percolation of the connectivity graph of our model
+%\end{itemize}
+\\ \vskip \baselineskip \emph{The rest of this paper is organised as follows:} We begin in Section~\ref{S.Model} with presenting our network mathematical model and introducing convenient notations. Then, in Section~\ref{S.Results} we state our theoretical results in more detail and proceed with their proofs. In Section~\ref{S.NumericalSimulations} we present results of numerical simulations to illustrate our main mathematical results. Finally, we conclude our work in Section~\ref{S.Conclusion}.
+
+\section{Model definition and main results}
+\label{S.Model}
 \subsection{Network model}
 \label{Ss.NetworkModel}
 Consider a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ and state space $(\mathbb{R}^{2}, \mathcal{B}(\mathbb{R}^{2}))$, where $\mathcal{B}(\mathbb{R}^{2})$ is the usual Borel $\sigma$-algebra of $\mathbb{R}^{2}$. \\
 
-Let $\lambda_{S} > 0$ and $X_{S}$ be a homogeneous planar Poisson point process (PPP) in the state space $\mathbb{R}^{2}$ with intensity $\lambda_S$. Consider the Poisson-Voronoi tessellation (PVT) $S$ associated with $X_S$. In particular, $S$ is stationary. By analogy with a telecommunications network, $S$ will be called \emph{street system} from now owards. Moreover, note that $S$ is motion-invariant and scale-invariant. As a matter of fact, we assume $\lambda_S$ to be fixed throughout the rest of this paper by setting $\lambda_S = 1$  \\
-\indent Denote by $E \coloneqq (e_{i})_{i \geq 1}$ the edge-set of $S$ and by $V \coloneqq (V_{i})_{i \geq 1}$ the vertex-set of $V$. Furthering the aforementioned analogy, the elements of $E$ (resp. $V$) will be called \emph{street segments} (resp. \emph{crossroads}). \\
+Let $\lambda_{S} > 0$ and $X_{S}$ be a homogeneous planar Poisson point process (PPP) in the state space $\mathbb{R}^{2}$ with intensity $\lambda_S$. Consider the Poisson-Voronoi tessellation (PVT) $S$ associated with $X_S$. In particular, $S$ is stationary. By analogy with a telecommunications network, $S$ will be called \emph{street system} from now owards. Moreover, note that $S$ is motion-invariant and scale-invariant. As a matter of fact, we assume $\lambda_S$ to be fixed throughout the rest of this paper by setting $\lambda_S = 1$.  \\
+\indent Denote by $E \coloneqq (e_{i})_{i \geq 1}$ the edge-set of $S$ and by $V \coloneqq (v_{i})_{i \geq 1}$ the vertex-set of $S$. Furthering the aforementioned analogy, the elements of $E$ (respectively $V$) will be called \emph{street segments} (respectively \emph{crossroads}). \\
 \indent Let $\Lambda$ be the stationary random measure defined such that:
 \begin{itemize}
 \item $\mathbb{E} \Lambda \left[0,1\right]^{2} = 1$
-\item $\Lambda(dx) = \nu_{1}(S \cap dx)$, where $\nu_{1}$ denotes the 1-dimensional Hausdorff measure of $\mathbb{R}^{2}$. In other words, $\nu_{1}(S \cap B)$ is the total edge length of $S$ contained in the Borel observation window $B$ and so $\Lambda$ can be seen as a Lebesgue-like measure on the edges of $S$, rescaled in such a way that the total $\Lambda$-measure of a 1-area window is 1. \\
+\item $\Lambda(dx) = \nu_{1}(S \cap dx)$, where $\nu_{1}$ denotes the 1-dimensional Hausdorff measure of $\mathbb{R}^{2}$. In other words, for a Borel set $B \subset \mathbb{R}^2$, $\nu_{1}(S \cap B)$ is the total edge length of $S$ contained in  $B$ and so $\Lambda$ can be seen as a Lebesgue-like measure on the edges of $S$, rescaled in such a way that the total $\Lambda$-measure of a 1-area window is 1. \\
 \end{itemize}
 
 The key network parameters are:
 \begin{itemize}
 \item The user density $\lambda > 0$.
 \item The relay proportion $p \in \left(0,1\right)$.
-\item The connectivity radius $r > 0$. \\
+\item The connectivity range $r > 0$. \\
 \end{itemize}
 
-The users, equipped with mobile devices, are modelled by a Cox process $X^{\lambda}$ driven by the random intensity measure $\lambda \Lambda$. In other words, conditioned on a given realization of the street system $S$, $X^{\lambda}$ is a PPP with mean measure $\lambda \Lambda$. In particular, the number of users on a given street segment $e \in E$ is a Poisson random variable with mean $\nu_{1}(e)$ and the numbers of users in two disjoint subsets of $E$ are independent random variables. \\
+The users, equipped with mobile devices, are modelled by a Cox process $X^{\lambda}$ driven by the random intensity measure $\lambda \Lambda$. In other words, conditioned on a given realization of the street system $S$, $X^{\lambda}$ is a PPP with mean measure $\lambda \Lambda$. In particular, the number of users on a given street segment $e \in E$ is a Poisson random variable with mean $\nu_{1}(e)$ and the numbers of users on two disjoint subsets of $E$ are independent random variables. \\
 \indent The relays (either representing physical antennas or additional users not modelled through $X^{\lambda}$) are modelled by a doubly stochastic Bernoulli point process $Y$ on the set of crossroads $V$ with parameter $p$, so that one can write:
+%thinning of vertices of $S$ ?
 \begin{equation*}
-Y = \sum_{i} \mathbbm{1}_{\lbrace U_{i} \leq p \rbrace } \delta_{V_{i}},
+Y = \sum_{i} \mathbbm{1}_{\lbrace U_{i} \leq p \rbrace } \delta_{v_{i}},
 \end{equation*}
 where $U_{i} \;\substack{ \text{i.i.d.} \\ \sim} \; \mathcal{U}(0,1)$ and where $\delta_{x}$ denotes the Dirac measure at $x$. In other words, conditioned on $\Lambda$ (or, equivalently, $S$) each crossroad is retained (resp. erased) independently from all others with probability $p$ (resp. $1-p$). \\
 \noindent Moreover, we also assume that the processes of users and of relays  are conditionnally independent given their random support, i.e. $X^{\lambda} \indep Y \, \vert \,  \Lambda$. We denote $Z \coloneqq X^{\lambda} \cup Y$ the superposition of users and relays. 
@@ -240,7 +281,7 @@ where $U_{i} \;\substack{ \text{i.i.d.} \\ \sim} \; \mathcal{U}(0,1)$ and where 
 The network is modelled by the \emph{connectivity graph} $\mathcal{G}_{r,\lambda,p}$ defined in the following way:
 \begin{itemize}
 \item $\mathcal{G}_{r,\lambda,p}$ is undirected.
-\item The vertex set of $\mathcal{G}_{r,\lambda,p}$ are the points of $Z$.
+\item The vertex set of $\mathcal{G}_{r,\lambda,p}$ is given by the points of $Z$.
 \item The edge $Z_{i} \leftrightsquigarrow Z_{j}, i \neq j$ is drawn if and only if $Z_{i}$ and $Z_{j}$ are located on the \emph{same} street segment and of mutual Euclidean distance less than $r$. In other words:
 \begin{equation}
 \label{connectivity_mechanism}
@@ -253,51 +294,47 @@ The network is modelled by the \emph{connectivity graph} $\mathcal{G}_{r,\lambda
 \right.
 \end{equation}
 \end{itemize}
+\indent Figure~\ref{fig:Network} illustrates an example of a realization of our network model and of its connectivity graph in a bounded observation window. The blue lines represent the random environment (PVT) supporting the Cox process of users illustrated by red points. The Bernoulli process of relays is illustrated by the green points. Finally, possible connections are highlighted in orange and illustrate the connectivity mechanism given by~\eqref{connectivity_mechanism}
+\begin{figure}[h!]
+\centering
+    \includegraphics[width=\linewidth]{Network.pdf}
+    \caption{Illustration of a realization of the connectivity graph of our model for LOS networks supported by a random environment in a continuum setting.}
+    \label{fig:Network}
+\end{figure}
 
 %\begin{Remark}
 %The connectivity mechanism defined by \eqref{connectivity_mechanism} only allows for so-called line-of-sight (LOS) connections, which can be seen as a modelling of physical obstacles preventing connections to occur in all directions.
 %\end{Remark}
 
-\paragraph*{Main question :} Percolation regime of the connectivity graph $\mathcal{G}_{r,\lambda, p}$? Are there critical values of the parameters $(r,\lambda,p)$ for which percolation of $\mathcal{G}_{r,\lambda, p}$ occurs with positive probability?
+\indent In this paper, our main concern is the percolation regime of the connectivity graph $\mathcal{G}_{r,\lambda, p}$. In other words, the main question we address is: Are there critical values of the parameters $(r,\lambda,p)$ for which percolation of $\mathcal{G}_{r,\lambda, p}$ occurs with positive probability?
+
+%\paragraph*{Main question :} Percolation regime of the connectivity graph $\mathcal{G}_{r,\lambda, p}$? Are there critical values of the parameters $(r,\lambda,p)$ for which percolation of $\mathcal{G}_{r,\lambda, p}$ occurs with positive probability?
 
 \subsection{Definitions and Notations}
-We begin with introducing a few notations and definitions useful for the purposes of our developments.
- \begin{Notation}
- For $A \subset \mathbb{R}^{2}$ and $B \subset \mathbb{R}^{2}$, we denote as customary the Euclidean distance between $A$ and $B$ by:
+We begin with introducing a few notations and definitions which will be useful for the purposes of our developments. \\
+
+
+\indent For $A \subset \mathbb{R}^{2}$ and $B \subset \mathbb{R}^{2}$, we denote as customary the Euclidean distance between $A$ and $B$ by:
  $$\text{dist}(A,B) \coloneqq \inf \lbrace \lVert x - y \rVert_{2} , \,  x \in A, \,  y \in B \rbrace$$
- \end{Notation}
+\\
 
-\begin{Notation}
-For $x \in \mathbb{R}^{2}$, $n \in \mathbb{N} \setminus \lbrace 0 \rbrace$, we denote by $$Q_n(x) \coloneqq x + \left[-n/2,n/2\right]^{2}$$ the square of side $n$ centered at $x$. We note that this is exactly the definition of the closed ball with center $x$ and radius $n/2$ for the infinite norm of $\mathbb{R}$
-\end{Notation}
+\indent For $x \in \mathbb{R}^{2}$, $n \in \mathbb{N} \setminus \lbrace 0 \rbrace$, we denote by $Q_n(x) \coloneqq x + \left[-n/2,n/2\right]^{2}$ the square of side $n$ centered at $x$. We note that this is exactly the definition of the closed ball with center $x$ and radius $n/2$ for the infinite norm of $\mathbb{R}^2$:
+\begin{equation*}
+    Q_n(x) = \lbrace y : \lVert y-x \rVert_{\infty} \leq n/2 \rbrace = \mathscr{B}(x,n/2)
+\end{equation*}
+For simplicity, whenever $n \in \mathbb{N} \setminus \lbrace 0 \rbrace$, we will write $Q_n$ to mean $Q_n(0)$. \\
 
-\begin{Notation}
-For $n \in \mathbb{N} \setminus \lbrace 0 \rbrace$, we will write 
-$Q_n$ to mean $Q_n(0)$.
-\end{Notation}
+\indent We will use the following convenient notation for the length of a street segment or a subset of street segment: let $e \in E$ and $s \subseteq e$. Then we denote the length of $s$ by $\vert s \vert$. \\
 
-\begin{Notation}
-We denote by $\mathbf{M}$ the space of Borel measures on $\mathbb{R}^{2}$, equipped with the evalutation $\sigma$-algebra \cite[Section 13.1]{last2017lectures}, i.e. the smallest $\sigma$-algebra making the mappings $\Xi \mapsto \Xi(B)$ measurable for all Borel sets $B \subset \mathbb{R}^{d}$.
-\end{Notation}
-
-\begin{Notation}
-For a (possibly random) Borel measure $\mu$ on $\mathbb{R}^{2}$ and $A \subset \mathbb{R}^{2}$, we denote the restriction of $\mu$ to $A$ by: $$\mu_A(\cdot) \coloneqq \mu(A \cap \cdot)$$
-\end{Notation}
-
-Finally, we will use the following convenient notation for the length of a street segment or a subset of street segment:
-\begin{Notation}
-Let $e \in E$ and $s \subseteq e$. Then we denote the length of $s$ by $\vert s \vert$.
-\end{Notation}
-
-\begin{Definition}
-Let $\mu$ be a (possibly random) Borel measure on $\mathbb{R}^{2}$. The \emph{support} of $\mu$ is the following set:
+We will also need the concepts of \emph{stabilization} and \emph{essential asymptotic connectedness} given in \cite{hirsch2018continuum} for investigating spatial dependencies of random measures. \\
+To that end, we denote by $\mathbf{M}$ the space of Borel measures on $\mathbb{R}^{2}$, equipped with the evalutation $\sigma$-algebra \cite[Section 13.1]{last2017lectures}, i.e. the smallest $\sigma$-algebra making the mappings $\Xi \mapsto \Xi(B)$ measurable for all Borel sets $B \subset \mathbb{R}^{2}$. For a (possibly random) Borel measure $\mu$ on $\mathbb{R}^{2}$ and $A \subset \mathbb{R}^{2}$, we denote the restriction of $\mu$ to $A$ by $\mu_A(\cdot) \coloneqq \mu(A \cap \cdot)$. We also adapt the definition of the support of a measure as follows: let $\mu$ be a (possibly random) Borel measure on $\mathbb{R}^{2}$. The \emph{support} of $\mu$ is the following set:
 $$\text{supp}(\mu) \coloneqq \lbrace x \in \mathbb{R}^{d} \, : \forall \varepsilon > 0, \,  \mu(Q_{\varepsilon}(x)) > 0 \rbrace$$
-\end{Definition}
-We will then need the concepts of \emph{stabilization} and \emph{essential asymptotic connectedness} given in \cite{hirsch_continuum_2017} for investigating spatial dependencies of random measures:
 
-\begin{Definition}\cite[Definition 2.3]{hirsch_continuum_2017}
+
+The concept of stabilization for investigating spatial dependencies of random measures has been introduced in many different ways in the literature. We use the same definition as the one introduced in~\cite{hirsch2018continuum}:
+\begin{Definition}\cite[Definition 2.3]{hirsch2018continuum}
 \label{Def.stabilizing}
-A random measure $\Xi$ on $\mathbb{R}^{2}$ is called \emph{stabilizing} if there exists a random field of stabilisation radii $R = \lbrace R_{x} \rbrace _{x \in \mathbb{R}^{2}}$ defined on the same probability space as $\Xi$ such that:
+A random measure $\Xi$ on $\mathbb{R}^{2}$ is called \emph{stabilizing} if there exists a random field of stabilization radii $R = \lbrace R_{x} \rbrace _{x \in \mathbb{R}^{2}}$ defined on the same probability space as $\Xi$ such that:
 \begin{enumerate}[label = (\arabic*)]
 \item $(\Xi,R)$ are jointly stationary
 \item $\displaystyle \lim_{n \uparrow \infty} \mathbb{P}\left(\sup _{y \in Q_{n} \cap \mathbb{Q}^{2}} R_{y} < n\right) = 1$
@@ -307,16 +344,18 @@ are independent for all bounded measurable functions $$f : \mathbf{M} \to \left[
 \end{enumerate}
 \end{Definition}
 \begin{Remark}
-Throughout the rest of this paper, we assume the random variables $(R_x)_{x \in \mathbb{R}^{2}}$ to be $\Lambda$-measurable, as has been done by the authors of \cite{hirsch_continuum_2017}.
+Throughout the rest of this paper, we assume the random variables $(R_x)_{x \in \mathbb{R}^{2}}$ to be $\Lambda$-measurable, as has been done by the authors of \cite{hirsch2018continuum}.
+%How do we deal with that in the end?
 \end{Remark}
-\begin{Remark}
-In the above definition, the random field of stabilization radii $R = \lbrace R_{x} \rbrace _{x \in \mathbb{R}^{2}}$ may not be unique, i.e. a random measure can be stabilizing for more than one field of stabilization radii.
-\end{Remark}
-\begin{Remark}
-Let $b > 0$ and assume that $\Xi$ is $b$-dependent, i.e. $$\forall A,B \subset \mathbb{R}^{d}, \, \text{dist}(A,B) > b \Rightarrow \Xi_{A} \indep \Xi_{B}$$ Then $\Xi$ is stabilizing. 
-\end{Remark} 
+%\begin{Remark}
+%In the above definition, the random field of stabilization radii $R = \lbrace R_{x} \rbrace _{x \in \mathbb{R}^{2}}$ may not be unique, i.e. a random measure can be stabilizing for more than one field of stabilization radii.
+%\end{Remark}
+%\begin{Remark}
+%Let $b > 0$ and assume that $\Xi$ is $b$-dependent, i.e. $$\forall A,B \subset \mathbb{R}^{d}, \, \text{dist}(A,B) > b \Rightarrow \Xi_{A} \indep \Xi_{B}$$ Then $\Xi$ is stabilizing. 
+%\end{Remark} 
 
-\begin{Definition}\cite[Definition 2.5]{hirsch_continuum_2017}
+\indent We slightly modify the definition of asymptotical essential connectedness given in~\cite{hirsch2018continuum} for the sake of simplicity and use the following definition:
+\begin{Definition}\cite[Definition 2.5]{hirsch2018continuum}
 \label{Def.eac}
 Let $\Xi$ be a random measure. Then $\Xi$ is \emph{essentially asymptotically connected} if there exists a random field $R = \lbrace R_{x} \rbrace_{x \in \mathbb{R}^{d}}$ such that $\Lambda$ is stabilizing for $R$ and if for all $n \geq 1$, whenever $\displaystyle \sup_{y \in Q_{2n} \cap \mathbb{Q}^{2}} R_{y} < n/2$, the following assertions are satisfied:
 \begin{enumerate}[label = (\arabic*)]
@@ -325,26 +364,32 @@ Let $\Xi$ be a random measure. Then $\Xi$ is \emph{essentially asymptotically co
 \end{enumerate}
 \end{Definition}
 
-The following result from \cite{hirsch_continuum_2017} will turn out to be useful for our purposes:
+The following result is stated in~\cite[Example 3.1]{hirsch2018continuum} for a slightly modified version of Definition~\ref{Def.eac}. It is easy to check that it adapts in our case as follows:
 
-\begin{Proposition}\cite[Example 3.1]{hirsch_continuum_2017}
-Let $\Lambda = \nu_{1}(S \cap dx)$, where $S$ is the PVT generated by an homogeneous stationary Poisson. Then $\Lambda$ is stabilizing and essentially asymptotically connected for the following stabilization field:
+\begin{Proposition}
+Let $\Lambda = \nu_{1}(S \cap dx)$, where $S$ is the PVT generated by an homogeneous stationary Poisson point process. Then $\Lambda$ is stabilizing and essentially asymptotically connected for the following stabilization field:
 $$\forall x \in \mathbb{R}^{2}, \, R_x = \inf \lbrace \lVert x - X_{S,i} \rVert , \, X_{S,i} \in X_{S} \rbrace,$$
 where $X_S$ is the PPP having generated $S$.
 \end{Proposition}
 
-We will need the following notation for convenience:
-
-\begin{Notation}
-Assume that $\Xi$ is a stabilizing random measure for the stabilization field $R = \lbrace R_x \rbrace _{x \in \mathbb{R}^{2}}.$ Then, for $x \in \mathbb{R}^{2}$ and $n \in \mathbb{N}\setminus \lbrace 0 \rbrace$ we denote:
+As a matter of fact, we introduce the following notation for convenience: for $x \in \mathbb{R}^{2}$ and $n \in \mathbb{N}\setminus \lbrace 0 \rbrace$ we denote:
 $$R(Q_n(x)) \coloneqq \sup_{y \in Q_n(x) \cap \mathbb{Q}^{2}} R_y$$
-\end{Notation}
+whenever $\Xi$ is a stabilizing random measure for the stabilization field $R = \lbrace R_x \rbrace _{x \in \mathbb{R}^{2}}$. \\
 
-Finally, we will adapt the usual definitions of openness and closedness of crossroads and parts of street segments (possibly the whole street segments themselves) in our model as follows:
+
+\indent Finally, as is customary in any percolation problem, we need to define concepts of openness and closedness for the study of connected components. In our model, these definitions are adapted to crossroads and parts of street segments (possibly the whole street segments themselves) as follows:
+%opennness and closedness? What's the therm?
 
 \begin{Definition}[Open/Closed crossroad]
 \label{Def.open/crossroad}
-Say a crossroad $V_{i} \in V$ is \emph{open} if it is an atom of the point process $Y$, i.e. $Y(\lbrace V_i \rbrace) = 1$, or, equivalently, $U_i \leq p$. \\ Say $V_{i}$ is \emph{closed} if it is not open, i.e. $Y(\lbrace V_i \rbrace) = 0$, or, equivalently, $U_i > p$.
+Say a crossroad $v \in V$ is \emph{open} if it is an atom of the point process $Y$, i.e. $Y(\lbrace v\rbrace) = 1$, or, equivalently:
+\begin{equation*}
+   \exists \,  i \geq 1, v=v_i \: \text{and } U_i \leq p
+\end{equation*}
+Say $v$ is \emph{closed} if it is not open, i.e. $Y(\lbrace V_i \rbrace) = 0$, or, equivalently:
+\begin{equation*}
+   \exists \,  i \geq 1, v=v_i \: \text{and } U_i > p
+\end{equation*}
 \end{Definition}
 
 \begin{Definition}[Open/Closed street segment]
@@ -372,11 +417,12 @@ Say $s$ is \emph{closed} if $s$ is not open, i.e.: \\
 \end{Definition}
 
 \section{Results}
+\label{S.Results}
 Our results concern the phase transition of the connectivity graph corresponding to the model presented in Section~\ref{Ss.NetworkModel} as well as a minimality condition on $p$ to make percolation to occur possible. Namely, we have the following:
 
 \begin{Theorem}[Minimality condition on $p$]
 \label{Thm.minimality}
-Let $p^{*}$ be the Voronoi percolation site threshold (a theoretical estimate is given in~\cite{neher2008topological} and a numerical one is given in~\cite{becker_percolation_2009}). Let $p < p^*$. Then, for all $\lambda > 0$ and $r >0$, the connectivity graph $\mathcal{G}_{r, \lambda, p}$ does not percolate with probability 1.
+Let $p^{*}$ be the Voronoi site percolation threshold (a theoretical estimate is given in~\cite{neher2008topological} and a numerical one is given in~\cite{becker_percolation_2009}). Let $p < p^*$. Then, for all $\lambda > 0$ and $r >0$, the connectivity graph $\mathcal{G}_{r, \lambda, p}$ does not percolate with probability 1.
 \end{Theorem}
 
 Concerning the sub-critical phase, we have the following:
@@ -406,7 +452,7 @@ Finally, we also were able to get a matching super-criticality result:
 For sufficiently large and finite $\lambda$ and sufficiently large $p > p^*$, $\mathcal{G}_{r,\lambda,p}$ percolates, i.e. there exists a non-trivial super-critical phase.
 \end{Theorem}
 
-While Theorem~\ref{Thm.minimality} is quite straightforward, Theorems~\ref{Thm.subcritical} and ~\ref{Thm.supercritical} require the use of renormalization techniques similar to the ones exposed in \cite{hirsch_continuum_2017} and the domination by product measures theorem \cite[Theorem 0.0]{liggett_domination_1997}. \\
+While Theorem~\ref{Thm.minimality} is quite straightforward, Theorems~\ref{Thm.subcritical} and ~\ref{Thm.supercritical} require the use of renormalization techniques similar to the ones exposed in \cite{hirsch2018continuum} and the domination by product measures theorem \cite[Theorem 0.0]{liggett_domination_1997}. \\
 We will carry the proofs of the former theorems in the rest of this section.
 
 \subsection{Proof of Theorem~\ref{Thm.minimality}}\mbox{}\\
@@ -417,7 +463,7 @@ Now, by definition of $p^*$, $\forall \, p < p^*, \, \mathcal{G}_p$ does not per
 \\
 \subsection{Proof of Theorem~\ref{Thm.subcritical}}\mbox{}\\
 Proving Theorem~\ref{Thm.subcritical} is equivalent to proving that there exists $r_0$ such that whenever $r \leq r_0$, $\mathcal{G}_{r, \lambda, 1}$ does not percolate if $\lambda$ is sufficiently small but positive. \\
-As customary in any continuum percolation problem and as has been done in \cite{hirsch_continuum_2017}, we will use a renormalization argument and introduce a discrete percolation model constructed in such a way that if the discrete model does not percolate, then neither does $\mathcal{G}_{r, \lambda,1}$. Proving the absence of percolation of the discrete model will then be done via appealing to \cite[Theorem 0.0]{liggett_domination_1997}. \\
+As customary in any continuum percolation problem and as has been done in \cite{hirsch2018continuum}, we will use a renormalization argument and introduce a discrete percolation model constructed in such a way that if the discrete model does not percolate, then neither does $\mathcal{G}_{r, \lambda,1}$. Proving the absence of percolation of the discrete model will then be done via appealing to \cite[Theorem 0.0]{liggett_domination_1997}. \\
 \\
 To this end, for $n \geq 1$, say a site $z \in \mathbb{Z}^{2}$ is \emph{n-good} if the following conditions are satisfied: 
 \begin{enumerate}
@@ -433,13 +479,14 @@ Percolation of $\mathcal{G}_{r, \lambda,1}$ implies percolation of the process o
 \end{Lemma}
 \begin{Proof}
 Assume $\mathcal{G}_{r,\lambda,1}$ percolates and denote by $\mathcal{C}$ a giant component of $\mathcal{G}_{r, \lambda, 1}$. Since $\mathcal{C}$ is infinite, we have: $\# \lbrace z : \mathcal{C} \cap Q_n(nz) \neq \emptyset \rbrace = + \infty$.
-\\ Denote $ \lbrace z : \mathcal{C} \cap Q_n(nz) \neq \emptyset \rbrace \coloneqq \lbrace z_i, i \geq 1 \rbrace$. Note that $\mathcal{C}$ is made of open street segments and open crossroads. Therefore, since $Q_n(nz_i)$ is crossed by $\mathcal{C}$ for all $i \geq 1$, $Q_n(nz_i)$ has to be crossed by some open non-empty $s_e$, for some $e \in  E$. Hence $z_i$ is $n$-bad, and $\lbrace z_i, i \geq 1 \rbrace$ is a infinite component of $n$-bad sites. Now, since $\mathcal{C}$ is connected, then so is $\lbrace z_i, i \geq 1 \rbrace$. Hence, the process of $n$-bad sites percolates. 
+\\ Denote $ \lbrace z : \mathcal{C} \cap Q_n(nz) \neq \emptyset \rbrace \coloneqq \lbrace z_i, i \geq 1 \rbrace$. Note that $\mathcal{C}$ is made of open street segments and open crossroads. Therefore, since $Q_n(nz_i)$ is crossed by $\mathcal{C}$ for all $i \geq 1$, $Q_n(nz_i)$ has to be crossed by some open non-empty $s_{z_i,e}$, for some $e \in  E$. Hence $z_i$ is $n$-bad, and $\lbrace z_i, i \geq 1 \rbrace$ is a infinite component of $n$-bad sites. Now, since $\mathcal{C}$ is connected in $\mathbb{R}^2$, then so is $\lbrace z_i, i \geq 1 \rbrace$ in $\mathbb{Z}^2$. Hence, the process of $n$-bad sites percolates. 
 \end{Proof}
 Therefore, it suffices to prove that the process of $n$-bad sites does not percolate if $\lambda$ and $r$ are sufficiently small. This will be done via appealing to \cite[Theorem 0.0]{liggett_domination_1997}. \\
 The conditions of \cite[Theorem 0.0]{liggett_domination_1997} are valid for so-called $k$-dependent random fields:
 \begin{Definition}
 Let $ \mathbf{X}=(X_s)_{s \in \mathbb{Z}^{d}}$ be a discrete random field. Let $k \geq 1$. Then $\mathbf{X}$ is said to be $k$-dependent if for all $p \geq 1$ and all $\psi = \lbrace s_{1}, \ldots s_{p} \rbrace \subset \mathbb{Z}^{d}$ finite with the property that $\forall i \neq j, \lVert s_{i} - s_{j} \rVert_{\infty} > k $, the random variables $(X_{s_{i}})_{1 \leq i \leq p}$ are independent.
 \end{Definition}
+%shall we keep d=2 there? 
 
 As we shall see thereafter, the process of $n$-bad sites previously defined is $3$-dependent:
 
@@ -450,37 +497,34 @@ For $z \in \mathbb{Z}^{2}$, set $\zeta_{z} \coloneqq \mathbbm{1}\lbrace z \, \te
 \begin{Proof}
 As a starting point, note that $\forall z \in \mathbb{Z}^{2}, \zeta_{z} = 1 - \mathbbm{1} \lbrace z \, \text{is $n$-good} \rbrace$. It is therefore equivalent to prove that the process of $n$-good sites is $3$-dependent. \\
 For $z \in \mathbb{Z}^{2}$, set $\xi_{z} = \mathbbm{1} \lbrace z \, \text{is $n$-good} \rbrace$. Let $\psi = \lbrace z_{1}, \ldots z_{p} \rbrace \subset \mathbb{Z}^{2}$ be such that $\forall i \neq j, \lVert z_i - z_j \rVert_{\infty} > 3$.
-We want to show that the random variables $(\xi_{z_i})_{1\leq i \leq p}$ are independent. Equivalently, since we are dealing with indicator functions, this amounts to showing that: 
+We want to show that the random variables $(\xi_{z_i})_{1\leq i \leq p}$ are independent. Since we are dealing with indicator functions, this is equivalent to showing that: 
 $$\mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) = \prod_{i=1}^{p} \mathbb{E}(\xi_{z_i})$$
 Now, we have:
 
 \begin{align}
-  \nonumber \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \mathbb{E}\left[\mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \Bigg\vert \Lambda \right)\right] \\ \label{eq2} &= \mathbb{E}\Bigg[\mathbb{E}\Bigg(\prod_{i=1}^{p}\mathbbm{1}\lbrace R(Q_n(nz_i)) < n \rbrace \prod_{i=1}^{p} \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg) \Bigg] 
+  \nonumber \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \mathbb{E}\left[\mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \Bigg\vert \Lambda \right)\right] \\ \label{eq2} &= \mathbb{E}\Bigg[\mathbb{E}\Bigg(\prod_{i=1}^{p}\mathbbm{1}\lbrace R(Q_n(nz_i)) < n \rbrace \prod_{i=1}^{p} \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg) \Bigg] \\  &= \label{eq3}  \mathbb{E}\Bigg[\prod_{i=1}^{p} \mathbbm{1} \lbrace R(Q_n(nz_i) <n \rbrace \mathbb{E}\Bigg( \prod_{i=1}^{p} \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg) \Bigg],
 \end{align}
+where we have used $\Lambda$-measurability of the random variables $\lbrace R_x \rbrace_{x \in \mathbb{R}^2}$ in~\eqref{eq3}. \\
 
-By $\Lambda$-measurability of the random variables $\lbrace R_x \rbrace_{x \in \mathbb{R}^2}$, we can take the indicators of the form $\mathbbm{1} \lbrace R(Q_n(nz_i)) < n \rbrace$, $1 \leq i \leq p$ out of the conditional expectation given $\Lambda$ in~\eqref{eq2}. This yields:
-
-\begin{align}
- \label{eq3} \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \mathbb{E}\Bigg[\prod_{i=1}^{p} \mathbbm{1} \lbrace R(Q_n(nz_i) <n \rbrace \mathbb{E}\Bigg( \prod_{i=1}^{p} \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg) \Bigg] 
-\end{align}
-For $1 \leq i \leq p$, set $A_{z_i} \coloneqq \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace \, , 1 \leq i \leq p$. According to Definition~\ref{Def.open/closed/subcritical}, for a given $1 \leq i \leq p$, the event $A_{z_i}$ only depends on the configuration of the random measure $\Lambda$ and of the Cox process $X^{\lambda}$ inside the square $Q_n(nz_i)$. Therefore, given $\Lambda$, the former events only depend on $X^{\lambda} \cap Q_n(nz_i)$ for $1 \leq i \leq p$. Since we have $\forall i \neq j, \lVert z_i - z_j \rVert_{\infty} > 3$, then the squares $Q_n(nz_i) = $ are disjoint. Now, we have that $X^{\lambda}$ is a Poisson Point Process given $\Lambda$. Thus, by Poisson independence property, the events $(A_{z_i})_{1 \leq i \leq p}$ are conditionally independent given $\Lambda$. Hence~\eqref{eq3} yields:
+For $1 \leq i \leq p$, set $A_{z_i} \coloneqq \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace$. According to Definition~\ref{Def.open/closed/subcritical}, for a given $1 \leq i \leq p$, the event $A_{z_i}$ only depends on the configuration of the random measure $\Lambda$ and of the Cox process $X^{\lambda}$ inside the square $Q_n(nz_i)$. Therefore, given $\Lambda$, the events $\lbrace A_{z_i}  : 1 \leq i \leq p \rbrace$ only depend on $X^{\lambda} \cap Q_n(nz_i)$, $1 \leq i \leq p$. Since we have $\forall i \neq j, \lVert z_i - z_j \rVert_{\infty} > 3$, then the squares $Q_n(nz_i)$ are disjoint. Moreover, given $\Lambda$, $X^{\lambda}$ has the distribution of a Poisson Point Process. Thus, by Poisson independence property, the events $(A_{z_i})_{1 \leq i \leq p}$ are conditionally independent given $\Lambda$. Hence~\eqref{eq3} yields:
 \begin{align}
  \label{eq4} \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \mathbb{E}\Bigg[\prod_{i=1}^{p} \mathbbm{1} \lbrace R(Q_n(nz_i) <n \rbrace \prod_{i=1}^{p} \mathbb{E}\Bigg(  \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg) \Bigg] 
 \end{align}
-Now, setting, $f(\Lambda_{Q_n(x)}) \coloneqq \mathbb{E}\Bigg(  \mathbbm{1} \lbrace \forall \, e \in E, \, s_{x,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg)$, a deterministic, bounded and measurable function of $\Lambda_{Q_n(x)}$, we are left with:
-\begin{align}
-    \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \mathbb{E}\left( \prod_{i=1}^{p} f(\Lambda_{Q_n(nz_i)}) \mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right) \label{eq5}
-\end{align}
-Now, the set $\varphi \coloneqq \lbrace nz_1,\ldots,nz_p \rbrace \subset \mathbb{R}^{d}$ is finite and satisfies: $$\forall i \neq j, \lVert nz_i - nz_j \rVert_{\infty} > 3n$$ Since the infinite norm is always upper bounded by the Euclidean norm, we have $\forall i \neq j, \lVert nz_i - nz_j \rVert_{2} > 3n $, and so $\varphi$ satisfies:
+Set $f(\Lambda_{Q_n(x)}) \coloneqq \mathbb{E}\Bigg(  \mathbbm{1} \lbrace \forall \, e \in E, \, s_{x,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg)$. Then $f$ is a deterministic, bounded and measurable function of $\Lambda_{Q_n(x)}$. Moreover,
+%we are left with:
+%\begin{align}
+    %\mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \mathbb{E}\left( \prod_{i=1}^{p} f(\Lambda_{Q_n(nz_i)}) \mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right) \label{eq5}
+%\end{align}
+the set $\varphi \coloneqq \lbrace nz_1,\ldots,nz_p \rbrace \subset \mathbb{R}^{d}$ is finite and satisfies: $$\forall i \neq j, \lVert nz_i - nz_j \rVert_{\infty} > 3n$$ Since the infinite norm is always upper bounded by the Euclidean norm, we have $\forall i \neq j, \lVert nz_i - nz_j \rVert_{2} > 3n $, and so $\varphi$ satisfies:
 $$\forall x \in \varphi, \, \text{dist}(x, \varphi \setminus \lbrace x \rbrace) > 3n$$
-We can therefore apply the condition (3) in the definition of stabilization (Definition~\ref{Def.stabilizing})  to get that the random variables appearing in the right-hand side of~\eqref{eq5} are independent. Hence:
+Hence, by condition (3) in the definition of stabilization (Definition~\ref{Def.stabilizing}), the random variables appearing in the right-hand side of~\eqref{eq4} are independent. This yields:
 
 \begin{align}
-    \nonumber \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) &= \prod_{i=1}^{p} \mathbb{E}\left( f(\Lambda_{Q_n(nz_i)})\mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right) \\\nonumber &= \prod_{i=1}^{p} \mathbb{E}\left[  \mathbb{E}\Bigg(  \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg) \mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right] \nonumber \\ &= \prod_{i=1}^{p} \mathbb{E}\left[  \mathbb{E}\Bigg(  \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace \mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace  \Bigg\vert \Lambda \Bigg)   \right]  \label{eq6} \intertext{(where we have used $\Lambda$-measurability of the $R$'s in~\eqref{eq6})} \nonumber  \\ \nonumber &= \prod_{i=1}^{p} \mathbb{E}\left[   \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace \mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right] \\ \nonumber &\eqqcolon \prod_{i=1}^{p} \mathbb{E}(\xi_{z_i}) 
+    \nonumber \mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right)  &= \mathbb{E}\left( \prod_{i=1}^{p} f(\Lambda_{Q_n(nz_i)}) \mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right) \\ \label{eq5} &= \prod_{i=1}^{p} \mathbb{E}\left( f(\Lambda_{Q_n(nz_i)})\mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right) \\\nonumber &= \prod_{i=1}^{p} \mathbb{E}\left[  \mathbb{E}\Bigg(  \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace  \Bigg\vert \Lambda \Bigg) \mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right] \nonumber \\ &= \prod_{i=1}^{p} \mathbb{E}\left[  \mathbb{E}\Bigg(  \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace \mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace  \Bigg\vert \Lambda \Bigg)   \right]  \label{eq6}  \\ \nonumber &= \prod_{i=1}^{p} \mathbb{E}\left[   \mathbbm{1} \lbrace \forall \, e \in E, \, s_{z_i,e} \, \text{is closed} \rbrace \mathbbm{1}\lbrace R(Q_n(nz_i)) <n \rbrace \right] \\ \nonumber &\eqqcolon \prod_{i=1}^{p} \mathbb{E}(\xi_{z_i}), 
 \end{align}
-This concludes the proof of the lemma.
+where we have used the aforementioned independence property in~\eqref{eq5} and $\Lambda$-measurability of the $R$'s in~\eqref{eq6}. This concludes the proof of the lemma.
 \end{Proof}
-Now that we have proven that the process of $n$-bad sites is $3$-dependent, in order to apply \cite[Theorem 0.0]{liggett_domination_1997}, it remains to prove that the probability for a site $z \in \mathbb{Z}^{d}$ to be $n$-bad is sufficiently small when $\lambda$ and $r$ are chosen sufficiently small. Equivalently, as has been done in \cite{hirsch_continuum_2017}, we need to prove the following:
+Now that we have proven that the process of $n$-bad sites is $3$-dependent, in order to apply \cite[Theorem 0.0]{liggett_domination_1997}, it remains to prove that the probability for a site $z \in \mathbb{Z}^{d}$ to be $n$-bad is sufficiently small when $\lambda$ and $r$ are chosen sufficiently small. Equivalently, as has been done in \cite{hirsch2018continuum}, we need to prove the following:
 \begin{equation*}
     \limsup_{n \uparrow \infty}\limsup_{r \downarrow 0}\limsup_{\lambda \downarrow 0} \mathbb{P}(z \, \text{is $n$-bad}) = 0
 \end{equation*}
@@ -492,7 +536,11 @@ Now, note that we have:
 \begin{align*}
     \mathbb{P}(0 \, \text{is $n$-bad}) &= \mathbb{P}\Big(\lbrace R(Q_n) \geq n \rbrace \cup \lbrace \exists \, e \in E, \, e \cap Q_n \, \text{is open} \rbrace \Big) \\ & \leq \mathbb{P}\left( R(Q_n) \geq n \right) + \mathbb{P}\left(  \exists \, e \in E, \, e \cap Q_n \, \text{is open} \right)
 \end{align*}
-On the one hand, we note that the quantity $R(Q_n)$ does not depend on $\lambda$ and $r$ and by Definition~\ref{Def.stabilizing}, we have $\displaystyle \lim_{n \uparrow \infty} \mathbb{P}(R(Q_n) \geq n)  = 0$. \\
+On the one hand, we note that the quantity $R(Q_n)$ does not depend on $\lambda$ and $r$ and by Definition~\ref{Def.stabilizing}, we have $\displaystyle \lim_{n \uparrow \infty} \mathbb{P}(R(Q_n) \geq n)  = 0$, thus yielding: 
+\begin{equation}
+\label{eqsemifinalsubcritical}
+  \limsup_{n \uparrow \infty} \limsup_{r \downarrow 0} \limsup_{\lambda \downarrow 0} \mathbb{P}(R(Q_n) \geq n)=0
+\end{equation}
 Therefore, it remains to deal with the quantity $\mathbb{P}\left(  \exists \, e \in E, \, e \cap Q_n \, \text{is open} \right)$. We have:
 \begin{align}
     \nonumber \mathbb{P}\left(\exists \, e \in E, \, e \cap Q_n \, \text{is open} \right) &= 1 - \mathbb{P}\left(  \forall \, e \in E, \, e \cap Q_n \, \text{is open} \right) \\ \nonumber &= 1 - \mathbb{E}\left( \prod_{e \in E \, : \, e \cap Q_n \neq \emptyset} \mathbbm{1}\lbrace \text{$e \cap Q_n$ is open} \rbrace \right) \\ \nonumber &= 1 - \mathbb{E}\left[\mathbb{E}\left( \prod_{e \in E \, : e \cap Q_n \neq \emptyset} \mathbbm{1}\lbrace \text{$e \cap Q_n$ is closed} \rbrace  \Bigg\vert \Lambda \right) \right] 
@@ -537,7 +585,7 @@ To conclude, we have:
 \begin{equation*}
     0 \leq \mathbb{P}(0 \, \text{is $n$-bad}) \leq \mathbb{P}(R(Q_n) \geq n) + \mathbb{P}(\exists \, e \in E, \, e \cap Q_n \, \text{is open})
 \end{equation*}
-Using Definition~\ref{Def.stabilizing} on  and~\eqref{eq10}, we finally get:
+Using~\eqref{eqsemifinalsubcritical} and~\eqref{eq10}, we finally get:
 \begin{equation*}
      \limsup_{n \uparrow \infty}\limsup_{r \downarrow 0}\limsup_{\lambda \downarrow 0} \mathbb{P}(0 \, \text{is $n$-bad}) =0
 \end{equation*}
@@ -691,10 +739,10 @@ First, partitioning the square $Q_{6n}$ into $12^2=144$ subsquares $(Q_i)_{1 \le
     \\ \nonumber & \leq  \mathbb{P}\left(\bigcup_{i=1}^{144} \left\lbrace  R(Q_i) \geq n/2 \right\rbrace \right)
     \\ \nonumber &= 144 \; \mathbb{P}(R(Q_{n/2}) \geq n/2) \qquad \text{by stationarity of the $R$'s} 
 \end{align}
-Therefore, by condition (2) of Definition~\ref{Def.stabilizing}, we get:
+Therefore, by condition (2) of Definition~\ref{Def.stabilizing}, we get: $\lim_{n \uparrow \infty} \mathbb{P}(A^c) = 0$. Noting that the event $A^c$ does not depend on $\lambda$ and $p$, the former yields:
 \begin{equation}
     \label{eq13}
-    \lim_{n \uparrow \infty} \mathbb{P}(A^c) = 0
+    \limsup_{n \uparrow \infty}\limsup_{\lambda \uparrow \infty}\limsup_{p \uparrow 1} \mathbb{P}(A^c) = \limsup_{n \uparrow \infty} \mathbb{P}(A^c)= \lim_{n \uparrow \infty} \mathbb{P}(A^c) = 0
 \end{equation}
 Moreover, we have: 
 \begin{align*}
@@ -705,10 +753,10 @@ By monotone convergence, we therefore get:
 \begin{equation*}
     \lim_{n \uparrow \infty}\mathbb{P}(E \cap Q_n = \emptyset) = \mathbb{P}(E \cap \mathbb{R}^{2} = \emptyset) = 0,
 \end{equation*}
-since $\lambda_S > 0$ and so the Poisson-Voronoi tessellation $S$ is non-empty. Therefore, we have:
+since $\lambda_S > 0$ and so the Poisson-Voronoi tessellation $S$ is non-empty. Therefore, we have $\lim_{n \uparrow \infty}\mathbb{P}(A \cap B^c) = 0$. Since the event $A \cap B^c$ only depends on $n$, we get:
 \begin{equation}
     \label{eq14}
-    \lim_{n \uparrow \infty}\mathbb{P}(A \cap B^c) = 0
+    \limsup_{n \uparrow \infty}\limsup_{\lambda \uparrow \infty}\limsup_{p \uparrow 1}\mathbb{P}(A \cap B^c) = \limsup_{n \uparrow \infty}\mathbb{P}(A \cap B^c)= \lim_{n \uparrow \infty}\mathbb{P}(A \cap B^c) = 0
 \end{equation}
 Let's now deal with the quantity $\mathbb{P}(A \cap B \cap C^c)$. We have:
 \begin{align*}
@@ -733,7 +781,7 @@ Since the event $\lbrace \vert e \vert > r \rbrace$ is $\Lambda$-measurable for 
 \begin{equation*}
 \mathbb{E}\left( \prod_{e \in E \cap Q_n} \mathbbm{1} \lbrace e \, \text{is closed} \rbrace \Bigg\vert \Lambda \right) = \prod_{e \in E \cap Q_n} \mathbbm{1} \lbrace \vert e \vert > r \rbrace \mathbb{E}\left( \prod_{e \in E \cap Q_n}  \mathbbm{1} \lbrace I_e \rbrace \Bigg\vert \Lambda \right)
 \end{equation*}
-Conditioned on $\Lambda$, $x^{\lambda}$ has the distribution of a Poisson point process, and the events $\lbrace I_e : e \in E \cap Q_n \rbrace$ depend on the configuration of $X^{\lambda}$ distinct edges. Therefore, by the Poisson independence property, the events $\lbrace I_e : e \in E \cap Q_n \rbrace$ are conditionally independent given $\Lambda$. This yields:
+Conditioned on $\Lambda$, $X^{\lambda}$ has the distribution of a Poisson point process, and the events $\lbrace I_e : e \in E \cap Q_n \rbrace$ depend on the configuration of $X^{\lambda}$ distinct edges. Therefore, by the Poisson independence property, the events $\lbrace I_e : e \in E \cap Q_n \rbrace$ are conditionally independent given $\Lambda$. This yields:
 \begin{align}
 \nonumber \mathbb{E}\left( \prod_{e \in E \cap Q_n} \mathbbm{1} \lbrace e \, \text{is closed} \rbrace \Bigg\vert \Lambda \right) &= \prod_{e \in E \cap Q_n} \mathbbm{1} \lbrace \vert e \vert > r \rbrace \mathbb{E}\left( \prod_{e \in E \cap Q_n}  \mathbbm{1} \lbrace I_e \rbrace \Bigg\vert \Lambda \right)
 \\ \nonumber  &= \prod_{e \in E \cap Q_n} \mathbbm{1} \lbrace \vert e \vert > r \rbrace \mathbb{E}\left(  \mathbbm{1} \lbrace I_e \rbrace \vert \Lambda \right)
@@ -750,10 +798,14 @@ Getting back to~\eqref{eq15} and applying dominated convergence on the right-han
 \begin{equation*}
   \limsup_{\lambda \uparrow \infty} \mathbb{P}(A \cap B \cap C^c) \leq \mathbb{E}\left[\mathbbm{1}\lbrace E \cap Q_n \neq \emptyset \rbrace \mathbbm{1} \lbrace E \cap Q_n = \emptyset \rbrace \right] = 0  
 \end{equation*}
-Hence:
+Hence $\limsup_{\lambda \uparrow \infty} \mathbb{P}(A \cap B \cap C^c) = 0$. Now, note that the event $A \cap B \cap C^c$ only depends on $n$ and $\lambda$. Therefore:
+\begin{equation*}
+   \limsup_{\lambda \uparrow \infty}\limsup_{p \uparrow 1} \mathbb{P}(A \cap B \cap C^c) = \limsup_{\lambda \uparrow \infty} \mathbb{P}(A \cap B \cap C^c) = 0
+\end{equation*}
+and so:
 \begin{equation}
     \label{eq18}
-    \limsup_{\lambda \uparrow \infty} \mathbb{P}(A \cap B \cap C^c) = 0
+    \limsup_{n \uparrow \infty}\limsup_{\lambda \uparrow \infty}\limsup_{p \uparrow 1} \mathbb{P}(A \cap B \cap C^c) = 0
 \end{equation}
 We now deal with the quantity $\mathbb{P}(A \cap B \cap C \cap F^c)$. We have:
 \begin{align*}
@@ -871,29 +923,37 @@ And hence:
 
 To conclude, putting~\eqref{eq13},\eqref{eq14},\eqref{eq18},\eqref{eq20},\eqref{eq21} altogether, we have proven the following:
 \begin{gather*}
-    \lim_{n \uparrow \infty}\mathbb{P}(A^c) = 0 
-    \\ \lim_{n \uparrow \infty}\mathbb{P}(A \cap B^c) = 0 
-    \\ \limsup_{\lambda \uparrow \infty} \mathbb{P}(A \cap B \cap C^c) = 0
-  \\ \lim_{n \uparrow \infty}\lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F^c) = 0 
-  \\ \lim_{n \uparrow \infty}\lim_{\lambda \uparrow \infty}\lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F \cap D^{c}) = 0
+    \limsup_{n \uparrow \infty}\limsup_{\lambda \uparrow \infty}\limsup_{p \uparrow 1} \mathbb{P}(A^c) = 0 
+    \\  \limsup_{n \uparrow \infty}\limsup_{\lambda \uparrow \infty}\limsup_{p \uparrow 1}\mathbb{P}(A \cap B^c) = 0 
+    \\  \limsup_{n \uparrow \infty}\limsup_{\lambda \uparrow \infty}\limsup_{p \uparrow 1} \mathbb{P}(A \cap B \cap C^c) = 0
+  \\  \limsup_{n \uparrow \infty}\limsup_{\lambda \uparrow \infty}\limsup_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F^c) = 0 
+  \\  \limsup_{n \uparrow \infty}\limsup_{\lambda \uparrow \infty}\limsup_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F \cap D^{c}) = 0
 \end{gather*}
 But we had:
 \begin{align*}
     \mathbb{P}(0 \, \text{is $n$-bad}) &= \mathbb{P}(A^c \cup B^c \cup C^c \cup D^c \cup F^c)
 \\ &= \mathbb{P}(A^c) + \mathbb{P}(A \cap B^c) + \mathbb{P}(A \cap B \cap C^c) + \mathbb{P}(A \cap B \cap C \cap F^c) \\ & \quad + \mathbb{P}(A \cap B \cap C \cap F \cap D^c)
 \end{align*}
-Nothing that:
-\begin{itemize}
-    \item The events $A^c$, $A \cap B^c$ only depend on $n$
-    \item The event $A \cap B \cap C^c$ only depends on $n$ and $\lambda$
-    \item The event $A \cap B \cap C \cap F^c$ depends on $n$, $\lambda$ and $p$
-    \item The event $A \cap B \cap C \cap F \cap D^c$ depends on $n$, $\lambda$ and $p$
-\end{itemize} 
-we have indeed proven the following, as wanted:
+%Nothing that:
+%\begin{itemize}
+    %\item The events $A^c$, $A \cap B^c$ only depend on $n$
+    %\item The event $A \cap B \cap C^c$ only depends on $n$ and $\lambda$
+    %\item The event $A \cap B \cap C \cap F^c$ depends on $n$, $\lambda$ and $p$
+    %\item The event $A \cap B \cap C \cap F \cap D^c$ depends on $n$, $\lambda$ and $p$
+%\end{itemize} 
+Therefore, we have indeed proven the following, as wanted:
 \begin{equation*}
     \limsup_{n \uparrow \infty}\limsup_{\lambda \uparrow \infty}\limsup_{p \uparrow 1} \mathbb{P}(0 \, \text{is $n$-bad}) = 0
 \end{equation*}
 Therefore, by \cite[Theorem 0.0]{liggett_domination_1997}, the process of weakly-$n$-good sites is stochastically dominated from below by a supercritical Bernoulli process, which concludes the proof of Theorem~\ref{Thm.supercritical}.
+\section{Numerical simulations}
+\label{S.NumericalSimulations}
+\textbf{\textcolor{red}{Yet to be written.}}
+
+\section{Conclusions and perspectives}
+\label{S.Conclusion}
+\textbf{\textcolor{red}{Yet to be written.}}
+
 \bibliographystyle{amsplain}
 \bibliography{references}
 
