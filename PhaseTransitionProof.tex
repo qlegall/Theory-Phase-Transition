@@ -809,39 +809,48 @@ and so:
     \label{eq18}
     \limsup_{n \uparrow \infty}\limsup_{\lambda \uparrow \infty}\limsup_{p \uparrow 1} \mathbb{P}(A \cap B \cap C^c) = 0
 \end{equation}
-We now deal with the quantity $\mathbb{P}(A \cap B \cap C \cap F^c)$. We have:
+We now deal with the quantity $\mathbb{P}(A \cap B \cap C \cap F^c)$. We have: 
+%is it 1-p^\#(V ...) or (1-p)^\#(V ...) : adapt in consequence!
 \begin{align*}
     \mathbb{P}(A \cap B \cap C \cap F^c) &\leq \mathbb{P}(F^{c})
     \\ &= \mathbb{E}(\mathbbm{1}\lbrace F^c \rbrace)
-    \\ &= \mathbb{E}\left[\mathbb{E}(\mathbbm{1}\lbrace F^c \vert \Lambda ) \right]
-    \\ &= \mathbb{E}\left[\mathbb{E}\left( \prod_{v \in V \cap Q_{6n}} \mathbbm{1}\lbrace v \, \text{is open} \rbrace \Bigg\vert \Lambda \right)\right]
+    \\ &= \mathbb{E}(1-\mathbbm{1}\lbrace F \rbrace)
+    \\ &= \mathbb{E}\left[1-\mathbb{E}(\mathbbm{1}\lbrace F \rbrace \vert \Lambda ) \right]
+    \\ &= \mathbb{E}\left[1-\mathbb{E}\left( \prod_{v \in V \cap Q_{6n}} \mathbbm{1}\lbrace v \, \text{is open} \rbrace \Bigg\vert \Lambda \right)\right]
 \end{align*}
 By definition of $Y$, the random variables $(\mathbbm{1} \lbrace v \, \text{is open} \rbrace )_{v \in V}$ are conditionally independent given $\Lambda$, so we get:
 \begin{align}
-    \nonumber \mathbb{P}(A \cap B \cap C \cap F^c) &\leq \mathbb{E}\left[\prod_{v \in V \cap Q_{6n}}\mathbb{E}\left( \mathbbm{1}\lbrace v \, \text{is open} \rbrace \vert \Lambda \right)\right]
-    \\ \nonumber &= \mathbb{E}\left[\prod_{v \in V \cap Q_{6n}}\mathbb{P}\left( v \, \text{is open} \vert \Lambda \right)\right]
-    \\ \label{eq19} &= \mathbb{E}\left[(1-p)^{\#(V \cap Q_{6n})}\right], 
+    \nonumber \mathbb{P}(A \cap B \cap C \cap F^c) &\leq \mathbb{E}\left[1-\prod_{v \in V \cap Q_{6n}}\mathbb{E}\left( \mathbbm{1}\lbrace v \, \text{is open} \rbrace \vert \Lambda \right)\right]
+    \\ \nonumber &= \mathbb{E}\left[1-\prod_{v \in V \cap Q_{6n}}\mathbb{P}\left( v \, \text{is open} \vert \Lambda \right)\right]
+    \\ \label{eq19} &= \mathbb{E}\left[1-p^{\#(V \cap Q_{6n})}\right], 
 \end{align}
 where the last line comes directly from the definition of $Y$. By monotone convergence, we have:
 \begin{align*}
-  \lim_{p \uparrow 1}(1-p)^{\#(V \cap Q_{6n})} &= \mathbbm{1}\lbrace \#(V \cap Q_{6n}) = 0 \rbrace \; \text{a.s.}
-  \\ &= \mathbbm{1}\lbrace V \cap Q_{6n} = \emptyset \rbrace \; \text{a.s.}  
+  \lim_{p \uparrow 1}1-p^{\#(V \cap Q_{6n})} &= 0 \; \text{a.s. for all finite } n \geq 0
+  %\mathbbm{1}\lbrace \#(V \cap Q_{6n}) = \infty  \rbrace \; \text{a.s.}
+  %\\ &= \mathbbm{1}\lbrace V \cap Q_{6n} = \emptyset \rbrace \; \text{a.s.}  
 \end{align*}
 Hence, using dominated convergence in the right-hand side of~\eqref{eq19}, we get:
 \begin{align*}
-\lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F^c) &\leq \mathbb{E}(\mathbbm{1}\lbrace V \cap Q_{6n} = \emptyset \rbrace)
-\\ &= \mathbb{P}(V \cap Q_{6n} = \emptyset)
+\lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F^c) = 0 \; \text{for all finite } n \geq 0
+%&\leq \mathbb{E}(\mathbbm{1}\lbrace V \cap Q_{6n} = \emptyset \rbrace)
+%\\ &= \mathbb{P}(V \cap Q_{6n} = \emptyset)
 \end{align*}
-Note that the right-hand side of the former inequality does not depend on $\lambda$. Therefore, we have: \begin{equation*}
-    \limsup_{\lambda \uparrow \infty}\lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F^c) \leq \limsup_{\lambda \uparrow \infty} \mathbb{P}(V \cap Q_{6n} = \emptyset) = \mathbb{P}(V \cap Q_{6n} = \emptyset)
+Hence $\limsup_{p \uparrow 1}1-p^{\#(V \cap Q_{6n})} = 0 \; \text{a.s. for all finite } n \geq 0$. \\
+Note that the right-hand side of the former equality does not depend on $\lambda$. Therefore, we have: \begin{equation*}
+    \limsup_{\lambda \uparrow \infty}\lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F^c) = 0 \; \text{for all finite } n \geq 0
+    %\leq \limsup_{\lambda \uparrow \infty} \mathbb{P}(V \cap Q_{6n} = \emptyset) = \mathbb{P}(V \cap Q_{6n} = \emptyset)
 \end{equation*}
-And, finally, by monotone convergence:
+And so:
+%by monotone convergence:
 \begin{align*}
-\limsup_{n \uparrow \infty}\limsup_{\lambda \uparrow \infty}\lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F^c) &\leq \limsup_{n \uparrow \infty} \mathbb{P}(V \cap Q_{6n} = \emptyset) \\ &= \lim_{n \uparrow \infty} \mathbb{P}(V \cap Q_{6n} = \emptyset)
-\\ &= \mathbb{P}(V \cap \mathbb{R}^{2} = \emptyset)
-\\ &= 0 \quad \text{since $\lambda_{S} > 0$, and so $V \neq \emptyset$}
+%\limsup_{n \uparrow \infty}\limsup_{\lambda \uparrow \infty}\lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F^c) &= 
+\lim_{n \uparrow \infty}\limsup_{\lambda \uparrow \infty}\lim_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F^c) &=0
+%&\leq \limsup_{n \uparrow \infty} \mathbb{P}(V \cap Q_{6n} = \emptyset) \\ &= \lim_{n \uparrow \infty} \mathbb{P}(V \cap Q_{6n} = \emptyset)
+%\\ &= \mathbb{P}(V \cap \mathbb{R}^{2} = \emptyset)
+%\\ &= 0 \quad \text{since $\lambda_{S} > 0$, and so $V \neq \emptyset$}
 \end{align*}
-Therefore, we have:
+Therefore, we finally have:
 \begin{equation}
     \label{eq20}
     \limsup_{n \uparrow \infty} \limsup_{\lambda \uparrow \infty} \limsup_{p \uparrow 1} \mathbb{P}(A \cap B \cap C \cap F^c)=0
