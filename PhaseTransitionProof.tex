@@ -23,6 +23,8 @@
 \usepackage{float}
 \usepackage{color}
 \usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{snakes}
 % plotting
 \usepackage{pgfplots}
 \pgfplotsset{compat=newest}
@@ -206,42 +208,57 @@ anchor=north east}}
 \tableofcontents
 
 \begin{abstract}
-    \textbf{\textcolor{red}{This is the abstract. Yet to be written.}}
+   In this work, we introduce a new model for continuum line-of-sight percolation in a random environment given by a Poisson Voronoi tessellation. The edges of this tessellation are the support of a Cox process, while the vertices are the support of a Bernoulli process. Taking the superposition $Z$ of these two processes, two points of $Z$ are linked by an edge if and only if they are sufficiently close and located on the same edge of the supporting tessellation. We study the percolation of the random graph arising from this construction and prove that a subcritical phase as well as a supercritical phase exist under %sufficiently 
+   general assumptions. We also give numerical estimates of the critical parameters of the model. Our model can be seen as a good candidate for modelling telecommunications networks in a random environment with obstructive conditions for signal propagation.  
 \end{abstract}
 \section{Introduction}
 \subsection{Background and motivation}
 Bernoulli bond percolation, introduced in the late fifties by Boradbent and Hammersley \cite{broadbent1957percolation}, is one of the simplest mathematical models featuring phase transition. Since then, this model has been generalized in many different ways, making percolation theory a broader and still very active research topic today. 
-\\ \indent In his seminal work \cite{gilbert1961random}, Gilbert introduced percolation in a continuum setting by considering a planar homogeneous Poisson point process where two points are joined by an edge if and only if they are separated by a distance gap less than a given threshold %$R$ in the plane. 
+\\ \indent Since the seminal work~\cite{gilbert1961random} of Gilbert, random graphs have been a key mathematical tool for the modelling of telecommunications networks. Good connectivity of the network is then interpreted by percolation of its associated connectivity graph. Over the years, Gilbert's original model has been refined and lots of mathematical models for telecommunications networks are now available in the literature.
+\\ \indent In our previous work~\cite{LeGal1904:Influence}, we introduced and numerically studied a new mathematical model for modelling telecommunications networks in obstructive urban environments: we think of the urban network as being supported by a haphazard system of streets, modelled as a Poisson Voronoi tessellation (PVT) $S$. The edges of $S$ are the support of a Cox process modelling users of the network, and the vertices of $S$ are the support of a Bernoulli point process modelling relays. Considering the superposition of these %former
+two point processes, say $Z$, we define a connectivity graph whose nodes are the points of $Z$ and where two points are joined by an edge if and only if they are sufficiently close \emph{and} located on the same edge of $S$. This is how we model obstructive conditions for signal propagation. Good connectivity of the network is then interpreted as percolation of the aforementioned connectivity graph. \\
+
+\indent In this paper, we study this new model on a more theoretical approach. \emph{Our main findings are the following ones:}
+\begin{itemize}
+    \item \textbf{Minimal parameter for the Bernoulli process:} There exists a minimal parameter of the Bernoulli process $p=p^*$ under which percolation of the connectivity graph cannot happen with positive probability, regardless of all other parameters.
+    \item Above the former threshold, two connectivity regimes exist:
+    \begin{itemize}
+        \item \textbf{Non-trivial subcritical phase :} If the connectivity range is not too large, then there exists a subcritical phase for percolation of the connectivity graph.
+        \item \textbf{Non-trivial supercritical phase :} For sufficiently large $p<1$ and finite positive linear intensity of the Cox process, percolation happens with some positive probability.
+    \end{itemize}
+\end{itemize}
+%\textbf{\textcolor{red}{Need to write with actual and concrete words what our results mean}}
+ \vskip \baselineskip \emph{The rest of this paper is organised as follows:} We begin with recalling some related works in Subsection~\ref{Ss.Relatedworks}. Then, we present our network model and introduce convenient notations in Section~\ref{S.Model}. In Section~\ref{S.Results}, we state our theoretical results in more detail and proceed with their proofs. In Section~\ref{S.NumericalSimulations}, we present results of numerical simulations to illustrate our main mathematical results. Finally, we conclude and give perspectives for future work in Section~\ref{S.Conclusion}.
+\subsection{Related works}
+\label{Ss.Relatedworks}
+In~\cite{gilbert1961random}, Gilbert introduced percolation in a continuum setting by considering a planar homogeneous Poisson point process where two points are joined by an edge if and only if they are separated by a distance gap less than a given threshold. %$R$ in the plane. 
 This model has at the time been considered to be a good candidate for representing a telecommunications network, with the range of the stations being taken into account as a parameter. The Poisson case has now extensively been studied \cite{FnT1,meester_continuum_1996} and Gilbert's model has recently been extended to other types of point processes, among which sub-Poisson \cite{blaszczyszyn2010connectivity,blaszczyszyn2013clustering,blaszczyszyn2015clustering} , Ginibre \cite{ghosh2016continuum} and Gibbsian \cite{jansen2016continuum,stucki2013continuum}. 
 \\ \indent The study of percolation processes living in random environments has only been considered recently and outlined that many standard techniques from Bernoulli or continuum percolation cannot be applied in a random environment setting.
 %fail to carry over in a random environment setting
 %Recent results on random unimodular graphs \cite{beringer2017percolation} confirmed this fashion 
-As a matter of fact, new tools and techniques had to be introduced. In this regard, the paper from Bollob\'as and Riordan \cite{bollobas2006critical} on the threshold of Voronoi percolation in the plane is pioneering. Later on, \cite{ahlberg2016quenched,tassion2016crossing} brought additional results concerning this model. Other percolation models \cite{vahidi1990first}, tessellations \cite{bollobas2008percolation} and other random graphs \cite{balister2008percolation, balister2008percolationknearest,beringer2017percolation} have also been considered. A more general study of Bernoulli and first-passage percolation on random tessellations has been conducted in \cite{ziesche2016bernoulli,ziesche2016first}. 
+As a matter of fact, new tools and techniques had to be introduced. In this regard, the paper from Bollob\'as and Riordan \cite{bollobas2006critical} on the threshold of Voronoi percolation in the plane is pioneering. Later on, \cite{ahlberg2016quenched,tassion2016crossing} brought additional results concerning this model. Other percolation models \cite{vahidi1990first}, tessellations \cite{bollobas2008percolation} and other random graphs \cite{balister2008percolationknearest, balister2008percolation, beringer2017percolation} have also been considered. A more general study of Bernoulli and first-passage percolation on random tessellations has been conducted in \cite{ziesche2016bernoulli,ziesche2016first}. 
 \\ \indent A natural extension of Gilbert's model in a random environment setting is obtained by considering a Cox point process, i.e. a Poisson point process with a random intensity measure. Percolation of Gilbert's model in such a setting has theoretically been studied for the first time in \cite{hirsch2018continuum}. %Numerical aspects of Gilbert's model for Cox processes with applications to telecommunications networks have then been explored in \cite{cali2018percolation}. Only very recently, SINR percolation for Cox processes has been investigated in \cite{tobias2018signal}.
 \\ \indent In Gilbert's original model, connectivity between two network nodes only depends on their mutual Euclidean distance. This assumption has proven to be quite simplistic for the modelling of real telecommunications networks, where physical phenomena such as interference, fading or shadowing are at stake, making connectivity between two nodes to occur depend on other factors. As a matter of fact, other extensions of Gilbert's work have been considered for a more accurate modelling of telecommunications networks. In particular, percolation of the signal-to-interference-plus-noise ratio (SINR) model, where a connection between a pair of points does not only depend on their relative distance anymore but also on the positions of all other nodes of the network, has theoretically been studied in \cite{dousse2006percolation}. SINR percolation for Cox point processes has only been explored very recently \cite{tobias2018signal}. On a more applied perspective, random tessellations have turned out to yield good fits of real street systems, as has been proven in \cite{gloaguen2006fitting}. Percolation thresholds of the Gilbert graph of Cox processes supported by random tessellations have numerically been investigated in \cite{cali2018percolation}, yielding other interesting applications for telecommunication networks. 
-\\ \indent Recently, mathematical models of so-called \emph{line-of-sight} (LOS) networks have been introduced modelling of telecommunication networks in environments with regular obstructions, such as large urban environments or indoor environments. Nodes of the networks are then connected when they are sufficiently close to one another and when they have line-of-sight access to one another, in other words if no physical obstacle stands between them. In \cite{frieze2009line}, asymptotically tight results on $k$-connectivity of the connectivity graph are studied. Bollobàs, Janson and Riordan \cite{bollobas2009line} extend these results by introducing a line-of-sight site percolation model on the discrete square lattice $\mathbb{Z}^{2}$ and the two-dimensional $n$-torus $\left[0 \times n \right]^2$: asymptotical results for the critical probability are derived as well. Interesting connections to Gilbert's continuum percolation model are also investigated. However, the study of line-of-sight percolation in a continuum setting with a random environment has not, to the state of our knowledge, been studied yet. \\ \indent In light of these recent developments, we introduced a new percolation model for Cox processes supported by Poisson-Voronoi tessellations (PVT) in our previous work \cite{LeGal1904:Influence}, where two network nodes are connected if and only if they are sufficiently close and located on the same edge of the supporting PVT. We now investigate this new model on a more theoretical approach and will be interested in theoretical proofs which had to be postponed in our previous work.
-\subsection{Main findings} In our new model introduced in \cite{LeGal1904:Influence}, we consider the PVT $S$ generated by a stationary homogeneous planar Poisson point process. The edges of tessellation will be the support of a Cox point process \cite[Section 5.2]{chiu_stochastic_2013}, and the vertices of $S$ will be the support of a Bernoulli point process \cite[Section 2.2]{chiu_stochastic_2013}, whose atoms will ensure connectivity between adjacent edges of $S$. We then consider the superposition of these two point processes, say $Z$. Any two distinct points of $Z$ are joined by an edge if and only if they are located on the same edge of $S$ and their relative Euclidean distance is less than a given threshold. This defines a connectivity graph whose percolation regimes are studied in this paper. For this study, relevant parameters, to be properly defined in Section~\ref{S.Model}, are:
-\begin{itemize}
-    \item $\lambda$, the linear intensity of the Cox process $\lambda$ (i.e. the mean number of Cox points per edge of the PVT $S$)
-    \item $p$, the parameter of the Bernoulli process (i.e. the mean proportion of PVT vertices that are atoms of the Bernoulli process)
-    \item $r$, the connectivity range
-\end{itemize}
-\indent \emph{Our main findings are the following ones:}
-\begin{itemize}
-    \item \textbf{Minimal parameter for the Bernoulli process:} There exists a minimal parameter $p=p_c$ under which percolation of the connectivity graph cannot happen with positive probability, regardless of all other parameters.
-    \item Above the former threshold, two connectivity regimes exist:
-    \begin{itemize}
-        \item \textbf{Non-trivial subcritical phase :} If the connectivity range is not too large, then there exists a subcritical phase for percolation of the connectivity graph, i.e. it does not percolate if the linear user intensity is too small (but positive).
-        \item \textbf{Non-trivial supercritical phase :} For sufficiently large $p<1$ and finite $\lambda >0$, percolation happens with some positive probability.
-    \end{itemize}
-\end{itemize}
-\textbf{\textcolor{red}{Need to write with actual and concrete words what our results mean}}
+\\ \indent Recently, mathematical models of so-called \emph{line-of-sight} (LOS) networks have been introduced, modelling telecommunication networks in environments with regular obstructions, such as large urban environments or indoor environments. Nodes of the network are then connected when they are sufficiently close %to one another
+and when they have line-of-sight access to one another, in other words if no physical obstacle stands between them. In \cite{frieze2009line}, asymptotically tight results on $k$-connectivity of the connectivity graphs arising from such models are studied. Bollobàs, Janson and Riordan \cite{bollobas2009line} extend these results by introducing a line-of-sight site percolation model on the discrete square lattice $\mathbb{Z}^{2}$ and the two-dimensional $n$-torus $\left[0 \times n \right]^2$ and asymptotical results for the critical probability were derived as well. Interesting connections to Gilbert's continuum percolation model were also investigated. However, the study of line-of-sight percolation in a continuum setting with a random environment has not, %to the state of our knowledge, 
+as far as we know, been studied yet. \\ \indent It is in light of these recent developments that we introduced a new percolation model for Cox processes supported by Poisson-Voronoi tessellations (PVT) in our previous work \cite{LeGal1904:Influence}. 
+%, where two network nodes are connected if and only if they are sufficiently close and located on the same edge of the supporting PVT. We now investigate this new model on a more theoretical approach and will be interested in theoretical proofs which had to be postponed in our previous work.
+
+%\subsection{Main findings} In our new model 
+%introduced in \cite{LeGal1904:Influence}, 
+%we consider the PVT $S$ generated by a stationary homogeneous planar Poisson point process. The edges of tessellation will be the support of a Cox point process \cite[Section 5.2]{chiu_stochastic_2013}, and the vertices of $S$ will be the support of a Bernoulli point process \cite[Section 2.2]{chiu_stochastic_2013}, whose atoms will ensure connectivity between adjacent edges of $S$. We then consider the superposition of these two point processes, say $Z$. Any two distinct points of $Z$ are joined by an edge if and only if they are located on the same edge of $S$ and their relative Euclidean distance is less than a given threshold. This defines a connectivity graph whose percolation regimes are studied in this paper. For this study, relevant parameters, to be properly defined in Section~\ref{S.Model}, are:
+%\begin{itemize}
+    %\item $\lambda$, the linear intensity of the Cox process $\lambda$ (i.e. the mean number of Cox points per edge of the PVT $S$)
+    %\item $p$, the parameter of the Bernoulli process (i.e. the mean proportion of PVT vertices that are atoms of the Bernoulli process)
+    %\item $r$, the connectivity range
+%\end{itemize}
+
 %\begin{itemize}
     %\item \textbf{Minimality condition:} There is a minimal parameter of the Bernoulli process below which the connectivity graph of our model does not percolate, regardless of all other parameters.
     %\item \textbf{Non-trivial sub-critical phase under certain conditions:} If the Bernoulli parameter exceeds the former threshold and if the connectivity threshold is sufficiently small, there is a non-trivial sub-critical phase for percolation of the connectivity graph.
    % \item \textbf{Non-trivial super-critical phase:} There is a non-trivial super-critical phase for percolation of the connectivity graph of our model
 %\end{itemize}
-\\ \vskip \baselineskip \emph{The rest of this paper is organised as follows:} We begin in Section~\ref{S.Model} with presenting our network mathematical model and introducing convenient notations. Then, in Section~\ref{S.Results} we state our theoretical results in more detail and proceed with their proofs. In Section~\ref{S.NumericalSimulations} we present results of numerical simulations to illustrate our main mathematical results. Finally, we conclude our work and give perspectives for future work in Section~\ref{S.Conclusion}.
+
 
 \section{Model definition and main results}
 \label{S.Model}
@@ -249,20 +266,15 @@ As a matter of fact, new tools and techniques had to be introduced. In this rega
 \label{Ss.NetworkModel}
 Consider a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ and state space $(\mathbb{R}^{2}, \mathcal{B}(\mathbb{R}^{2}))$, where $\mathcal{B}(\mathbb{R}^{2})$ is the usual Borel $\sigma$-algebra of $\mathbb{R}^{2}$. \\
 
-Let $\lambda_{S} > 0$ and $X_{S}$ be a homogeneous planar Poisson point process (PPP) in the state space $\mathbb{R}^{2}$ with intensity $\lambda_S$. Consider the Poisson-Voronoi tessellation (PVT) $S$ associated with $X_S$. In particular, $S$ is stationary. By analogy with a telecommunications network, $S$ will be called \emph{street system} from now owards. Moreover, note that $S$ is motion-invariant and scale-invariant. As a matter of fact, we assume $\lambda_S$ to be fixed throughout the rest of this paper by setting $\lambda_S = 1$.  \\
-\indent Denote by $E \coloneqq (e_{i})_{i \geq 1}$ the edge-set of $S$ and by $V \coloneqq (v_{i})_{i \geq 1}$ the vertex-set of $S$. Furthering the aforementioned analogy, the elements of $E$ (respectively $V$) will be called \emph{street segments} (respectively \emph{crossroads}). \\
+Let $\lambda_{S} > 0$ and $X_{S}$ be a homogeneous planar Poisson point process (PPP) in the state space $\mathbb{R}^{2}$ with intensity $\lambda_S$. Consider the Poisson-Voronoi tessellation (PVT) $S$ associated with $X_S$. In particular, $S$ is stationary and isotropic. By analogy with a telecommunications network, $S$ will be called \emph{street system} from now onwards. Moreover, note that $S$ is  scale-invariant. %motion-invariant
+%As a matter of fact, we assume $\lambda_S$ to be fixed throughout the rest of this paper by setting $\lambda_S = 1$.  \\
+\\ \indent Denote by $E \coloneqq (e_{i})_{i \geq 1}$ the edge-set of $S$ and by $V \coloneqq (v_{i})_{i \geq 1}$ the vertex-set of $S$. Furthering the aforementioned analogy, the elements of $E$ (respectively $V$) will be called \emph{street segments} (respectively \emph{crossroads}). \\
 \indent Let $\Lambda$ be the stationary random measure defined such that:
 \begin{itemize}
 \item $\mathbb{E} \Lambda \left[0,1\right]^{2} = 1$
 \item $\Lambda(dx) = \nu_{1}(S \cap dx)$, where $\nu_{1}$ denotes the 1-dimensional Hausdorff measure of $\mathbb{R}^{2}$. In other words, for a Borel set $B \subset \mathbb{R}^2$, $\nu_{1}(S \cap B)$ is the total edge length of $S$ contained in  $B$ and so $\Lambda$ can be seen as a Lebesgue-like measure on the edges of $S$, rescaled in such a way that the total $\Lambda$-measure of a 1-area window is 1. \\
 \end{itemize}
 
-The key network parameters are:
-\begin{itemize}
-\item The user density $\lambda > 0$.
-\item The relay proportion $p \in \left(0,1\right)$.
-\item The connectivity range $r > 0$. \\
-\end{itemize}
 
 The users, equipped with mobile devices, are modelled by a Cox process $X^{\lambda}$ driven by the random intensity measure $\lambda \Lambda$. In other words, conditioned on a given realization of the street system $S$, $X^{\lambda}$ is a PPP with mean measure $\lambda \Lambda$. In particular, the number of users on a given street segment $e \in E$ is a Poisson random variable with mean $\nu_{1}(e)$ and the numbers of users on two disjoint subsets of $E$ are independent random variables. \\
 \indent The relays (either representing physical antennas or additional users not modelled through $X^{\lambda}$) are modelled by a doubly stochastic Bernoulli point process $Y$ on the set of crossroads $V$ with parameter $p$, so that one can write:
@@ -271,7 +283,7 @@ The users, equipped with mobile devices, are modelled by a Cox process $X^{\lamb
 Y = \sum_{i} \mathbbm{1}_{\lbrace U_{i} \leq p \rbrace } \delta_{v_{i}},
 \end{equation*}
 where $U_{i} \;\substack{ \text{i.i.d.} \\ \sim} \; \mathcal{U}(0,1)$ and where $\delta_{x}$ denotes the Dirac measure at $x$. In other words, conditioned on $\Lambda$ (or, equivalently, $S$) each crossroad is retained (resp. erased) independently from all others with probability $p$ (resp. $1-p$). \\
-\noindent Moreover, we also assume that the processes of users and of relays  are conditionnally independent given their random support, i.e. $X^{\lambda} \indep Y \, \vert \,  \Lambda$. We denote $Z \coloneqq X^{\lambda} \cup Y$ the superposition of users and relays. 
+\noindent Moreover, we also assume that the processes of users and of relays  are conditionnally independent given their random support, i.e. $X^{\lambda} \indep Y \, \vert \,  \Lambda$. We denote $Z \coloneqq X^{\lambda} \cup Y$ the superposition of users and relays. \\
 %Then, conditioned on $\Lambda$, $Z$ has an independence property similar to the one of Poisson processes:
 %\begin{Proposition}
 %Given $\Lambda$, $Z$ has the complete independence property.
@@ -280,7 +292,15 @@ where $U_{i} \;\substack{ \text{i.i.d.} \\ \sim} \; \mathcal{U}(0,1)$ and where 
 %Let $A, B \subset \mathbb{R}^{2}$ be Borel sets such that $A \cap B = \emptyset$. We need to show that $Z(A) \indep Z(B) \, \vert \, \Lambda$.
 %\end{Proof}
 %\vspace{2\baselineskip}
-The network is modelled by the \emph{connectivity graph} $\mathcal{G}_{p,\lambda,r}$ defined in the following way:
+
+The key network parameters are:
+\begin{itemize}
+\item The user density $\lambda > 0$.
+\item The relay proportion $p \in \left(0,1\right)$.
+\item The connectivity range $r > 0$. \\
+\end{itemize}
+
+The network is then modelled by the \emph{connectivity graph} $\mathcal{G}_{p,\lambda,r}$ defined in the following way:
 \begin{itemize}
 \item $\mathcal{G}_{p,\lambda,r}$ is undirected.
 \item The vertex set of $\mathcal{G}_{p,\lambda,r}$ is given by the points of $Z$.
@@ -296,10 +316,10 @@ The network is modelled by the \emph{connectivity graph} $\mathcal{G}_{p,\lambda
 \right.
 \end{equation}
 \end{itemize}
-\indent Figure~\ref{fig:Network} illustrates an example of a realization of our network model and of its connectivity graph in a bounded observation window. The blue lines represent the random environment (PVT) supporting the Cox process of users illustrated by red points. The Bernoulli process of relays is illustrated by the green points. Finally, possible connections are highlighted in orange and illustrate the connectivity mechanism given by~\eqref{connectivity_mechanism}
+\indent Figure~\ref{fig:Network} illustrates an example of a realization of our network model and of its connectivity graph in a bounded observation window. The blue lines represent the random environment (PVT) supporting the Cox process of users illustrated by red points. The Bernoulli process of relays is illustrated by the green points. Finally, possible connections are highlighted in orange and illustrate the connectivity mechanism given by~\eqref{connectivity_mechanism}.
 \begin{figure}[h!]
 \centering
-    \includegraphics[width=0.75\linewidth]{Network.pdf}
+    \includegraphics[width=0.6\linewidth]{Network.pdf}
     \caption{Illustration of a realization of the connectivity graph of our model for LOS networks supported by a random environment in a continuum setting.}
     \label{fig:Network}
 \end{figure}
@@ -329,7 +349,7 @@ For simplicity, whenever $n \in \mathbb{N} \setminus \lbrace 0 \rbrace$, we will
 \indent We will use the following convenient notation for the length of a street segment or a subset of street segment: let $e \in E$ and $s \subseteq e$. Then we denote the length of $s$ by $\vert s \vert$. \\
 
 We will also need the concepts of \emph{stabilization} and \emph{essential asymptotic connectedness} given in \cite{hirsch2018continuum} for investigating spatial dependencies of random measures. \\
-To that end, we denote by $\mathbf{M}$ the space of Borel measures on $\mathbb{R}^{2}$, equipped with the evalutation $\sigma$-algebra \cite[Section 13.1]{last2017lectures}, i.e. the smallest $\sigma$-algebra making the mappings $\Xi \mapsto \Xi(B)$ measurable for all Borel sets $B \subset \mathbb{R}^{2}$. For a (possibly random) Borel measure $\mu$ on $\mathbb{R}^{2}$ and $A \subset \mathbb{R}^{2}$, we denote the restriction of $\mu$ to $A$ by $\mu_A(\cdot) \coloneqq \mu(A \cap \cdot)$. We also adapt the definition of the support of a measure as follows: let $\mu$ be a (possibly random) Borel measure on $\mathbb{R}^{2}$. The \emph{support} of $\mu$ is the following set:
+To that end, we denote by $\mathbf{M}$ the space of Borel measures on $\mathbb{R}^{2}$, equipped with the evalutation $\sigma$-algebra \cite[Section 13.1]{last2017lectures}, i.e. the smallest $\sigma$-algebra making the mappings $\mathbf{M} \ni \Xi \mapsto \Xi(B)$ measurable for all Borel sets $B \subset \mathbb{R}^{2}$. For a (possibly random) Borel measure $\mu$ on $\mathbb{R}^{2}$ and $A \subset \mathbb{R}^{2}$, we denote the restriction of $\mu$ to $A$ by $\mu_A(\cdot) \coloneqq \mu(A \cap \cdot)$. We also adapt the definition of the support of a measure as follows: let $\mu$ be a (possibly random) Borel measure on $\mathbb{R}^{2}$. The \emph{support} of $\mu$ is the following set:
 $$\text{supp}(\mu) \coloneqq \lbrace x \in \mathbb{R}^{d} \, : \forall \varepsilon > 0, \,  \mu(Q_{\varepsilon}(x)) > 0 \rbrace$$
 
 
@@ -357,7 +377,7 @@ Throughout the rest of this paper, we assume the random variables $(R_x)_{x \in 
 %\end{Remark} 
 
 \indent We slightly modify the definition of asymptotical essential connectedness given in~\cite{hirsch2018continuum} for the sake of simplicity and use the following definition:
-\begin{Definition}\cite[Definition 2.5]{hirsch2018continuum}
+\begin{Definition} %\cite[Definition 2.5]{hirsch2018continuum}
 \label{Def.eac}
 Let $\Xi$ be a random measure. Then $\Xi$ is \emph{essentially asymptotically connected} if there exists a random field $R = \lbrace R_{x} \rbrace_{x \in \mathbb{R}^{d}}$ such that $\Lambda$ is stabilizing for $R$ and if for all $n \geq 1$, whenever $\displaystyle \sup_{y \in Q_{2n} \cap \mathbb{Q}^{2}} R_{y} < n/2$, the following assertions are satisfied:
 \begin{enumerate}[label = (\arabic*)]
@@ -365,6 +385,10 @@ Let $\Xi$ be a random measure. Then $\Xi$ is \emph{essentially asymptotically co
 \item $\text{supp}(\Xi_{Q_{n}})$ is contained in a connected component of $\text{supp}(\Xi_{Q_{2n}})$
 \end{enumerate}
 \end{Definition}
+
+As a matter of fact, we introduce the following notation for convenience: for $x \in \mathbb{R}^{2}$ and $n \in \mathbb{N}\setminus \lbrace 0 \rbrace$ we denote:
+$$R(Q_n(x)) \coloneqq \sup_{y \in Q_n(x) \cap \mathbb{Q}^{2}} R_y$$
+whenever $\Xi$ is a stabilizing random measure for the stabilization field $R = \lbrace R_x \rbrace _{x \in \mathbb{R}^{2}}$. \\
 
 The following result is stated in~\cite[Example 3.1]{hirsch2018continuum} for a slightly modified version of Definition~\ref{Def.eac}. It is easy to check that it adapts in our case as follows:
 
@@ -374,9 +398,7 @@ $$\forall x \in \mathbb{R}^{2}, \, R_x = \inf \lbrace \lVert x - X_{S,i} \rVert 
 where $X_S$ is the PPP having generated $S$.
 \end{Proposition}
 
-As a matter of fact, we introduce the following notation for convenience: for $x \in \mathbb{R}^{2}$ and $n \in \mathbb{N}\setminus \lbrace 0 \rbrace$ we denote:
-$$R(Q_n(x)) \coloneqq \sup_{y \in Q_n(x) \cap \mathbb{Q}^{2}} R_y$$
-whenever $\Xi$ is a stabilizing random measure for the stabilization field $R = \lbrace R_x \rbrace _{x \in \mathbb{R}^{2}}$. \\
+
 
 
 \indent Finally, as is customary in any percolation problem, we need to define concepts of openness and closedness for the study of connected components. In our model, these definitions are adapted to crossroads and parts of street segments (possibly the whole street segments themselves) as follows:
@@ -405,7 +427,7 @@ Let $e \in E$ be a street segment and let $\emptyset \neq s \subseteq e$ be a no
 \item $\left\{
 \begin{array}{l}
 \vert s \vert > r \\
-\forall c \subset s, \, (\vert c \vert = r \; \text{and} \; c  \; \text{topologically closed} )\Rightarrow X^{\lambda}(c) \geq 1
+\forall c \subset s, \, (\vert c \vert = r \; , c \text{ connected and} \; c  \; \text{topologically closed} )\Rightarrow X^{\lambda}(c) \geq 1
 \end{array}
 \right.$
 \end{enumerate}
@@ -413,7 +435,7 @@ Say $s$ is \emph{closed} if $s$ is not open, i.e.: \\
  $\left\{
 \begin{array}{l}
 \vert s \vert > r \\
-\exists \, c \subset s, \; \text{such that} \, \vert c \vert = r \; \text{and} \; c  \; \text{topologically closed} \; \text{and} \,  X^{\lambda}(c) = 0
+\exists \, c \subset s, \; \text{such that} \, \vert c \vert = r \; ,c \text{ connected,} \; c  \; \text{topologically closed} \; \text{and} \,  X^{\lambda}(c) = 0
 \end{array}
 \right.$
 \end{Definition}
@@ -424,26 +446,28 @@ Our results concern the phase transition of the connectivity graph corresponding
 
 \begin{Theorem}[Minimality condition on $p$]
 \label{Thm.minimality}
-Let $p^{*}$ be the Voronoi site percolation threshold (a theoretical estimate is given in~\cite{neher2008topological} and a numerical one is given in~\cite{becker_percolation_2009}). Let $p < p^*$. Then, for all $\lambda > 0$ and $r >0$, the connectivity graph $\mathcal{G}_{p,\lambda,r}$ does not percolate with probability 1.
+Let $p^*$ be the Voronoi site percolation threshold (a theoretical estimate is given in~\cite{neher2008topological} and a numerical one is given in~\cite{becker_percolation_2009}). Let $p < p^*$. Then, for all $\lambda > 0$ and $r >0$, the connectivity graph $\mathcal{G}_{p,\lambda,r}$ does not percolate with probability 1.
 \end{Theorem}
 
 Concerning the sub-critical phase, we have the following:
 \begin{Theorem}[Existence of a non-trivial sub-critical phase]
 \label{Thm.subcritical}
-Assume $p=1$. Then there exists $r_{0} > 0$ such that, whenever $r \leq r_0$, we have:
+Assume $p=1$. %Then there exists a minimal threshold $r_{0} > 0$ satisfying the following property: whenever $0<r < r_0$, we have
+For given $r>0$, denote by $\lambda_c(r)$ the critical user density required for percolation of the connectivity graph $\mathcal{G}_{1,\lambda,r}$:
 \begin{equation*}
-    \lambda_c(r) \coloneqq \inf \lbrace \lambda > 0 : \, \mathbb{P}(\mathcal{G}_{1, \lambda, r} \; \text{percolates}) > 0 \rbrace > 0
+    \lambda_c(r) \coloneqq \inf \lbrace \lambda > 0 : \, \mathbb{P}(\mathcal{G}_{1, \lambda, r} \; \text{percolates}) > 0 \rbrace
 \end{equation*}
-In other words, there exists a subcritical phase for percolation of the connectivity graph when all crossroads are equipped with a relay if the connection radius is not too large.
+Then, denoting $ r_0 \coloneqq \sup \lbrace r > 0 : \, \lambda_c(r) > 0 \rbrace$, we have that $0 < r_0 < \infty$. \\
+In other words, if the connection radius is not too large, there exists a subcritical phase for percolation of the connectivity graph when all crossroads are equipped with a relay.
 \end{Theorem}
 
 A straightforward consequence of Theorem~\ref{Thm.subcritical} is the following:
 
 \begin{Corollary}
 \label{Coroll.subcritical}
-Let $r_0$ be defined as in Theorem~\ref{Thm.subcritical}. Then, whenever $r \leq r_{0}$, for all $p \in \left(p^*,1\right]$, we have:
+Let $r_0$ be defined as in Theorem~\ref{Thm.subcritical}. Then, whenever $r < r_{0}$, for all $p \in \left(p^*,1\right]$, we have:
 \begin{equation*}
-    \inf \lbrace \lambda > 0 : \, \mathbb{P}(\mathcal{G}_{p,\lambda,r} \; \text{percolates}) > 0 \rbrace > 0
+    \lambda_c(p,r) \coloneqq \inf \lbrace \lambda > 0 : \, \mathbb{P}(\mathcal{G}_{p,\lambda,r} \; \text{percolates}) > 0 \rbrace > 0
 \end{equation*}
 \end{Corollary}
 
@@ -451,7 +475,7 @@ Finally, we also were able to get a matching super-criticality result:
 
 \begin{Theorem}[Existence of a non-trivial super-critical phase]
 \label{Thm.supercritical}
-For sufficiently large and finite $\lambda$ and sufficiently large $p > p^*$, $\mathcal{G}_{p,\lambda,r}$ percolates, i.e. there exists a non-trivial super-critical phase.
+Let $r > 0$. Then, for sufficiently large and finite $\lambda$ and sufficiently large $p > p^*$, $\mathcal{G}_{p,\lambda,r}$ percolates. In other words, for any $r > 0$, there exists a non-trivial super-critical phase.
 \end{Theorem}
 
 While Theorem~\ref{Thm.minimality} is quite straightforward, Theorems~\ref{Thm.subcritical} and ~\ref{Thm.supercritical} require the use of renormalization techniques similar to the ones exposed in \cite{hirsch2018continuum} and the domination by product measures theorem \cite[Theorem 0.0]{liggett_domination_1997}. \\
@@ -480,10 +504,42 @@ Our first claim is the following:
 Percolation of $\mathcal{G}_{1, \lambda,r}$ implies percolation of the process of $n$-bad sites.
 \end{Lemma}
 \begin{Proof}
-Assume $\mathcal{G}_{1,\lambda,r}$ percolates and denote by $\mathcal{C}$ a giant component of $\mathcal{G}_{r, \lambda, 1}$. Since $\mathcal{C}$ is infinite, we have: $\# \lbrace z : \mathcal{C} \cap Q_n(nz) \neq \emptyset \rbrace = + \infty$.
-\\ Denote $ \lbrace z : \mathcal{C} \cap Q_n(nz) \neq \emptyset \rbrace \coloneqq \lbrace z_i, i \geq 1 \rbrace$. Note that $\mathcal{C}$ is made of open street segments and open crossroads. Therefore, since $Q_n(nz_i)$ is crossed by $\mathcal{C}$ for all $i \geq 1$, $Q_n(nz_i)$ has to be crossed by some open non-empty $s_{z_i,e}$, for some $e \in  E$. Hence $z_i$ is $n$-bad, and $\lbrace z_i, i \geq 1 \rbrace$ is a infinite component of $n$-bad sites. Now, since $\mathcal{C}$ is connected in $\mathbb{R}^2$, then so is $\lbrace z_i, i \geq 1 \rbrace$ in $\mathbb{Z}^2$. Hence, the process of $n$-bad sites percolates. 
+Assume $\mathcal{G}_{1,\lambda,r}$ percolates and denote by $\mathcal{C}$ a giant component of $\mathcal{G}_{1, \lambda, r}$. Since $\mathcal{C}$ is infinite, we have: $\# \lbrace z \in \mathbb{Z}^{2} : \mathcal{C} \cap Q_n(nz) \neq \emptyset \rbrace = + \infty$.
+\\ Denote $ \lbrace z : \mathcal{C} \cap Q_n(nz) \neq \emptyset \rbrace \coloneqq \lbrace z_i, i \geq 1 \rbrace$. Note that $\mathcal{C}$ is composed of open street segments and open crossroads. Therefore, since $Q_n(nz_i)$ is crossed by $\mathcal{C}$ for all $i \geq 1$, $Q_n(nz_i)$ has to be crossed by some open non-empty $s_{z_i,e}$, for some $e \in  E$. Hence $z_i$ is $n$-bad, and $\lbrace z_i, i \geq 1 \rbrace$ is a infinite component of $n$-bad sites.
+\\ \indent  Now, obviously $\mathcal{C}$ is connected in $\mathbb{R}^2$. Without loss of generality, we can assume that the $z_i$'s have been indexed in the order they are encountered when exploring $\mathcal{C}$. In other words, when going along the path of $\mathcal{G}_{1,\lambda,r}$ given by $\mathcal{C}$, if, at some point, we encounter $z_i$, then the next site we encounter following our exploration along $\mathcal{C}$ is $z_{i+1}$. 
+\\ \indent We claim that $\lbrace z_i, i \geq 1 \rbrace$ is almost surely a connected path in $\mathbb{Z}^2$. Indeed, assume for a contradiction that this is not the case.  Then, with positive probability, it is possible to find a realization of $\mathcal{G}_{1,\lambda,r}$ satisfying the following property: there exists $i \geq 1$ such that the two neighbouring squares $Q_n(nz_i)$ and $Q_n(nz_{i+1})$ crossed by $\mathcal{C}$ only share a vertex, as in Figure~\ref{fig:connected-n-bad} (these two squares obviously neighbouring by definition of the indexation convention we have chosen). Denote by $x$ the intersection of two such consecutive squares with the infinite connected component $\mathcal{C}$. We thus have $x \in \mathcal{C}$ and that $Q_n(nz_i) \cap Q_n(nz_{i+1}) = \lbrace x \rbrace$. Then, necessarily, since $\mathcal{C} \subset \partial S$, $x$ belongs to the boundary $\partial S$ of $S$ and we thus have $\mathbb{P}(x \in \partial S) =1$. %ou >0 car on conditionne par rapport à une réalisation ?
+Denote by $(r,\theta_0)$ the polar coordinates of $x$. Denoting $\mathbb{P}^0$ the Palm probability of the stationary segment process of the edges of $S$, $\lambda$ its intensity, and $\mathcal{B}(0,r)$ the Euclidean ball of radius $r$ centered at the origin, we have, by the inversion formula of Palm calculus:
+%Moreover, we claim that the probability that two consecutive squares $Q_n(nz_i)$ and $Q_n(nz_{i+1})$ crossed by $\mathcal{C}$ only share a vertex as in Figure~\ref{fig:connected-n-bad} is exactly 0. 
+%Indeed, to see this, assume this is not the case and denote by $x$ the intersection of two consecutive squares with the infinite connected component $\mathcal{C}$, so that $x \in \mathcal{C}$ and that $Q_n(nz_i) \cap Q_n(nz_{i+1}) = \lbrace x \rbrace$. Then, necessarily, $x$ belongs to the boundary of the PVT $S$ and we thus have $\mathbb{P}(x \in \partial S) > 0$.  Denote by $(r,\theta_0)$ the polar coordinates of $x$. Denoting $\mathbb{P}^0$ the Palm probability of the stationary segment process $S$ and $\lambda$ its intensity, we have, by the inversion formula of Palm calculus:
+\begin{align}
+   \nonumber \mathbb{E}^0 \left[ \vert \partial S \cap \partial \mathcal{B}(0,r) \vert \right]  &= \nonumber \frac{1}{\lambda} \mathbb{E} \left[ \int_{0}^{2\pi} \mathbbm{1}\lbrace (r,\theta) \in \partial S \rbrace rd\theta\right] \\ \nonumber &= \frac{1}{\lambda} \int_{0}^{2\pi} \mathbb{P}\Big( (r,\theta) \in \partial S \Big) rd\theta \\ \label{rotationinvariance}  &= \frac{1}{\lambda} \int_{0}^{2\pi} \mathbb{P}\Big( (r,\theta_0) \in \partial S \Big) rd\theta \\  \nonumber &= \frac{2\pi r}{\lambda}  \mathbb{P}(x\in \partial S)  \\&= \frac{2 \pi r}{\lambda} > 0,
+\end{align}
+% il faut vraiment P(x \in \partial S) = 1 ou c'est >0 ? Demnader à Bartek
+where we have used the isotropy of $S$ in~\eqref{rotationinvariance}. But it is known that when $S$ is a PVT, $\mathbb{E}^0 \left[ \vert \partial S \cap \partial \mathcal{B}(0,r) \vert \right]=0$. 
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+\draw (0,0) rectangle (2,2) ;
+\draw (2,2) rectangle (4,4) ;
+%\draw[red, thick, dashed] (-1,-1) .. controls (1.53,0.9) and (2,2)  .. (4,5);
+\draw[red, thick, snake=zigzag] (-0.7,-1) -- (1.53,0.9) ;
+\draw[red, thick, snake=zigzag] (1.53,0.9) -- (1.8,1.8) ;
+\draw[red, thick, snake=zigzag] (1.8,1.8) -- (2,2) ;
+\draw[red, thick] (2,2) -- (2.1,2.1) ;
+\draw[red, thick, snake=zigzag] (2.1,2.1) -- (2.4,2.6) ;
+\draw[red, thick, snake=zigzag] (2.4,2.6) -- (5,5.2) ;
+\node[] at (0.8,1.6) {$Q_n(nz_i)$};
+\node[] at (3.2,2.3) {$Q_n(nz_{i+1})$};
+\node[text=red] at (4.2,5) {$\mathcal{C}$};
+\end{tikzpicture}
+\caption{Two consecutive $n$-bad sites have to share a common side}
+\label{fig:connected-n-bad}
+\end{figure}
+
+Hence we get a contradiction, and so any two consecutive squares $Q_n(nz_i)$ and $Q_n(nz_{i+1})$ must share a common side. As a matter of fact, $\lbrace z_i, i \geq 1 \rbrace$ is a connected path in $\mathbb{Z}^2$  and we have therefore found an infinite path of $n$-bad sites. Hence, the process of $n$-bad sites percolates. 
 \end{Proof}
-Therefore, it suffices to prove that the process of $n$-bad sites does not percolate if $\lambda$ and $r$ are sufficiently small. This will be done via appealing to \cite[Theorem 0.0]{liggett_domination_1997}. \\
+By Lemma~\ref{Claim1.subcritical}, it suffices to prove that the process of $n$-bad sites does not percolate if $\lambda$ and $r$ are sufficiently small. This will be done via appealing to \cite[Theorem 0.0]{liggett_domination_1997}. \\
 The conditions of \cite[Theorem 0.0]{liggett_domination_1997} are valid for so-called $k$-dependent random fields:
 \begin{Definition}
 Let $ \mathbf{X}=(X_s)_{s \in \mathbb{Z}^{d}}$ be a discrete random field. Let $k \geq 1$. Then $\mathbf{X}$ is said to be $k$-dependent if for all $p \geq 1$ and all $\psi = \lbrace s_{1}, \ldots s_{p} \rbrace \subset \mathbb{Z}^{d}$ finite with the property that $\forall i \neq j, \lVert s_{i} - s_{j} \rVert_{\infty} > k $, the random variables $(X_{s_{i}})_{1 \leq i \leq p}$ are independent.
@@ -501,6 +557,7 @@ As a starting point, note that $\forall z \in \mathbb{Z}^{2}, \zeta_{z} = 1 - \m
 For $z \in \mathbb{Z}^{2}$, set $\xi_{z} = \mathbbm{1} \lbrace z \, \text{is $n$-good} \rbrace$. Let $\psi = \lbrace z_{1}, \ldots z_{p} \rbrace \subset \mathbb{Z}^{2}$ be such that $\forall i \neq j, \lVert z_i - z_j \rVert_{\infty} > 3$.
 We want to show that the random variables $(\xi_{z_i})_{1\leq i \leq p}$ are independent. Since we are dealing with indicator functions, this is equivalent to showing that: 
 $$\mathbb{E}\left(\prod_{i=1}^{p} \xi_{z_i} \right) = \prod_{i=1}^{p} \mathbb{E}(\xi_{z_i})$$
+%Elie a fait une remarque là-dessus mais je ne suis pas sur d'avoir compris : c'est bien les variables aléatoires xi_z_i dont on veut montrer qu'elles sont indépendantes, ce qui équivaut à montrer que les événements incriminés sont indépendants, et donc in fine que l'espérance du produit est le produit des espérances ?
 Now, we have:
 
 \begin{align}
@@ -545,7 +602,7 @@ On the one hand, we note that the quantity $R(Q_n)$ does not depend on $\lambda$
 \end{equation}
 Therefore, it remains to deal with the quantity $\mathbb{P}\left(  \exists \, e \in E, \, e \cap Q_n \, \text{is open} \right)$. We have:
 \begin{align}
-    \nonumber \mathbb{P}\left(\exists \, e \in E, \, e \cap Q_n \, \text{is open} \right) &= 1 - \mathbb{P}\left(  \forall \, e \in E, \, e \cap Q_n \, \text{is open} \right) \\ \nonumber &= 1 - \mathbb{E}\left( \prod_{e \in E \, : \, e \cap Q_n \neq \emptyset} \mathbbm{1}\lbrace \text{$e \cap Q_n$ is open} \rbrace \right) \\ \nonumber &= 1 - \mathbb{E}\left[\mathbb{E}\left( \prod_{e \in E \, : e \cap Q_n \neq \emptyset} \mathbbm{1}\lbrace \text{$e \cap Q_n$ is closed} \rbrace  \Bigg\vert \Lambda \right) \right] 
+    \nonumber \mathbb{P}\left(\exists \, e \in E, \, e \cap Q_n \, \text{is open} \right) &= 1 - \mathbb{P}\left(  \forall \, e \in E, \, e \cap Q_n \, \text{is closed} \right) \\ \nonumber &= 1 - \mathbb{E}\left( \prod_{e \in E \, : \, e \cap Q_n \neq \emptyset} \mathbbm{1}\lbrace \text{$e \cap Q_n$ is closed} \rbrace \right) \\ \nonumber &= 1 - \mathbb{E}\left[\mathbb{E}\left( \prod_{e \in E \, : e \cap Q_n \neq \emptyset} \mathbbm{1}\lbrace \text{$e \cap Q_n$ is closed} \rbrace  \Bigg\vert \Lambda \right) \right] 
 \end{align}
 For $e \in E$, denote:
 \begin{gather*}
@@ -567,18 +624,23 @@ For all $e \in E$ such that $s_e \neq \emptyset$, we have that $0 \leq \mathbb{P
 \end{equation*}
 Noting that $\displaystyle \Bigg\lvert \prod_{e \in E : s_e \neq \emptyset} \mathbbm{1}\lbrace \vert s_e \vert > r \rbrace \prod_{e \in E \, : s_e \neq \emptyset}\mathbb{P}\left(    A_e  \vert \Lambda \right) \Bigg\rvert \leq 1$, we can apply dominated convergence in~\eqref{eq7}, we get:
 \begin{align}
-   \nonumber  \limsup_{\lambda \downarrow 0} \mathbb{P}\left(\exists \, e \in E, \, e \cap Q_n \, \text{is open} \right) &= 1 - \mathbb{E}\left(\prod_{e \in E : s_e \neq \emptyset} \mathbbm{1}\lbrace \vert s_e \vert > r \rbrace \right) \\ \label{eq8} &= 1 - \mathbb{E}\left(\prod_{e \in E} \mathbbm{1}\lbrace \vert e \cap Q_n \vert > r \rbrace \mathbbm{1} \lbrace e \cap Q_n \neq \emptyset \rbrace \right)
+   \nonumber  \limsup_{\lambda \downarrow 0} \mathbb{P}\left(\exists \, e \in E, \, e \cap Q_n \, \text{is open} \right) &= 1 - \mathbb{E}\left(\prod_{e \in E : s_e \neq \emptyset} \mathbbm{1}\lbrace \vert s_e \vert > r \rbrace \right) \\ \label{eq8} &= \mathbb{P}(\exists \, e \in E, \, 0 < \vert e \cap Q_n \vert \leq r)
+   %1 - \mathbb{E}\left(\prod_{e \in E} \mathbbm{1}\lbrace \vert e \cap Q_n \vert > r \rbrace \mathbbm{1} \lbrace e \cap Q_n \neq \emptyset \rbrace \right)
 \end{align}
-Again, by monotone convergence, we have for all $e \in E$:
+Note that for any fixed $\omega \in \Omega$, the event $\lbrace \exists \, e \in E, \, 0 < \vert e \cap Q_n \vert \leq r \rbrace$ is decreasing in $r$. Therefore, again by monotone convergence, we have for all $e \in E$:
 \begin{align*}
-\lim_{r \downarrow 0} \mathbbm{1}\lbrace \vert e \cap Q_n \vert > r \rbrace \mathbbm{1}\lbrace e \cap Q_n \neq \emptyset \rbrace &= \mathbbm{1}\lbrace \vert e \cap Q_n \vert > 0 \rbrace \mathbbm{1}\lbrace e \cap Q_n \neq \emptyset \rbrace \quad \text{a.s.} \\ &= \mathbbm{1}\lbrace e \cap Q_n \neq \emptyset \rbrace \quad \text{a.s.}
+\lim_{r \downarrow 0} \mathbb{P}(\exists \, e \in E, \, 0 < \vert e \cap Q_n \vert \leq r) &= 0
+%\mathbbm{1}\lbrace \vert e \cap Q_n \vert > r \rbrace \mathbbm{1}\lbrace e \cap Q_n \neq \emptyset \rbrace 
+%&= \mathbbm{1}\lbrace \vert e \cap Q_n \vert > 0 \rbrace \mathbbm{1}\lbrace e \cap Q_n \neq \emptyset \rbrace \quad \text{a.s.} \\ &= \mathbbm{1}\lbrace e \cap Q_n \neq \emptyset \rbrace \quad \text{a.s.}
 \end{align*} 
-So, applying dominated convergence again in~\eqref{eq8} we get:
+Hence $\displaystyle \limsup_{r \downarrow 0} \mathbb{P}(\exists \, e \in E, \, 0 < \vert e \cap Q_n \vert \leq r) = 0$. Combining this with~\eqref{eq8} yields:
 \begin{equation}
 \label{eq9}
-   \limsup_{r \downarrow \infty}\limsup_{\lambda \downarrow 0} \mathbb{P}\left(\exists \, e \in E, \, e \cap Q_n \, \text{is open} \right)=1-\mathbb{E}\left(\prod_{e \in E } \mathbbm{1}\lbrace e \cap Q_n \neq \emptyset \rbrace \right)
+   \limsup_{r \downarrow 0}\limsup_{\lambda \downarrow 0} \mathbb{P}\left(\exists \, e \in E, \, e \cap Q_n \, \text{is open} \right) = 0
+   %=1-\mathbb{E}\left(\prod_{e \in E } \mathbbm{1}\lbrace e \cap Q_n \neq \emptyset \rbrace \right)
 \end{equation}
-By monotone convergence, $\displaystyle \lim_{n \uparrow \infty}\mathbbm{1}\lbrace e \cap Q_n \neq \emptyset \rbrace = 1 \quad \text{a.s.}$ for all $e \in E$. Therefore, by dominated convergence in~\eqref{eq9}, we obtain:
+%By monotone convergence, $\displaystyle \lim_{n \uparrow \infty}\mathbbm{1}\lbrace e \cap Q_n \neq \emptyset \rbrace = 1 \quad \text{a.s.}$ for all $e \in E$. Therefore, by dominated convergence in~\eqref{eq9}, we obtain:
+Hence, we obtain:
 \begin{equation}
     \label{eq10}
     \limsup_{n \uparrow \infty}\limsup_{r \downarrow 0}\limsup_{\lambda \downarrow 0} \mathbb{P}\left(\exists \, e \in E, \, e \cap Q_n \, \text{is open} \right) = 1-1 = 0
@@ -608,7 +670,7 @@ By Theorem~\ref{Thm.subcritical}, we have that $\lambda_c(r) > 0$ whenever $r \l
 As in the proof of Theorem~\ref{Thm.subcritical}, we will use a renormalization argument to prove that $\mathcal{G}_{p,\lambda,r}$ percolates if $\lambda$ and $p \in \left(p^{*},1\right]$ are chosen sufficiently large. \\
 To this end, let us first define a discrete model in such a way that percolation of the discrete model will imply percolation of the continuum one. For $n \geq 1$, say a site $z \in \mathbb{Z}^{2}$ is $n$-good if the following conditions are satisfied:
 \begin{enumerate}
-\item $R(Q_{6n}(nz)) < n/2$
+\item $R(Q_{6n}(nz)) < n/2$ %3n/2 should be sufficient, double check if you need the stronger assumption n/2
 \item $E \cap Q_n(nz) \neq \emptyset$, i.e. the square $Q_n(nz)$ contains a \emph{full} street segment (not just a subset of a street segment)
 \item There exists $e \in E \cap Q_n(nz)$ such that $e$ is open, in the sense of Definition~\ref{Def.open/closed/subcritical}. In other words, there exists an open edge which is fully included in the square $Q_n(nz)$.
 \item Every two open edges $e,e' \in E \cap Q_{3n}(nz)$ are connected by a path in $\mathcal{G}_{1,\lambda,r}\cap Q_{6n}(nz)$, i.e. $e$ and $e'$ are connected by a path of the connectivity graph staying inside of the larger square $Q_{6n}(nz)$ if all crossroads are open.
@@ -641,6 +703,8 @@ For $n \geq 1$, say a site $z \in \mathbb{Z}^{2}$ is weakly-$n$-good if the foll
 \item[(4)]  Every two open edges $e,e' \in E \cap Q_{3n}(nz)$ are connected by a path in $\mathcal{G}_{1,\lambda,r}\cap Q_{6n}(nz)$, i.e. $e$ and $e'$ are connected by a path of the connectivity graph staying inside of the larger square $Q_{6n}(nz)$ if all crossroads are open.
 \item[(5)]  $Y(Q_{6n}(nz)) = \#(V \cap Q_{6n}(nz))$, i.e. all crossroads in $Q_{6n}(nz)$ are open, in the sense of Definition~\ref{Def.open/crossroad}.
 \end{enumerate}
+Note that the difference between $n$-goodness and weakly-$n$-goodness only lies in the first condition $(1) \; R(Q_{6n}(nz))<n/2$ being weakened into $\widetilde{(1)} \; R(Q_{6n}(nz))< 6n$. All other conditions remain unchanged. \\
+
 Then the following is clear:
 \begin{Lemma}
 \label{Lemma1.almost}
@@ -949,7 +1013,7 @@ But we had:
     \mathbb{P}(0 \, \text{is $n$-bad}) &= \mathbb{P}(A^c \cup B^c \cup C^c \cup D^c \cup F^c)
 \\ &= \mathbb{P}(A^c) + \mathbb{P}(A \cap B^c) + \mathbb{P}(A \cap B \cap C^c) + \mathbb{P}(A \cap B \cap C \cap F^c) \\ & \quad + \mathbb{P}(A \cap B \cap C \cap F \cap D^c)
 \end{align*}
-%Nothing that:
+%Noting that:
 %\begin{itemize}
     %\item The events $A^c$, $A \cap B^c$ only depend on $n$
     %\item The event $A \cap B \cap C^c$ only depends on $n$ and $\lambda$
@@ -963,22 +1027,23 @@ Therefore, we have indeed proven the following, as wanted:
 Therefore, by \cite[Theorem 0.0]{liggett_domination_1997}, the process of weakly-$n$-good sites is stochastically dominated from below by a supercritical Bernoulli process, which concludes the proof of Theorem~\ref{Thm.supercritical}.
 \section{Numerical simulations}
 \label{S.NumericalSimulations}
-For the sake of visualization, we performed Monte-Carlo simulations for various parameters to estimate percolation thresholds for our model. We simulated the model defined in Section~\ref{S.Model} with having set $\gamma \coloneqq \mathbb{E}\left[\Lambda(Q_1)\right] = 20$, a more realistic physical parameter for a telecommunications network analysis. Also, we naturally had to simulate on a finite bounded window, chosen to be a square of side $\texttt{win}=30$, sufficiently large so as to avoid any boundary effects. More simulations showed that taking larger values of $\texttt{win}$ required a too significant amount of simulation time for a very small gain in estimation precision. \\
+For the sake of visualization, we performed Monte-Carlo simulations for various parameters to estimate percolation thresholds for our model. We simulated the model defined in Section~\ref{S.Model} having set $\gamma \coloneqq \mathbb{E}\left[\Lambda(Q_1)\right] = 20 \, \text{km/km}^2$, which corresponds to the density of a rather dense urban street system.
+%a more realistic physical parameter for a telecommunications network analysis. 
+Also, we naturally had to simulate on a finite bounded window, chosen to be a square of side $\texttt{win}=30 \, \text{km}$, sufficiently large so as to avoid any boundary effects. More simulations showed that taking larger values of $\texttt{win}$ required a too significant amount of simulation time for a very small gain in estimation precision. \\
 \indent As has been explained in our previous work~\cite{LeGal1904:Influence}, the following parameters are scale-invariant:
 \begin{equation*}
     U=\frac{4}{3}\frac{\lambda}{\gamma} \quad \text{and} \quad H=\frac{4}{3}\frac{1}{r\gamma}
 \end{equation*}
-Moreover, $U$ and $H$ respectively are the mean number of Cox points per typical edge of the PVT $S$ and the mean number of hops per typical edge of the PVT $S$, see \cite[Section 9.4]{chiu_stochastic_2013}. Since these parameters are more physically interesting from the telecommunications point of view, and since $\gamma$ is fixed throughout our simulations, we have chosen to simulate in terms of the parameters $(p,U,H)$ rather than the parameters $(p,\lambda,r)$. In this context, the connectivity graph is rather denoted by $\mathcal{G}_{p,U,H}$ Theorem~\ref{Thm.minimality} stays the same, while Theorem~\ref{Thm.subcritical}, Corollary~\ref{Coroll.subcritical} and Theorem~\ref{Thm.supercritical} can be restated as follows:
+Moreover, $U$ and $H$ respectively are the mean number of Cox points per typical edge of the PVT $S$ and the mean number of hops per typical edge of the PVT $S$, see \cite[Section 9.4]{chiu_stochastic_2013}. Since these parameters are more physically interesting from the telecommunications point of view, and since $\gamma$ is fixed throughout our simulations, we have chosen to simulate in terms of the parameters $(p,U,H)$ rather than the parameters $(p,\lambda,r)$. In this context, the connectivity graph is rather denoted by $\mathcal{G}_{p,U,H}$, Theorem~\ref{Thm.minimality} stays the same, while Theorem~\ref{Thm.subcritical}, Corollary~\ref{Coroll.subcritical} and Theorem~\ref{Thm.supercritical} can be restated as follows:
 \begin{Theorem}[Analogue of Theorem~\ref{Thm.subcritical}]
 \label{Thm.analogue:subcritical}
-Assume $p=1$. Then there exists a non-trivial threshold  $0 < H_0 < \infty$ such that, whenever $H \geq H_0$, we have:
-\begin{equation*}
-    U_c(H) \coloneqq \inf \lbrace U > 0 \, : \, \mathbb{P}(\mathcal{G}_{1, U, H} \; \text{percolates}) > 0 \rbrace > 0
-\end{equation*}
+Assume $p=1$. For given $H > 0$, denote by $U_c(H)$ the critical mean number of user per typical street required for percolation of the connectivity graph $\mathcal{G}_{1,U,H}$:
+$$  U_c(H) \coloneqq \inf \lbrace U > 0 \, : \, \mathbb{P}(\mathcal{G}_{1, U, H} \; \text{percolates}) > 0 \rbrace$$
+Then, denoting $H_0 \coloneqq \inf \lbrace H : U_c(H) > 0 \rbrace$, we have that $0 < H_0 < \infty$.
 \end{Theorem}
 \begin{Corollary}[Analogue of Corollary~\ref{Coroll.subcritical}]
 \label{Coroll.analogue:subcritical}
-Let $H_0$ be defined as above. Then, whenever $H \geq H_0$, for all $p \in \left(p^*,1\right]$, we have:
+Let $H_0$ be defined as above. Then, whenever $H > H_0$, for all $p \in \left(p^*,1\right]$, we have:
 \begin{equation*}
    U_c(p,H) \coloneqq \inf \lbrace U > 0 \, : \, \mathbb{P}(\mathcal{G}_{p, U, H} \; \text{percolates}) > 0 \rbrace > 0
 \end{equation*}
@@ -999,7 +1064,7 @@ Figure~\ref{fig:thresholdsite+Uc(H)a} shows an estimation of the critical value 
 
 The former observations lead to several related questions which we only were able to solve numerically:
 \begin{enumerate}
-    \item When $H$ is chosen sufficiently small so as to have $U_c(H)=0$, it means that percolation is solely ensured by the Bernoulli process. Then, is there a non trivial critical parameter $p$ above which percolation still occurs with positive probability, without relying on additional Cox points?
+    \item When $H$ is chosen sufficiently small so as to have $U_c(H)=0$, it means that percolation is solely ensured by the Bernoulli process. We then know that $\mathcal{G}_{1,0,H}$ percolates with positive probability. Then, is there a non trivial critical parameter $p^*<p<1$ above which percolation  of $\mathcal{G}_{p,0,H}$ still occurs with positive probability?
     \item Can we estimate $H_0$, the threshold given by Theorem~\ref{Thm.analogue:subcritical}?
     \item Can we estimate $U_c(p,H)$ when $p^* < p < 1$?
 \end{enumerate}
@@ -1015,11 +1080,35 @@ Figure~\ref{fig:additionalquestionsa} shows the numerical estimation for the cri
 \begin{equation*}
     p_c(H) \coloneqq \inf \lbrace p > p^* \, : \, \mathbb{P}(\mathcal{G}_{p,0,H} \, \text{percolates} \, ) > 0 \rbrace
 \end{equation*}
-We only were able to estimate $p_c(H)$ for $H>0.46$. For smaller values of $H$, apart from the theoretical value $p_c(0)=p_c \approx 0.71299$, simulation becomes much trickier, as the system approaches criticality. A quadratic model $p_c(H) = aH^2+bH+c$ given by the blue curve provides a good fit. We finally obtained the numerical estimate for the threshold $H_c$ above which all crossroads have to be endowed with a Bernoulli point: $p_c(H_c) = 1 \Leftrightarrow H_c \approx 0.743$. This also partially answers the second aforementioned question: there is a possible theoretical gap which we were not able to quantify between $H_c$ and the critical value $H_0$ given by Theorem~\ref{Thm.subcritical}. However, our simulations suggest that $H \approx H_c$. A matching theoretical result is a track to follow for future work. \\ Finally, Figure~\ref{fig:additionalquestionsb} shows numerical estimations of $(p,H) \mapsto U_c(p,H)$. As is easily theoretically proven, $U_c(p,H)$ is increasing in $p$ and in $H$. 
+We only were able to estimate $p_c(H)$ for $H>0.46$. For smaller values of $H$, apart from the theoretical value $p_c(0)=p_c \approx 0.71299$, simulation becomes much trickier, as the system approaches criticality. A quadratic model $p_c(H) = aH^2+bH+c$ given by the blue curve provides a good fit. Figure~\ref{fig:additionalquestionsb} shows numerical estimations of $(p,H) \mapsto U_c(p,H)$. As is easily theoretically proven, $U_c(p,H)$ is decreasing in $p$ and increasing in $H$. \\
+Regarding an approximation of $H_0$, the threshold given by Theorem~\ref{Thm.analogue:subcritical}, we proceeded as follows. Define first the following critical value for $H$:
+\begin{equation*}
+    H_c \coloneqq \sup \lbrace H > 0, \, \mathbb{P}(\mathcal{G}_{1,0,H} \text{ percolates}) >0 \rbrace
+\end{equation*}
+If $H_c > 0$, then it is possible to have percolation of the connectivity graph when all crossroads are equipped with relays, i.e. $\mathbb{P}(\mathcal{G}_{1,0,H} \text{ percolates}) > 0$. Figure~\ref{fig:Hc} illustrates the result of our Monte-Carlo simulations and the estimation  $H_c \approx 0.743$.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.21]{sites-H_c-p=1}
+    \caption{Numerical estimation of $H_c$}
+    \label{fig:Hc}
+\end{figure}
+
+\noindent From the definition of $H_c$ and Theorem~\ref{Thm.analogue:subcritical}, it is clear that $H_0 \geq H_c$. Our simulations moreover suggest that $p_c(H_c)\approx 1$ and that $H_0 \approx H_c$ and we therefore conjecture that $H_0 \approx H_c$, thus estimating $H_0 \approx 0.743$. Matching theoretical results are tracks to follow for future work.
+
+%We finally obtained the numerical estimate for the threshold $H_c$ above which all crossroads have to be endowed with a Bernoulli point: $p_c(H_c) = 1 \Leftrightarrow H_c \approx 0.743$. Note that we can also define $H_c$ in the following way:
+%This also partially answers the second aforementioned question: our simulations suggest that $H_0 \approx H_c$. However, we were not able to prove this with rigorously. 
+%there is a possible theoretical gap (due to the fact that the percolation function $\theta$ may not be continuous) %as an analogy consider the fact that
+%which we were not able to quantify between $H_c$ and the critical value $H_0$ given by Theorem~\ref{Thm.subcritical}. However, our simulations suggest that $H_0 \approx H_c$. A matching theoretical result is a track to follow for future work. %say that theta function may not be continuous, which explains the gap.
+
 
 \section{Concluding remarks}
 \label{S.Conclusion}
-\textbf{\textcolor{red}{Yet to be written.}}
+
+In this paper, we have introduced and studied a new model for continuum LOS percolation in a random environment. This mathematical model can be seen as a good candidate for the modelling of telecommunications networks in an urban scenario with regular obstructions: the random support (equivalent to the street system of the city) is modelled by a PVT. Users are dropped on the edges of the PVT (i.e. the streets of the city) according to a Cox point process with linear intensity $\lambda$. Obstructive connectivity conditions require the presence of an additional Bernoulli point process (representing relays which could either be real users or physical antennas) at the vertices of the PVT (crossroads of the city) to ensure connectivity between adjacent streets. We have proven that a minimal relay proportion $p > p_c$ is necessary to allow for percolation of the connectivity graph, that a non-trivial subcritical phase exists whenever the connectivity threshold $r$ is not too large and that a supercritical phase exists for all $r>0$. To prove these theoretical statements, we appealed to renormalisation techniques and stochastic geometry tools, as customary in any continuum percolation approach. Moreover, we also performed Monte-Carlo simulations to get numerical estimations of critical parameters of our model. \\
+\indent Our results can easily be generalised to the \emph{dual tessellation} of a PVT: a \emph{Poisson-Delaunay} tessellation \cite[Section 9.2]{chiu_stochastic_2013}. %This is due to the fact that the dual tessellation is obtained by taking the center of each cell of the original tessellation as a vertex and by joining the centers of adjacent cells.
+For the purpose of conciseness, we also assumed the random support of the Cox process to be a sufficiently regular tessellation, but we believe that our results are still valid for any stabilizing and essentially asymptotically connected tessellation as defined in Definitions~\ref{Def.stabilizing} and~\ref{Def.eac}. Finally, another stream of generalization could be to investigate the case of higher dimensions, which we omitted to do as it is physically less relevant. \\
+\indent Our approach paves the way to the study of new continuum percolation models where two connection radii could appear: one for LOS connections (i.e. nodes of the network being located on the same edge of the random support) and one for non-line-of-sight (NLOS) connections (i.e. nodes of the network being located on different edges of the random support). This interesting generalization of Gilbert's original continuum percolation model, of interest for more realistic models of telecommunications networks, has not been studied yet, as far as we know.
 \bibliographystyle{amsplain}
 \bibliography{references}
 
